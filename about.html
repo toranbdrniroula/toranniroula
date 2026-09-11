@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t=='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+    }
+  }
+  </script>
+  <title>About | Toran Bahadur Niroula</title>
+  <meta name="description" content="About Toran Bahadur Niroula, an aerospace engineering researcher working across experimental fluid dynamics, CFD, and scientific ML.">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Toran Bahadur Niroula">
+  <meta property="og:title" content="About | Toran Bahadur Niroula">
+  <meta property="og:description" content="About Toran Bahadur Niroula, an aerospace engineering researcher working across experimental fluid dynamics, CFD, and scientific ML.">
+  <meta property="og:image" content="https://toranniroula.com.np/assets/media/og-banner.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://toranniroula.com.np/about.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About | Toran Bahadur Niroula">
+  <meta name="twitter:description" content="About Toran Bahadur Niroula, an aerospace engineering researcher working across experimental fluid dynamics, CFD, and scientific ML.">
+  <meta name="twitter:image" content="https://toranniroula.com.np/assets/media/og-banner.jpg">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/about-contact.css">
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+</head>
+<body>
+  <div id="nav-scrim" class="nav-scrim"></div>
+
+  <div class="top-strip">
+    <div class="identity">
+      <a href="index.html" class="name-mark js-site-name">Toran Bahadur Niroula</a>
+      <span class="signature-line js-signature-line">Experimentalist. Computationalist. Aspiring Research Scholar</span>
+    </div>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Site navigation"></nav>
+  </div>
+
+  <main>
+    <div class="page-container">
+      <div class="about-grid">
+        <div class="section-heading-row">
+          <h1 class="section-heading">About</h1>
+        </div>
+
+        <figure class="about-photo-frame">
+          <img
+            class="about-photo"
+            id="about-photo"
+            src="assets/media/about-photo_bw.jpg"
+            alt=""
+            loading="lazy"
+          >
+          <img
+            class="about-photo about-photo-color"
+            id="about-photo-color"
+            src="assets/media/about-photo.jpg"
+            alt=""
+            loading="lazy"
+            aria-hidden="true"
+          >
+        </figure>
+
+        <div class="about-bio" id="about-bio"></div>
+
+        <hr class="divider" style="margin-top:0">
+
+        <p class="case-subhead" style="font-size:var(--text-subhead);font-weight:600;margin-bottom:20px;">Research interests</p>
+        <div class="about-bio" id="research-interests"></div>
+
+        <hr class="divider">
+
+        <p class="case-subhead" style="font-size:var(--text-subhead);font-weight:600;margin-bottom:20px;" id="publications">Publications</p>
+        <div class="publications-list" id="publications-list"></div>
+
+        <hr class="divider">
+
+        <p class="case-subhead" style="font-size:var(--text-subhead);font-weight:600;margin-bottom:20px;">Timeline</p>
+        <ul class="timeline" id="timeline"></ul>
+
+        <hr class="divider">
+
+        <p class="case-subhead" style="font-size:var(--text-subhead);font-weight:600;margin-bottom:20px;">Things I believe</p>
+        <div class="beliefs-list" id="beliefs-list"></div>
+
+        <hr class="divider">
+
+        <p class="case-subhead" style="font-size:var(--text-subhead);font-weight:600;margin-bottom:16px;">Currently</p>
+        <div class="currently-card" id="currently-card"></div>
+
+        <hr class="divider">
+
+        <p class="case-subhead" style="font-size:var(--text-subhead);font-weight:600;margin-bottom:16px;">Skills &amp; Tools</p>
+        <div class="skills-list" id="skills-list"></div>
+      </div>
+
+      <footer class="footer" role="contentinfo">
+        <span>&copy; <span id="footer-year"></span> Toran Bahadur Niroula</span>
+        <div class="footer-links">
+          <a href="#" class="js-github-link" hidden target="_blank" rel="noopener">GitHub</a>
+          <a href="#" class="js-linkedin-link" hidden target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#" class="js-youtube-link" hidden aria-label="YouTube" target="_blank" rel="noopener">YouTube</a>
+          <a href="#" class="js-scholar-link" hidden aria-label="Google Scholar" target="_blank" rel="noopener">Scholar</a>
+          <a href="#" class="js-email-link">Email</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script src="js/publications.js"></script>
+  <script>
+    renderNav('');
+    loadSiteIdentity('');
+    setFooterYear();
+    renderPublications('publications-list', '');
+  </script>
+</body>
+</html>

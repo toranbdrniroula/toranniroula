@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t=='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+    }
+  }
+  </script>
+  <title>Case File | Toran Bahadur Niroula</title>
+  <meta name="description" content="A research or creative project by Toran Bahadur Niroula, aerospace engineer working across experimental and computational fluid dynamics.">
+  <!-- Generic social-share tags: this page has no per-slug static HTML (the
+       piece is rendered client-side from work-index.json by case-file.js),
+       so crawlers that don't execute JS only ever see this generic "project
+       page" card, not the specific piece's title/description/image. See the
+       Content Manual addendum for the prerender option that would fix this
+       properly. document.title and the description tag above ARE updated at
+       runtime (case-file.js), which covers the browser tab and any
+       JS-executing crawler, but not static-HTML-only ones. -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Toran Bahadur Niroula">
+  <meta property="og:title" content="Case File | Toran Bahadur Niroula">
+  <meta property="og:description" content="A research or creative project by Toran Bahadur Niroula, aerospace engineer working across experimental and computational fluid dynamics.">
+  <meta property="og:image" content="https://toranniroula.com.np/assets/media/og-banner.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://toranniroula.com.np/work/case-file.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Case File | Toran Bahadur Niroula">
+  <meta name="twitter:description" content="A research or creative project by Toran Bahadur Niroula, aerospace engineer working across experimental and computational fluid dynamics.">
+  <meta name="twitter:image" content="https://toranniroula.com.np/assets/media/og-banner.jpg">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/gallery.css">
+  <link rel="stylesheet" href="../css/case-file.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+</head>
+<body>
+  <div id="nav-scrim" class="nav-scrim"></div>
+
+  <div class="top-strip">
+    <div class="identity">
+      <a href="../index.html" class="name-mark js-site-name">Toran Bahadur Niroula</a>
+      <span class="signature-line js-signature-line">Experimentalist. Computationalist. Aspiring Research Scholar</span>
+    </div>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Site navigation"></nav>
+  </div>
+
+  <main>
+    <div id="case-file-root" class="page-container"></div>
+  </main>
+
+  <div class="page-container">
+    <footer class="footer" role="contentinfo">
+      <span>&copy; <span id="footer-year"></span> Toran Bahadur Niroula</span>
+      <div class="footer-links">
+        <a href="#" class="js-github-link" hidden target="_blank" rel="noopener">GitHub</a>
+        <a href="#" class="js-linkedin-link" hidden target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#" class="js-youtube-link" hidden aria-label="YouTube" target="_blank" rel="noopener">YouTube</a>
+        <a href="#" class="js-scholar-link" hidden aria-label="Google Scholar" target="_blank" rel="noopener">Scholar</a>
+        <a href="#" class="js-email-link">Email</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../js/nav.js"></script>
+  <script src="../js/yt-embed.js"></script>
+  <script src="../js/video-embed.js"></script>
+  <script src="../js/plotly-chart.js"></script>
+  <script src="../js/stl-reader.js"></script>
+  <script src="../js/vtk-reader.js"></script>
+  <script src="../js/gallery.js"></script>
+  <script src="../js/case-file.js"></script>
+  <script>
+    const REL = '../';
+    renderNav(REL);
+    loadSiteIdentity(REL);
+    setFooterYear();
+    renderCaseFile(REL);
+  </script>
+</body>
+</html>

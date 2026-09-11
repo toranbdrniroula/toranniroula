@@ -1,0 +1,169 @@
+.lightbox-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+  overflow: hidden;
+  transition: background 250ms ease-out;
+}
+
+.lightbox-scrim.open {
+  display: flex;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.lightbox-content {
+  position: relative;
+  width: min(880px, 100%);
+  max-height: 90vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--color-bg-elevated);
+  border-radius: 4px;
+  padding: 0 0 28px;
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 250ms ease-out, opacity 250ms ease-out;
+}
+
+.lightbox-scrim.open .lightbox-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.lightbox-visual {
+  position: relative;
+}
+
+.lightbox-media {
+  width: 100%;
+  max-height: 56vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lightbox-media img,
+.lightbox-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lightbox-body {
+  padding: 22px 28px 0;
+}
+
+.lightbox-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--color-text);
+  display: inline-block;
+  margin-bottom: 10px;
+  transition: color 150ms ease-out;
+}
+
+.lightbox-title:hover { color: var(--color-accent); }
+
+.lightbox-description {
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.lightbox-meta {
+  margin-top: 14px;
+  font-size: var(--text-meta);
+  color: var(--color-text-muted);
+}
+
+.lightbox-readmore {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--color-accent);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  /* Fixed light text, not var(--color-text): this box's background is a
+     fixed dark scrim regardless of site theme, but --color-text flips to
+     near-black in light mode -- dark text on a dark box otherwise. */
+  color: #F0EFEA;
+  background: rgba(10,10,12,0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 4px;
+  z-index: 2;
+  transition: background 150ms ease-out;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus-visible {
+  background: rgba(10,10,12,0.7);
+}
+
+.lightbox-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.tag-chip {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-divider);
+  border-radius: 3px;
+  padding: 3px 9px;
+}
+
+.lightbox-bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-divider);
+}
+
+.lightbox-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-divider);
+  border-radius: 4px;
+  padding: 8px 14px;
+  transition: border-color 150ms ease-out, color 150ms ease-out;
+}
+
+.lightbox-nav-btn:hover,
+.lightbox-nav-btn:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.lightbox-next { margin-left: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-scrim, .lightbox-content { transition: none; }
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Vortex-ring mark: a single curling streamline winding down to a
+       core, echoing the site's recurring motif (PIV, schlieren, the
+       falling-seed vortex-ring CFD work) rather than a generic initial
+       or logotype. Transparent background so it reads on both light and
+       dark browser chrome; color matches the accent blue used sitewide. -->
+  <path
+    d="M 32.0 7.0 L 35.48 7.56 L 38.8 8.59 L 41.9 10.07 L 44.72 11.95 L 47.22 14.18 L 49.34 16.71 L 51.06 19.48 L 52.34 22.43 L 53.18 25.48 L 53.57 28.58 L 53.52 31.66 L 53.03 34.66 L 52.14 37.51 L 50.86 40.16 L 49.25 42.57 L 47.33 44.69 L 45.17 46.48 L 42.82 47.92 L 40.32 48.99 L 37.74 49.68 L 35.14 49.98 L 32.56 49.91 L 30.07 49.48 L 27.71 48.71 L 25.53 47.63 L 23.56 46.27 L 21.85 44.67 L 20.41 42.88 L 19.28 40.94 L 18.45 38.9 L 17.94 36.81 L 17.75 34.72 L 17.86 32.67 L 18.25 30.7 L 18.92 28.86 L 19.82 27.18 L 20.94 25.69 L 22.22 24.41 L 23.64 23.37 L 25.15 22.58 L 26.72 22.03 L 28.31 21.74 L 29.86 21.69 L 31.36 21.87 L 32.77 22.26 L 34.05 22.84 L 35.18 23.58 L 36.14 24.46 L 36.92 25.44 L 37.51 26.49 L 37.91 27.57 L 38.11 28.64 L 38.12 29.69 L 37.96 30.67 L 37.64 31.56 L 37.19 32.33 L 36.63 32.96 L 35.97 33.43 L 35.25 33.72 L 34.43 33.76"
+    fill="none"
+    stroke="#4FA8FF"
+    stroke-width="5.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="34.0" cy="33.9" r="3.4" fill="#4FA8FF" />
+</svg>

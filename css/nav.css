@@ -1,0 +1,186 @@
+/* .top-strip used to be wrapped in its own dedicated <div class="page-container">
+   for centering/padding. That's what silently broke `position: sticky` below:
+   sticky positioning only has room to "stick" if the element's containing
+   block (its nearest parent) is taller than the element itself. A wrapper
+   div whose *only* child is .top-strip is exactly as tall as .top-strip, so
+   there was zero slack -- the header just scrolled off with the page like
+   any static element instead of pinning. Fix: .top-strip is now a direct
+   child of <body> (a sibling of <main>), with the max-width/centering/
+   horizontal-padding that .page-container used to provide folded in here
+   directly. <body> is always much taller than the header, so sticky has
+   room to work. */
+.top-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Sticky nav, desktop only (matches the breakpoint hero.css already uses).
+   Applies site-wide -- every page keeps the nav reachable while scrolling.
+   Mobile is left alone: the hamburger menu is already a fixed overlay, so
+   there's less need for the bar itself to stick, and the extra chrome eats
+   into precious small-screen height. */
+@media (min-width: 1024px) {
+  .top-strip {
+    padding: 28px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--color-bg);
+  }
+}
+
+/* Homepage only: the hero canvas repeats the name in large type, so the
+   nav copy of it (name + signature line) starts hidden and only fades in
+   once the hero name has scrolled out of view -- see initHeroNameSync()
+   in nav.js. Default is hidden (not `visibility`/`display`, so the fade
+   is smooth) to avoid a flash of the duplicate name before JS runs. */
+body.has-hero .top-strip .identity {
+  opacity: 0;
+  transition: opacity 450ms ease-out;
+  pointer-events: none;
+}
+
+body.has-hero .top-strip .identity.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.has-hero .top-strip .identity { transition: none; }
+}
+
+.name-mark {
+  font-family: var(--font-body);
+  font-size: var(--text-name-mark);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+}
+
+.signature-line {
+  font-size: var(--text-signature);
+  color: var(--color-text-muted);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.site-nav a {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 150ms ease-out;
+}
+
+.site-nav a:hover {
+  color: var(--color-text);
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--color-divider);
+  color: var(--color-text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+@media (max-width: 639px) {
+  .theme-toggle { order: -1; align-self: flex-start; margin: 0 0 8px; }
+}
+
+.site-nav a.active {
+  color: var(--color-text);
+}
+
+.site-nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 1px;
+  background: var(--color-text);
+}
+
+@media (max-width: 639px) {
+  .nav-toggle { display: flex; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(280px, 80vw);
+    background: var(--color-bg-elevated);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 96px 32px 32px;
+    gap: 24px;
+    transform: translateX(100%);
+    transition: transform 220ms ease-out;
+    border-left: 1px solid var(--color-divider);
+    z-index: 60;
+  }
+
+  .site-nav.open {
+    transform: translateX(0);
+  }
+
+  .site-nav a { font-size: 18px; color: var(--color-text); }
+
+  .nav-scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 50;
+  }
+
+  .nav-scrim.open { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav { transition: none; }
+}

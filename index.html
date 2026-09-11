@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t=='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+    }
+  }
+  </script>
+  <title>Toran Bahadur Niroula | Experimentalist. Computationalist.</title>
+  <meta name="description" content="Personal site of Toran Bahadur Niroula, an aerospace engineering researcher working across experimental fluid dynamics, CFD, and scientific ML.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Toran Bahadur Niroula">
+  <meta property="og:title" content="Toran Bahadur Niroula | Experimentalist. Computationalist.">
+  <meta property="og:description" content="Personal site of Toran Bahadur Niroula, an aerospace engineering researcher working across experimental fluid dynamics, CFD, and scientific ML.">
+  <meta property="og:image" content="https://toranniroula.com.np/assets/media/og-banner.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://toranniroula.com.np/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Toran Bahadur Niroula | Experimentalist. Computationalist.">
+  <meta name="twitter:description" content="Personal site of Toran Bahadur Niroula, an aerospace engineering researcher working across experimental fluid dynamics, CFD, and scientific ML.">
+  <meta name="twitter:image" content="https://toranniroula.com.np/assets/media/og-banner.jpg">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/gallery.css">
+  <link rel="stylesheet" href="css/lightbox.css">
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+</head>
+<body class="has-hero">
+  <div id="nav-scrim" class="nav-scrim"></div>
+
+  <div class="top-strip">
+    <div class="identity">
+      <a href="index.html" class="name-mark js-site-name">Toran Bahadur Niroula</a>
+      <span class="signature-line js-signature-line">Experimentalist. Computationalist. Aspiring Research Scholar</span>
+    </div>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Site navigation"></nav>
+  </div>
+
+  <main>
+    <div class="page-container">
+      <section class="hero">
+        <flow-field cell-size="5"></flow-field>
+        <div class="hero-scrim"></div>
+        <div class="hero-copy">
+          <span class="eyebrow js-hero-eyebrow">Aerospace engineer, Experimental and Computational Fluid Dynamics, scientific ML</span>
+          <h1 class="hero-name js-site-name">Toran Bahadur Niroula</h1>
+          <p class="hero-intro js-hero-intro">
+            I build the instruments that measure flow and the solvers that predict it, then spend most of my
+            time in the gap where the two disagree.
+          </p>
+          <div class="hero-actions">
+            <a class="hero-btn primary" href="work.html">See the work &rarr;</a>
+            <a class="hero-btn js-resume-link" href="#" hidden target="_blank" rel="noopener">Download CV</a>
+            <a class="hero-btn" href="about.html">About</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-heading-row">
+        <h2 class="section-heading">Selected work</h2>
+        <a class="back-link" href="work.html">View all &rarr;</a>
+      </div>
+    </div>
+
+    <div class="page-container">
+      <div id="home-gallery" class="gallery-grid"></div>
+    </div>
+
+    <div class="page-container">
+      <footer class="footer" role="contentinfo">
+        <span>&copy; <span id="footer-year"></span> Toran Bahadur Niroula</span>
+        <div class="footer-links">
+          <a href="#" class="js-github-link" hidden aria-label="GitHub" target="_blank" rel="noopener">GitHub</a>
+          <a href="#" class="js-linkedin-link" hidden aria-label="LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#" class="js-youtube-link" hidden aria-label="YouTube" target="_blank" rel="noopener">YouTube</a>
+          <a href="#" class="js-scholar-link" hidden aria-label="Google Scholar" target="_blank" rel="noopener">Scholar</a>
+          <a href="#" class="js-email-link">Email</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script src="js/yt-embed.js"></script>
+  <script src="js/video-embed.js"></script>
+  <script src="js/lightbox.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/flow-field.js"></script>
+  <script>
+    const REL = '';
+    renderNav(REL);
+    loadSiteIdentity(REL);
+    setFooterYear();
+    renderHomeGallery('home-gallery', null, REL);
+    initHeroNameSync();
+  </script>
+</body>
+</html>

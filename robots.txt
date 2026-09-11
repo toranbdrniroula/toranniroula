@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://toranniroula.com.np/sitemap.xml

@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Study of the Surface Heating Effect on a Compressible Wall Jet Using Rainbow Schlieren Deflectometry",
+    "type": "thesis",
+    "institution": "IOE Pulchowk Campus, Tribhuvan University — B.E. Aerospace Engineering Final Year Project",
+    "date": "2026",
+    "link": "",
+    "related_work": "compressible-wall-jet-rsd"
+  },
+  {
+    "title": "Flow Analysis and Modal Decomposition of a NACA0015 Airfoil Under Reverse Flow Configuration Using PIV Data",
+    "type": "internship report",
+    "institution": "Experimental Aerodynamics Group, Flow Control Laboratory, IIT Kanpur",
+    "date": "2025",
+    "link": "",
+    "related_work": "piv-pod-wake-study"
+  },
+  {
+    "title": "Numerical Simulation of a Fixed-Wing UAV and the Effect of Blended Winglets",
+    "type": "internship report",
+    "institution": "FOSSEE Fellowship, IIT Bombay",
+    "date": "2025",
+    "link": "https://www.researchgate.net/profile/T-Chourushi/publication/395231481_Numerical_Simulation_of_a_Fixed-Wing_UAV_and_the_Effect_of_Blended_Winglets/links/68b81faf653c451cf47400a9/Numerical-Simulation-of-a-Fixed-Wing-UAV-and-the-Effect-of-Blended-Winglets.pdf",
+    "related_work": "fossee-uav-cfd"
+  },
+  {
+    "title": "NIMBUS - The Agro e-Duster",
+    "type": "poster",
+    "institution": "Aircraft Design and Flight Dynamics courses, IOE Pulchowk Campus",
+    "date": "2026",
+    "link": "",
+    "related_work": "nimbus-agricultural-uav"
+  }
+]

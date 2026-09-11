@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --color-bg: #0A0A0C;
+  --color-bg-elevated: #141417;
+  --color-text: #F0EFEA;
+  --color-text-muted: #8C8C92;
+  --color-accent: #4FA8FF;
+  --color-accent-glow: rgba(79, 168, 255, 0.35);
+  --color-divider: #232328;
+  --color-status-progress: #E0A845;
+  --color-status-complete: #4FA8FF;
+
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-name-mark: 20px;
+  --text-signature: 13px;
+  --text-case-title: clamp(32px, 5vw, 44px);
+  --text-subhead: 20px;
+  --text-body: 17px;
+  --text-meta: 13px;
+
+  --gap-mobile: 24px;
+  --gap-desktop: 36px;
+  --content-max: 780px;
+}
+
+html[data-theme="light"] {
+  --color-bg: #FAFAF7;
+  --color-bg-elevated: #FFFFFF;
+  --color-text: #16161A;
+  --color-text-muted: #5B5B62;
+  --color-divider: #E3E2DD;
+  --color-accent-glow: rgba(30, 110, 200, 0.18);
+}
+
+html[data-theme="light"] .post-body { color: #1E1E22; }
+
+* { transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out; }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+main { display: block; }
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 400;
+}
+
+p { margin: 0; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 1024px) {
+  .page-container { padding: 0 48px; }
+}
+
+.eyebrow {
+  font-size: var(--text-meta);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  margin: 48px 0;
+}
+
+.footer {
+  border-top: 1px solid var(--color-divider);
+  margin-top: 80px;
+  padding: 32px 0 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-meta);
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+  transition: color 150ms ease-out;
+}
+
+.footer-links a .fa-brands,
+.footer-links a .fa-solid {
+  font-size: 0.95em;
+}
+
+.hero-btn.js-resume-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-links a:hover {
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Generic tag/category filter bar -- shared by any section that lists
+   tagged content (Writing, Work, and any future section). Pills are
+   discovered from the data at render time (see js/tag-filter.js), so
+   adding a new category value (e.g. "teaching") to a content JSON file
+   is all it takes for a new pill to appear here -- no CSS or markup
+   changes needed. */
+.tag-filter {
+  margin: 20px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Modifier for sections whose list below is column-width (e.g. Writing) so
+   the filter bar lines up with it instead of spanning the full grid. */
+.tag-filter--narrow {
+  max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tag-filter-btn {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-divider);
+  border-radius: 20px;
+  padding: 6px 16px;
+  transition: color 150ms ease-out, border-color 150ms ease-out, background 150ms ease-out;
+}
+
+.tag-filter-btn:hover { color: var(--color-text); }
+
+.tag-filter-btn.active {
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Shared chip style, used by Work tags, publication type badges, and the
+   Skills & Tools list on about.html. Also defined locally in case-file.css
+   and lightbox.css (pre-existing, harmless duplication with identical
+   rules) -- this copy is the one that actually reaches about.html, which
+   doesn't load either of those stylesheets. */
+.tag-chip {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-divider);
+  border-radius: 3px;
+  padding: 3px 9px;
+}

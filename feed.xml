@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Writing | Toran Bahadur Niroula</title>
+    <link>https://toranniroula.com.np/writing.html</link>
+    <description>Technical notes and reflective writing by Toran Bahadur Niroula.</description>
+    <language>en</language>
+    <lastBuildDate>Thu, 09 Jul 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Setting Up a Propeller–Wing Case in OpenFOAM: A Practical Guide to AMI</title>
+      <link>https://toranniroula.com.np/writing/post.html?slug=propeller-wing-ami-setup</link>
+      <guid isPermaLink="true">https://toranniroula.com.np/writing/post.html?slug=propeller-wing-ami-setup</guid>
+      <pubDate>Thu, 09 Jul 2026 00:00:00 GMT</pubDate>
+      <description>A full walkthrough of building a physically consistent propeller-wing simulation with the Arbitrary Mesh Interface: meshing, MRF, dynamic mesh setup, boundary conditions, solver controls, and force extraction, dictionary by dictionary.</description>
+    </item>
+    <item>
+      <title>Overset Meshing, Explained the Way I Wish Someone Had Explained It to Me</title>
+      <link>https://toranniroula.com.np/writing/post.html?slug=overset-meshing-explained</link>
+      <guid isPermaLink="true">https://toranniroula.com.np/writing/post.html?slug=overset-meshing-explained</guid>
+      <pubDate>Thu, 14 May 2026 00:00:00 GMT</pubDate>
+      <description>Why you&apos;d bother with two overlapping meshes instead of one, and what actually happens at the boundary between them.</description>
+    </item>
+  </channel>
+</rss>

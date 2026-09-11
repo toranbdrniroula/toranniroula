@@ -1,0 +1,103 @@
+{
+  "name": "Toran Bahadur Niroula",
+  "signature_line": "Experimentalist. Computationalist. Aspiring Research Scholar",
+  "email": "niroulasudeep001@gmail.com",
+  "resume": "assets/media/Toran_Niroula_Resume.pdf",
+  "site_url": "https://toranniroula.com.np",
+  "skills": [
+    {
+      "group": "Simulation & CFD",
+      "items": [
+        "OpenFOAM",
+		"SU2",
+        "ANSYS Fluent",
+        "XFLR5",
+        "ParaView"
+      ]
+    },
+    {
+      "group": "Data & Analysis",
+      "items": [
+        "Python",
+        "NumPy",
+        "SciPy",
+        "PIV Post-Processing",
+        "POD / SVD"
+      ]
+    },
+    {
+      "group": "Design & Documentation",
+      "items": [
+        "CATIA V5",
+        "LaTeX",
+        "Manim"
+      ]
+    },
+    {
+      "group": "Experimental Skills",
+      "items": [
+        "High speed Imaging (experience with Chronus 2.1HD)",
+		"Schlieren (including Rainbow Schlieren Deflectometry)"
+      ]
+    }
+  ],
+  "hero": {
+    "eyebrow": "Aerospace engineer, Experimental and Computational Fluid Dynamics, scientific ML",
+    "intro": "I build the instruments that measure flow and the solvers that predict it, then spend most of my time in the gap where the two disagree."
+  },
+  "social": {
+    "github": "https://github.com/toranbdrniroula",
+    "linkedin": "https://www.linkedin.com/in/toranbdrniroula/",
+    "youtube": "https://www.youtube.com/@toranbdrniroula",
+    "scholar": ""
+  },
+  "about": {
+    "photo": "assets/media/about-photo.jpg",
+    "photo_bw": "assets/media/about-photo_bw.jpg",
+    "photo_alt": "Toran Bahadur Niroula mug shot",
+    "bio": [
+      "I grew up in rural Nepal watching the occasional aircraft overhead and a lot more of birds and insects in flight, and never entirely stopped wondering what the air was doing to make that possible. That question later turned into aerospace engineering at Pulchowk Campus, and over the last four years it evolved into the two questions I now spend most of my time on: what can I measure, what can I calculate, and where these two pictures converge and diverge.",
+      "I'm an experimentalist by heart and a computationalist by mind. The experimental side took me to IIT Kanpur's Flow Control Laboratory, running PIV and POD on a NACA0015 airfoil's reverse-flow wake under Asst. Prof. Tufan K. Guha, and to building my own Rainbow Schlieren Deflectometry rig from scratch for my undergraduate thesis on surface heating effects on a compressible wall jet over a flat plate, along with pyrsd, a small Python library I wrote to turn the colorful images that rig produces into actual density gradient fields. Designing and fabricating the heating setup for the experiment was soul-wrenching; designing the color filter on E6 film, having it developed, taking high-speed color schlieren images with a Chronus 2.1HD, and post-processing the data into real measurements was truly zen and heart-warming. The computational side is mostly a mix of coordinated and self-directed CFD runs. The coordinated ones took me to FOSSEE, IIT Bombay, as an intern working on the external aerodynamics of a fixed-wing UAV and the effects of blended winglets. The self-directed ones have occasionally pushed a homework assignment a mile further than it needed to go, like checking whether my design for a single-ramp scramjet intake would actually work at its design conditions. Currently I'm trying to get a falling dandelion seed to behave the way its vortex physics says it should, using overset meshes and sixDoF solvers in OpenFOAM, under the supervision of my FOSSEE internship supervisor, Asst. Prof. Chandan Bose.",
+      "Outside the lab I read more random books and watch more anime than is strictly useful for an engineering degree. Trying to self-teach French alongside English, Nepali, and Hindi has been an unsuccessful effort for a while now (apparently bonjour, merci beaucoup, and au revoir is all I can remember), and a habit of singing in public without much self-consciousness has opened more than a few doors to embarrassment, though nothing seems to stop me when I really want to sing. I also built a short Manim animation on PIV this year to guest-lecture a sophomore instrumentation systems course, and I'm hoping to start making videos soon on the things I've learned and can't stop talking about.",
+      "I recently finished my B.E. Aerospace final exams and I'm hoping to apply to PhD programs for Fall 2027, mainly in experimental hypersonics: labs doing optical diagnostics and boundary-layer work I could actually contribute to, not just admire from a distance. If any of this overlaps with what you're working on, I'd like to hear from you."
+    ],
+    "research_interests": [
+      "I'm applying to PhD programs for Fall 2027 in experimental hypersonics, specifically labs doing optical flow diagnostics and boundary-layer transition work. The Rainbow Schlieren rig I built for my undergraduate thesis and the PIV/POD work at IIT Kanpur are the closest things I have to that kind of work at lower speeds, and the overset-mesh CFD I've been running, first on a fixed-wing UAV at FOSSEE and now on a falling dandelion seed, is the computational half of the same question: whether I can build both the instrument and the model well enough that they can be trusted to check each other."
+    ],
+    "timeline": [
+      {
+        "year": "2022",
+        "label": "Enrolled at IOE Pulchowk Campus, Tribhuvan University"
+      },
+      {
+        "year": "2025",
+        "label": "FOSSEE semester-long internship, IIT Bombay: OpenFOAM CFD for a fixed-wing UAV (Asst. Prof. Chandan Bose)"
+      },
+      {
+        "year": "2025",
+        "label": "Research internship, IIT Kanpur, Flow Control Laboratory: PIV and POD (Asst. Prof. Tufan K. Guha)"
+      },
+      {
+        "year": "2025-2026",
+        "label": "Research assistant, Flow Visualization Lab, IOE Pulchowk: development of a Rainbow Schlieren Deflectometry facility and study of surface heating effects on wall jets"
+      },
+      {
+        "year": "2026",
+        "label": "Graduating, B.E. Aerospace Engineering"
+      }
+    ],
+    "beliefs": [
+      "A simulation that has never been compared against an experiment is a guess with better graphics.",
+      "The clearest explanation of a result is usually the one that would survive being said out loud to someone outside the field.",
+      "Most turbulence is not chaos, it's structure we haven't found the right coordinates for yet.",
+      "Building your own instrument teaches you more about a phenomenon than buying someone else's ever will.",
+      "The instrument shapes what you're allowed to discover. Build the instrument carefully."
+    ],
+    "currently": {
+      "reading": "Hypersonic boundary-layer transition papers, and a practical look at Fourier Neural Operators",
+      "working_on": "sixDoF, overset-mesh OpenFOAM simulations of bio-inspired flight: a falling dandelion seed, in collaboration with a researcher at the University of Birmingham",
+      "listening_to": "Nothing particular"
+    },
+    "contact_text": "I will be excited to hear from people working on experimental or computational fluid dynamics or scientific machine learning and any aerospace research in general. I am open for scientific and engineering projects and collaboratios that feeds my curiosity and solve interesting scietific questions or social challenges through the process. I'm looking to connect with individuals who pursue rigorous technical works and the slower, stranger questions that sit next to it. <br> And finally I am open to graduate opportunities that will challenge me to sit and think. <br> Feel free to reach out."
+  }
+}
