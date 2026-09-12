@@ -5,8 +5,13 @@
     "category": "research",
     "status": "In Progress",
     "thumbnail": "assets/media/dandelion-thumb.jpg",
-    "media_type": "image",
-    "media_src": "assets/media/dandelion-hero.jpg",
+	"media_type": "carousel",
+	"hero_interval": 5000,
+	"hero_slides": [
+	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_streamlines.png", "caption": "Streamlines and the recirculating bubble" },
+	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png", "caption": "Vorticity, counter-rotating vortex pair" },
+	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_U.png", "caption": "Streamwise velocity" }
+	],
     "quick_description": "This is a dandelion seed falling through still air, simulated frame by frame. The faint ring forming above it is a separated vortex ring, a structure that keeps the seed aloft far longer than its size and weight should allow, and that nature seems to have stumbled onto long before fluid dynamicists had a name for it.",
     "institution": "University of Birmingham (collaboration)",
     "date": "2026",
@@ -23,7 +28,7 @@
     "links": [
       {
         "label": "Code",
-        "url": "https://github.com/example/dandelion-cfd"
+        "url": ""
       }
     ]
   },

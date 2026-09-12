@@ -53,7 +53,11 @@ async function renderCaseFile(relPrefix) {
         ? `<video-embed src="${relPrefix + piece.media_src}" poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}" label="${piece.title.replace(/"/g, '&quot;')}"></video-embed>`
         : piece.media_type === 'gif'
           ? `<video src="${relPrefix + piece.media_src}" controls muted loop playsinline poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}"></video>`
-          : `<img src="${relPrefix + piece.media_src}" alt="${piece.title.replace(/"/g, '&quot;')}">`;
+          : piece.media_type === 'carousel'
+            ? `<hero-carousel interval="${piece.hero_interval || 5000}" label="${piece.title.replace(/"/g, '&quot;')}">${
+                (piece.hero_slides || []).map(s => `<img src="${relPrefix + s.src}" alt="${(s.caption || piece.title).replace(/"/g, '&quot;')}" data-caption="${(s.caption || '').replace(/"/g, '&quot;')}">`).join('')
+              }</hero-carousel>`
+            : `<img src="${relPrefix + piece.media_src}" alt="${piece.title.replace(/"/g, '&quot;')}">`;
 
     const technicalHtml = (typeof marked !== 'undefined')
       ? marked.parse(technicalBody)
