@@ -64,6 +64,18 @@
   object-fit: contain;
 }
 
+/* Same fix as .case-hero hero-carousel in case-file.css: hero-carousel's
+   own image area sizes itself from a fixed aspect-ratio (16/9 desktop,
+   4/5 mobile), independently of this container's max-height: 56vh
+   above, so on a short/wide window it could render taller than that cap
+   and get clipped by overflow: hidden -- taking the footer (dots/
+   caption) at its bottom edge with it. Capping the whole <hero-carousel>
+   element here lets its image area shrink to make room instead, while
+   the footer always keeps its own space below the image. */
+.lightbox-media hero-carousel {
+  max-height: 56vh;
+}
+
 .lightbox-body {
   padding: 22px 28px 0;
 }

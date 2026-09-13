@@ -94,6 +94,24 @@
   background: #000;
 }
 
+/* hero-carousel (media_type: "carousel") sizes its own image box from a
+   fixed aspect-ratio (16/9 desktop, 4/5 mobile -- see hero-carousel.js),
+   completely independently of this figure's own max-height: 70vh above.
+   On a short/wide window (a laptop screen is the common case -- e.g.
+   1366x728 or a non-maximized browser) 16/9 of the available width is
+   often taller than 70vh, so the carousel used to render past
+   .case-hero's cap and get silently sliced off by its overflow: hidden
+   -- including the slide counter, dots and caption in its footer strip.
+   Capping the whole <hero-carousel> element to the same budget here
+   means its image area (a flex-shrink item -- see hero-carousel.js)
+   shrinks to make room instead (object-fit: contain never crops, so
+   nothing is lost -- the image just renders smaller), while the footer
+   below it always keeps its own space, so it always matches whatever
+   height .case-hero actually ends up with. */
+.case-hero hero-carousel {
+  max-height: 70vh;
+}
+
 .case-section {
   max-width: var(--content-max);
   margin: 0 auto;

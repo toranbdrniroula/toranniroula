@@ -9,7 +9,7 @@
 // an alternative to <video-embed>/<yt-embed>/plain <img> for media_type:
 // "carousel" in work-index.json. Light-DOM <img> children are the content
 // contract (progressive-enhancement friendly: without JS, or if the element
-// fails to upgrade, the images still just stack and are all visible/readable).
+// fails to upgrade, the images just stack and are all visible/readable).
 //
 // - Auto-advances every `interval` ms (default 5000), pauses on hover/focus
 //   and whenever scrolled out of view (IntersectionObserver, same pattern as
@@ -28,6 +28,16 @@
 //   rather than stripes down both sides. Pass an explicit aspect-ratio
 //   attribute to opt a piece out of that responsive default and pin one
 //   fixed ratio everywhere instead.
+// - The slide counter, caption and dots live in a themed footer strip
+//   *below* the image (not overlaid on top of it): they're a single set of
+//   shared elements that get their text/active-state updated on nav, rather
+//   than living inside each fading .hc-slide, so (a) they never overlap the
+//   picture and (b) they never show two slides' captions at once mid-fade.
+//   The image area is a flex-shrink item above the footer, so on a page
+//   that caps this component's total height (case-file.css / lightbox.css
+//   both set a max-height on the <hero-carousel> element via a vh unit),
+//   the image shrinks to make room for the footer rather than the footer
+//   getting pushed out and clipped.
 
 const HERO_CAROUSEL_STYLE_ID = 'hero-carousel-styles';
 
@@ -36,25 +46,30 @@ function ensureHeroCarouselStyles() {
   const style = document.createElement('style');
   style.id = HERO_CAROUSEL_STYLE_ID;
   style.textContent = `
-    hero-carousel { display: block; width: 100%; }
-    .hc-viewport { position: relative; width: 100%; overflow: hidden; background: var(--color-bg-elevated, #141417); outline: none; --hc-aspect-ratio: 16 / 9; aspect-ratio: var(--hc-aspect-ratio); }
+    hero-carousel { display: flex; flex-direction: column; width: 100%; overflow: hidden; }
+    .hc-viewport { position: relative; width: 100%; overflow: hidden; background: var(--color-bg-elevated, #141417); outline: none; --hc-aspect-ratio: 16 / 9; aspect-ratio: var(--hc-aspect-ratio); flex: 1 1 auto; min-height: 0; }
     .hc-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
     .hc-slide.hc-active { opacity: 1; }
     .hc-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .hc-viewport.hc-fit-contain { background: #000; }
     .hc-viewport.hc-fit-contain .hc-slide img { object-fit: contain; background: #000; }
-    .hc-number { position: absolute; top: 0; left: 0; padding: 8px 12px; font-size: 12px; color: #f2f2f2; text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
-    /* Bottom padding is pushed down to leave a clear ~26px strip for
-       .hc-dots below the caption text -- they used to sit right on top of
-       each other. */
-    .hc-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 22px 14px 30px; font-size: 13px; line-height: 1.4; color: #f2f2f2; text-align: center; background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0)); }
-    .hc-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(10,10,12,0.45); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; }
+    .hc-number { position: absolute; top: 0; left: 0; padding: 8px 12px; font-size: 12px; color: #f2f2f2; text-shadow: 0 1px 3px rgba(0,0,0,0.7); z-index: 1; }
+    .hc-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(10,10,12,0.45); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; z-index: 1; }
     .hc-arrow:hover, .hc-arrow:focus-visible { background: rgba(10,10,12,0.75); }
     .hc-prev { left: 10px; }
     .hc-next { right: 10px; }
-    .hc-dots { position: absolute; bottom: 8px; left: 0; right: 0; z-index: 1; display: flex; justify-content: center; gap: 7px; }
-    .hc-dot { width: 8px; height: 8px; padding: 0; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.9); cursor: pointer; background: rgba(255,255,255,0.35); box-shadow: 0 0 2px rgba(0,0,0,0.6); }
-    .hc-dot.hc-active { background: #fff; }
+
+    /* Footer strip: caption + dots, below the image, in the site's normal
+       panel colors -- flex: 0 0 auto (see "hero-carousel" above) so it
+       always keeps its own space and the image shrinks around it, never
+       the other way round. */
+    .hc-footer { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 14px 12px; background: var(--color-bg-elevated, #141417); border-top: 1px solid var(--color-divider, #232328); }
+    .hc-caption { margin: 0; font-size: 13px; line-height: 1.4; color: var(--color-text-muted, #8C8C92); text-align: center; }
+    .hc-dots { display: flex; justify-content: center; gap: 7px; }
+    .hc-dot { width: 8px; height: 8px; padding: 0; border-radius: 50%; border: 1.5px solid var(--color-divider, #232328); background: transparent; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
+    .hc-dot:hover { border-color: var(--color-text-muted, #8C8C92); }
+    .hc-dot.hc-active { background: var(--color-accent, #4FA8FF); border-color: var(--color-accent, #4FA8FF); }
+
     @media (max-width: 640px) {
       .hc-viewport { --hc-aspect-ratio: 4 / 5; }
     }
@@ -118,8 +133,6 @@ class HeroCarousel extends HTMLElement {
     const slidesMarkup = this._slides.map((s, i) => `
       <div class="hc-slide${i === 0 ? ' hc-active' : ''}" data-index="${i}">
         <img src="${s.src}" alt="${s.alt.replace(/"/g, '&quot;')}" loading="${i === 0 ? 'eager' : 'lazy'}">
-        <span class="hc-number">${i + 1} / ${this._slides.length}</span>
-        ${s.caption ? `<span class="hc-caption">${s.caption.replace(/</g, '&lt;')}</span>` : ''}
       </div>
     `).join('');
 
@@ -127,12 +140,23 @@ class HeroCarousel extends HTMLElement {
       <button type="button" class="hc-dot${i === 0 ? ' hc-active' : ''}" data-index="${i}" aria-label="Go to image ${i + 1}"></button>
     `).join('');
 
+    // Only reserve a caption line at all if at least one slide actually has
+    // one -- otherwise the footer is just the dots, no empty text row.
+    const anyCaption = this._slides.some(s => s.caption);
+    const captionMarkup = anyCaption
+      ? `<p class="hc-caption">${(this._slides[0].caption || '').replace(/</g, '&lt;')}</p>`
+      : '';
+
     this.innerHTML = `
       <div class="hc-viewport${this._fit === 'contain' ? ' hc-fit-contain' : ''}"${arStyle ? ` style="${arStyle}"` : ''} tabindex="0" role="group"
         aria-roledescription="carousel" aria-label="${this._label.replace(/"/g, '&quot;')}">
         ${slidesMarkup}
+        <span class="hc-number">1 / ${this._slides.length}</span>
         <button type="button" class="hc-arrow hc-prev" aria-label="Previous image">&#10094;</button>
         <button type="button" class="hc-arrow hc-next" aria-label="Next image">&#10095;</button>
+      </div>
+      <div class="hc-footer">
+        ${captionMarkup}
         <div class="hc-dots">${dotsMarkup}</div>
       </div>
     `;
@@ -153,12 +177,13 @@ class HeroCarousel extends HTMLElement {
       if (e.key === 'ArrowRight') { this._go(this._current + 1, true); e.preventDefault(); }
     });
 
-    // Pause auto-advance on hover/focus so a caption someone's reading
-    // doesn't get swapped out from under them.
-    viewport.addEventListener('mouseenter', () => this._stopAutoplay());
-    viewport.addEventListener('mouseleave', () => this._startAutoplay());
-    viewport.addEventListener('focusin', () => this._stopAutoplay());
-    viewport.addEventListener('focusout', () => this._startAutoplay());
+    // Pause auto-advance on hover/focus anywhere in the component --
+    // including the footer now, since the caption someone's reading lives
+    // there rather than on top of the image.
+    this.addEventListener('mouseenter', () => this._stopAutoplay());
+    this.addEventListener('mouseleave', () => this._startAutoplay());
+    this.addEventListener('focusin', () => this._stopAutoplay());
+    this.addEventListener('focusout', () => this._startAutoplay());
   }
 
   _wireVisibilityAwareAutoplay() {
@@ -193,6 +218,13 @@ class HeroCarousel extends HTMLElement {
     this.querySelector(`.hc-slide[data-index="${next}"]`).classList.add('hc-active');
     this.querySelector(`.hc-dot[data-index="${next}"]`).classList.add('hc-active');
     this._current = next;
+
+    // Shared, single elements -- updated in place rather than living inside
+    // each fading .hc-slide, so nav is instant with no mid-crossfade overlap.
+    const numberEl = this.querySelector('.hc-number');
+    if (numberEl) numberEl.textContent = `${next + 1} / ${n}`;
+    const captionEl = this.querySelector('.hc-caption');
+    if (captionEl) captionEl.textContent = this._slides[next].caption || '';
 
     // A manual nav restarts the autoplay clock so the next auto-advance is
     // a full interval away, rather than firing right after someone clicked.
