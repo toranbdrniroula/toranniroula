@@ -48,7 +48,11 @@ async function renderCaseFile(relPrefix) {
       : '';
 
     const heroFit = piece.media_fit === 'contain' ? 'contain' : 'cover';
-    const heroFitClass = heroFit === 'contain' ? ' hero-fit-contain' : '';
+    // hero-carousel-media additionally marks pieces using media_type:
+    // "carousel" -- see the matching CSS rule in case-file.css for why
+    // (it needs to opt out of the outer figure's own fixed aspect-ratio,
+    // which only the plain img/video path below actually relies on).
+    const heroFitClass = (heroFit === 'contain' ? ' hero-fit-contain' : '') + (piece.media_type === 'carousel' ? ' hero-carousel-media' : '');
     const heroFitStyle = (heroFit === 'contain' && piece.media_aspect_ratio)
       ? ` style="--hero-aspect-ratio:${piece.media_aspect_ratio};"`
       : '';

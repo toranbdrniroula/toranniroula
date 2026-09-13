@@ -85,6 +85,20 @@
   }
 }
 
+/* hero-carousel now has its own footer strip (caption + dots) below the
+   image, so its total height is "image + footer", not just the image's
+   16/9 (or 4/5) box. The rule above forces .case-hero itself to that
+   same rigid ratio -- sized for the image alone -- which used to
+   coincidentally match hero-carousel's height exactly (before the
+   footer existed) but is now shorter than the carousel's real content,
+   so overflow: hidden was clipping the footer straight back off again.
+   Cancelling it here lets .case-hero size itself to whatever height
+   hero-carousel actually needs (which already manages its own
+   max-height budget internally -- see ".case-hero hero-carousel" below). */
+.case-hero.hero-fit-contain.hero-carousel-media {
+  aspect-ratio: unset;
+}
+
 .case-hero.hero-fit-contain img,
 .case-hero.hero-fit-contain video {
   width: 100%;
