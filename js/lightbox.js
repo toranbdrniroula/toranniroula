@@ -43,13 +43,19 @@
   }
 
   function renderMedia(piece, relPrefix) {
+    const fit = piece.media_fit === 'contain' ? 'contain' : 'cover';
     if (piece.media_type === 'youtube') {
-      return `<yt-embed videoid="${piece.media_src}" label="${piece.title.replace(/"/g, '&quot;')}"></yt-embed>`;
+      return `<yt-embed videoid="${piece.media_src}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${fit}"></yt-embed>`;
+    }
+    if (piece.media_type === 'carousel') {
+      return `<hero-carousel interval="${piece.hero_interval || 5000}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${fit}"${piece.media_aspect_ratio ? ` aspect-ratio="${piece.media_aspect_ratio}"` : ''}>${
+        (piece.hero_slides || []).map(s => `<img src="${relPrefix + s.src}" alt="${(s.caption || piece.title).replace(/"/g, '&quot;')}" data-caption="${(s.caption || '').replace(/"/g, '&quot;')}">`).join('')
+      }</hero-carousel>`;
     }
     const src = relPrefix + piece.media_src;
     if (piece.media_type === 'video') {
       const posterAttr = piece.thumbnail ? ` poster="${relPrefix + piece.thumbnail}"` : '';
-      return `<video-embed src="${src}"${posterAttr} label="${piece.title.replace(/"/g, '&quot;')}"></video-embed>`;
+      return `<video-embed src="${src}"${posterAttr} label="${piece.title.replace(/"/g, '&quot;')}" fit="${fit}"></video-embed>`;
     }
     if (piece.media_type === 'gif') {
       const posterAttr = piece.thumbnail ? ` poster="${relPrefix + piece.thumbnail}"` : '';
@@ -61,6 +67,7 @@
   function renderPiece(piece, relPrefix) {
     const mediaEl = scrimEl.querySelector('.lightbox-media');
     mediaEl.innerHTML = renderMedia(piece, relPrefix);
+    mediaEl.classList.toggle('fit-contain', piece.media_fit === 'contain');
 
     const titleEl = scrimEl.querySelector('.lightbox-title');
     titleEl.textContent = piece.title;

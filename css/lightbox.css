@@ -53,6 +53,14 @@
 .lightbox-media video {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+/* Same "media_fit": "contain" opt-in as .case-hero (case-file.css) --
+   kept as a separate class here (rather than shared) since this container
+   is a fixed-height flex box rather than an aspect-ratio box. */
+.lightbox-media.fit-contain img,
+.lightbox-media.fit-contain video {
   object-fit: contain;
 }
 

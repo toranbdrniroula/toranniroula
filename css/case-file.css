@@ -61,6 +61,39 @@
   object-fit: cover;
 }
 
+/* Opt-in alternative to the default "cover" (crop-to-fill) behavior above.
+   Added via a "hero-fit-contain" class when a piece sets
+   "media_fit": "contain" in work-index.json -- the whole image/video is
+   kept intact at its native aspect ratio, with black letterboxing filling
+   whatever space is left over, instead of cropping. Useful for hero media
+   whose aspect ratio doesn't suit a wide crop (e.g. a tall/portrait
+   result) or where nothing in the frame should ever be cut off.
+   aspect-ratio is fixed here (rather than left to the image's own
+   intrinsic ratio) so the letterboxing is actually visible -- without a
+   fixed box shape, "contain" would just shrink the box to match the
+   image and no bars would show. Override per-piece with an inline
+   "--hero-aspect-ratio" custom property if 16/9 doesn't suit a piece. */
+.case-hero.hero-fit-contain {
+  background: #000;
+  --hero-aspect-ratio: 16 / 9;
+  aspect-ratio: var(--hero-aspect-ratio);
+}
+
+@media (max-width: 640px) {
+  .case-hero.hero-fit-contain {
+    --hero-aspect-ratio: 4 / 5;
+  }
+}
+
+.case-hero.hero-fit-contain img,
+.case-hero.hero-fit-contain video {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  background: #000;
+}
+
 .case-section {
   max-width: var(--content-max);
   margin: 0 auto;

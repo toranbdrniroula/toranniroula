@@ -1,4 +1,4 @@
-// <yt-embed videoid="..." label="..." height="360"></yt-embed>
+// <yt-embed videoid="..." label="..." height="360" fit="cover"></yt-embed>
 //
 // A lazy, click-to-play YouTube facade. Matches the site's Web Component
 // contract: attributes are the only content-author-facing API (usable
@@ -13,6 +13,10 @@
 // - Uses IntersectionObserver so even the thumbnail doesn't mount until
 //   the element scrolls into view.
 // - Fails visibly (not silently) if no videoid is given.
+// - fit="cover" (default) crops the thumbnail to fill the box, matching
+//   every other hero media type; fit="contain" keeps the whole thumbnail
+//   intact with black letterbars instead. Only affects the pre-play
+//   thumbnail -- once playing, YouTube's own player handles its frame.
 
 class YtEmbed extends HTMLElement {
   connectedCallback() {
@@ -39,13 +43,14 @@ class YtEmbed extends HTMLElement {
     const videoId = typeof extractYouTubeId === 'function' ? extractYouTubeId(rawVideoId) : rawVideoId;
     const label = this.getAttribute('label') || 'video';
     const height = this.getAttribute('height') || '360';
+    const fit = this.getAttribute('fit') === 'contain' ? 'contain' : 'cover';
 
     this.style.display = 'block';
     this.style.position = 'relative';
     this.style.width = '100%';
     this.style.aspectRatio = '16 / 9';
     this.style.maxHeight = height + 'px';
-    this.style.background = 'var(--color-bg-elevated, #141417)';
+    this.style.background = fit === 'contain' ? '#000' : 'var(--color-bg-elevated, #141417)';
     this.style.overflow = 'hidden';
 
     if (!videoId) {
@@ -60,7 +65,7 @@ class YtEmbed extends HTMLElement {
     this.innerHTML = `
       <button type="button" class="yt-embed-facade" aria-label="Play video: ${label.replace(/"/g, '&quot;')}"
         style="all:unset;cursor:pointer;display:block;position:relative;width:100%;height:100%;">
-        <img src="${thumbUrl}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"
+        <img src="${thumbUrl}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:${fit};background:${fit === 'contain' ? '#000' : 'transparent'};display:block;"
           onerror="this.style.display='none'">
         <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
           <span style="width:56px;height:56px;border-radius:50%;background:rgba(10,10,12,0.65);

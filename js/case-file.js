@@ -47,14 +47,20 @@ async function renderCaseFile(relPrefix) {
       ? `<span class="case-status-badge">${piece.type.charAt(0).toUpperCase() + piece.type.slice(1)}</span>`
       : '';
 
+    const heroFit = piece.media_fit === 'contain' ? 'contain' : 'cover';
+    const heroFitClass = heroFit === 'contain' ? ' hero-fit-contain' : '';
+    const heroFitStyle = (heroFit === 'contain' && piece.media_aspect_ratio)
+      ? ` style="--hero-aspect-ratio:${piece.media_aspect_ratio};"`
+      : '';
+
     const mediaMarkup = piece.media_type === 'youtube'
-      ? `<yt-embed videoid="${piece.media_src}" label="${piece.title.replace(/"/g, '&quot;')}"></yt-embed>`
+      ? `<yt-embed videoid="${piece.media_src}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${heroFit}"></yt-embed>`
       : piece.media_type === 'video'
-        ? `<video-embed src="${relPrefix + piece.media_src}" poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}" label="${piece.title.replace(/"/g, '&quot;')}"></video-embed>`
+        ? `<video-embed src="${relPrefix + piece.media_src}" poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${heroFit}"></video-embed>`
         : piece.media_type === 'gif'
           ? `<video src="${relPrefix + piece.media_src}" controls muted loop playsinline poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}"></video>`
           : piece.media_type === 'carousel'
-            ? `<hero-carousel interval="${piece.hero_interval || 5000}" label="${piece.title.replace(/"/g, '&quot;')}">${
+            ? `<hero-carousel interval="${piece.hero_interval || 5000}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${heroFit}"${piece.media_aspect_ratio ? ` aspect-ratio="${piece.media_aspect_ratio}"` : ''}>${
                 (piece.hero_slides || []).map(s => `<img src="${relPrefix + s.src}" alt="${(s.caption || piece.title).replace(/"/g, '&quot;')}" data-caption="${(s.caption || '').replace(/"/g, '&quot;')}">`).join('')
               }</hero-carousel>`
             : `<img src="${relPrefix + piece.media_src}" alt="${piece.title.replace(/"/g, '&quot;')}">`;
@@ -146,7 +152,7 @@ async function renderCaseFile(relPrefix) {
         ${tagsMarkup}
       </header>
 
-      <figure class="case-hero">
+      <figure class="case-hero${heroFitClass}"${heroFitStyle}>
         ${mediaMarkup}
       </figure>
 

@@ -1,4 +1,4 @@
-// <video-embed src="..." poster="..." label="..." height="360"></video-embed>
+// <video-embed src="..." poster="..." label="..." height="360" fit="cover"></video-embed>
 //
 // Local-file counterpart to <yt-embed>. Same contract, same facade, same
 // behavior -- so a self-hosted .mp4 in work-index.json (media_type: "video")
@@ -13,6 +13,10 @@
 // - Once played, uses native <video controls> -- unmuted, no forced loop --
 //   same as clicking through to YouTube's own player chrome.
 // - Fails visibly (not silently) if no src is given.
+// - fit="cover" (default) crops to fill the box, matching every other
+//   hero media type; fit="contain" keeps the whole frame intact with
+//   black letterbars instead, for footage whose aspect ratio doesn't
+//   suit a crop.
 
 class VideoEmbed extends HTMLElement {
   connectedCallback() {
@@ -36,13 +40,14 @@ class VideoEmbed extends HTMLElement {
     const poster = this.getAttribute('poster') || '';
     const label = this.getAttribute('label') || 'video';
     const height = this.getAttribute('height') || '360';
+    const fit = this.getAttribute('fit') === 'contain' ? 'contain' : 'cover';
 
     this.style.display = 'block';
     this.style.position = 'relative';
     this.style.width = '100%';
     this.style.aspectRatio = '16 / 9';
     this.style.maxHeight = height + 'px';
-    this.style.background = 'var(--color-bg-elevated, #141417)';
+    this.style.background = fit === 'contain' ? '#000' : 'var(--color-bg-elevated, #141417)';
     this.style.overflow = 'hidden';
 
     if (!src) {
@@ -57,7 +62,7 @@ class VideoEmbed extends HTMLElement {
     this.innerHTML = `
       <button type="button" class="video-embed-facade" aria-label="Play video: ${label.replace(/"/g, '&quot;')}"
         style="all:unset;cursor:pointer;display:block;position:relative;width:100%;height:100%;">
-        ${poster ? `<img${posterAttr} alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"
+        ${poster ? `<img${posterAttr} alt="" loading="lazy" style="width:100%;height:100%;object-fit:${fit};background:${fit === 'contain' ? '#000' : 'transparent'};display:block;"
           onerror="this.style.display='none'">` : ''}
         <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
           <span style="width:56px;height:56px;border-radius:50%;background:rgba(10,10,12,0.65);
@@ -70,10 +75,10 @@ class VideoEmbed extends HTMLElement {
     `;
 
     const facade = this.querySelector('.video-embed-facade');
-    facade.addEventListener('click', () => this._loadVideo(src, label));
+    facade.addEventListener('click', () => this._loadVideo(src, label, fit));
   }
 
-  _loadVideo(src, label) {
+  _loadVideo(src, label, fit) {
     const video = document.createElement('video');
     video.src = src;
     video.setAttribute('aria-label', label);
@@ -83,6 +88,11 @@ class VideoEmbed extends HTMLElement {
     video.style.width = '100%';
     video.style.height = '100%';
     video.style.display = 'block';
+    // Browsers default replaced elements like <video> to object-fit: fill
+    // (stretch to the box) when nothing else is set -- explicit here so a
+    // clip that isn't exactly 16:9 doesn't come out visibly distorted.
+    video.style.objectFit = fit;
+    video.style.background = fit === 'contain' ? '#000' : 'transparent';
     video.addEventListener('error', () => {
       this.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--color-text-muted, #8C8C92);font-size:13px;">
         Couldn't load this video.
