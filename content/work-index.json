@@ -6,7 +6,8 @@
     "status": "In Progress",
     "thumbnail": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png",
 	"media_type": "carousel",
-	"hero_interval": 1000,
+	"media_fit": "contain",
+	"hero_interval": 2000,
 	"hero_slides": [
 	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_streamlines.png", "caption": "Streamlines and the recirculating bubble" },
 	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png", "caption": "Vorticity, counter-rotating vortex pair" },
