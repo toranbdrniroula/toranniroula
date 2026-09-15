@@ -10,7 +10,7 @@ Part of a rotor blade sees reverse flow on every rotation, in every forward-flyi
 
 I spent three and a half weeks in that lab, under Asst. Prof. Dr. Tufan K. Guha, working on a narrower and more specific piece of that program: post-processing an already-acquired PIV dataset for the *baseline* NACA0015 case in reverse flow, extracting the flow physics from it, and applying Proper Orthogonal Decomposition to pull out the dominant coherent structures. I want to be upfront about scope, since it matters for how to read everything below: the wind-tunnel run, the PIV acquisition, and the experimental setup were all done before I arrived, by Ranga Srinivas Gokul and the EAG team. My internship started at the `.mat` files PIVlab produces and went from there.
 
-[style="cursor: pointer;" onmouseover="this.style.color='#0000EE';" onmouseout="this.style.color='';">Download the full internship report (PDF)</span>] (../assets/downloads/iitk-reverse-flow-piv-pod-internship-report.pdf)
+[<span style="cursor: pointer;" onmouseover="this.style.color='#0000EE';" onmouseout="this.style.color='';">Download the full internship report (PDF)</span>] (../assets/downloads/iitk-reverse-flow-piv-pod-internship-report.pdf)
 
 ## The dataset
 
@@ -75,13 +75,13 @@ Streamwise normal stress $\overline{u'u'}$ and Reynolds shear stress $\overline{
 
 ## Pulling structure out of the noise: POD
 
-Mean fields and single-point statistics tell you *that* the flow is unsteady and separated, but not what the dominant unsteady motions actually look like. For that I used Proper Orthogonal Decomposition on the fluctuating velocity component, $u' = u - U_{mean}$, $v' = v - V_{mean}$.
+Mean fields and single-point statistics tell you *that* the flow is unsteady and separated, but not what the dominant unsteady motions actually look like. For that I used Proper Orthogonal Decomposition on the fluctuating velocity component, $u' = u - U_{\text{mean}}$, $v' = v - V_{\text{mean}}$.
 
-The mechanics are just an economy SVD on a snapshot matrix. Each snapshot's $u'$ and $v'$ fields get flattened and stacked into a single column, one column per time step, giving a $63{,}448 \times 500$ matrix $\mathbf{X}$ (with any NaNs or infinities from the masked region zeroed out first, for numerical stability). Decomposing,
+The mechanics are just an economy SVD on a snapshot matrix. Each snapshot's $u'$ and $v'$ fields get flattened and stacked into a single column, one column per time step, giving a $63{,}448 \times 500$ matrix $\mathbf{X}$ (with any $\text{NaN}$s or infinities from the masked region zeroed out first, for numerical stability). Decomposing,
 
 $$\mathbf{X} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^T$$
 
-$\mathbf{U}$'s columns are the spatial POD modes, $\mathbf{\Sigma}$'s diagonal holds the singular values (mode energies), and $\mathbf{V}^T$ carries the temporal coefficients. The energy fraction of the $k$-th mode is $E_k = \sigma_k^2 / \sum_i \sigma_i^2$, and a reduced-order reconstruction with just the first $r$ modes is $\mathbf{X}_r = \sum_{k=1}^{r}\sigma_k\phi_k v_k^T$ - POD is optimal in exactly this sense: no other linear basis captures more energy for a given number of modes.
+$\mathbf{U}$'s columns are the spatial POD modes, $\mathbf{\Sigma}$'s diagonal holds the singular values (mode energies), and $\mathbf{V}^T$ carries the temporal coefficients. The energy fraction of the $k$-th mode is $E_k = \sigma_k^2 / \sum_i \sigma_i^2$, and a reduced-order reconstruction with just the first $r$ modes is $\mathbf{X}_r = \sum_{k=1}^{r}\sigma_k\phi_k v_k^T$ — POD is optimal in exactly this sense: no other linear basis captures more energy for a given number of modes.
 
 <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-svd-schematic.png" alt="Schematic of the SVD matrix decomposition used for POD" style="max-width:640px;display:block;margin:0 auto;">
 <span class="md-caption">The economy SVD used to compute the POD modes and their temporal coefficients.</span>
