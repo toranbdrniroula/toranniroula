@@ -181,6 +181,15 @@
   color: var(--color-accent);
 }
 
+.post-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-glow);
+  text-underline-offset: 2px;
+}
+
+.post-body a:hover { text-decoration-color: currentColor; }
+
 .post-pdf-link {
   display: inline-block;
   margin-top: 14px;
