@@ -23,7 +23,7 @@ The configuration was about as clean a baseline as reverse-flow studies get: a s
 
 Raw pairs went through PIVlab, a MATLAB-based, free and open-source PIV tool: masking out the region without seeding, CLAHE contrast enhancement, then a four-pass FFT window-deformation scheme (two passes at 64 px, two at 32 px) to get the cross-correlation right at multiple scales. Spatial calibration converted pixel displacement to physical units, giving a 1 px/frame → 3.34 m/s conversion factor once combined with the 17 μs time step. The output was instantaneous 2D velocity fields, exported to `.mat` and handed off to Python - the rest of the pipeline (NumPy, SciPy, Matplotlib) is where the actual analysis happened.
 
-<img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-piv-pod-workflow.png" alt="PIVlab and Python post-processing and POD workflow diagram" style="max-width:100%;display:block;margin:0 auto;">
+<img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-piv-pod-workflow.png" alt="PIVlab and Python post-processing and POD workflow diagram" style="max-width:50%;display:block;margin:0 auto;">
 <span class="md-caption">The full post-processing pipeline: PIVlab for image-pair processing, then Python for field analysis and POD.</span>
 
 Inside PIVlab itself, that's three concrete stages on every image pair: mask out the airfoil (nothing valid is ever going to correlate inside solid metal), cross-correlate to get a raw vector field, then validate and interpolate over any spurious vectors before the field is trusted enough to export.
