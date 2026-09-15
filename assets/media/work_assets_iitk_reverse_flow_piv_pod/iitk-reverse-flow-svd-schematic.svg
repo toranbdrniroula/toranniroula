@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 310" width="100%" height="100%">
+  <defs>
+    <style>
+      .grid-line {
+        stroke: #000000;
+        stroke-width: 3.5px;
+        stroke-linecap: square;
+      }
+      .text-outlined {
+        fill: #000000;
+        stroke: #ffffff;
+        stroke-width: 3.5px;
+        paint-order: stroke fill;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+      .text-red-outlined {
+        fill: #800000;
+        stroke: #ffffff;
+        stroke-width: 3.5px;
+        paint-order: stroke fill;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+      .font-main { font-size: 28px; font-weight: bold; font-style: italic; }
+      .font-sub { font-size: 16px; font-weight: 600; font-style: italic; }
+      .font-eq { font-size: 22px; font-weight: bold; }
+      .font-approx { font-size: 38px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- ================= MATRIX A (6x8) ================= -->
+  <g id="matrix-A">
+    <!-- Column Fills -->
+    <rect x="30" y="30" width="28" height="224" fill="#9AD135" />
+    <rect x="58" y="30" width="28" height="224" fill="#F67E28" />
+    <rect x="86" y="30" width="28" height="224" fill="#81D2EB" />
+    <rect x="114" y="30" width="28" height="224" fill="#FCE432" />
+    <rect x="142" y="30" width="28" height="224" fill="#BEABD6" />
+    <rect x="170" y="30" width="28" height="224" fill="#F4ADC6" />
+
+    <!-- Horizontal Grid Lines -->
+    <line x1="30" y1="30" x2="198" y2="30" class="grid-line" />
+    <line x1="30" y1="58" x2="198" y2="58" class="grid-line" />
+    <line x1="30" y1="86" x2="198" y2="86" class="grid-line" />
+    <line x1="30" y1="114" x2="198" y2="114" class="grid-line" />
+    <line x1="30" y1="142" x2="198" y2="142" class="grid-line" />
+    <line x1="30" y1="170" x2="198" y2="170" class="grid-line" />
+    <line x1="30" y1="198" x2="198" y2="198" class="grid-line" />
+    <line x1="30" y1="226" x2="198" y2="226" class="grid-line" />
+    <line x1="30" y1="254" x2="198" y2="254" class="grid-line" />
+
+    <!-- Vertical Grid Lines -->
+    <line x1="30" y1="30" x2="30" y2="254" class="grid-line" />
+    <line x1="58" y1="30" x2="58" y2="254" class="grid-line" />
+    <line x1="86" y1="30" x2="86" y2="254" class="grid-line" />
+    <line x1="114" y1="30" x2="114" y2="254" class="grid-line" />
+    <line x1="142" y1="30" x2="142" y2="254" class="grid-line" />
+    <line x1="170" y1="30" x2="170" y2="254" class="grid-line" />
+    <line x1="198" y1="30" x2="198" y2="254" class="grid-line" />
+
+    <!-- Labels -->
+    <text x="114" y="286" text-anchor="middle" class="text-outlined font-main">A</text>
+    <text x="202" y="252" text-anchor="start" class="text-outlined font-sub">mxn</text>
+  </g>
+
+  <!-- APPROXIMATION SYMBOL -->
+  <text x="244" y="152" text-anchor="middle" class="text-outlined font-approx">≈</text>
+
+  <!-- ================= MATRIX U (3x8) ================= -->
+  <g id="matrix-U">
+    <!-- Column Fills -->
+    <rect x="290" y="30" width="28" height="224" fill="#26A347" />
+    <rect x="318" y="30" width="28" height="224" fill="#E31E24" />
+    <rect x="346" y="30" width="28" height="224" fill="#334BC4" />
+
+    <!-- Horizontal Grid Lines -->
+    <line x1="290" y1="30" x2="374" y2="30" class="grid-line" />
+    <line x1="290" y1="58" x2="374" y2="58" class="grid-line" />
+    <line x1="290" y1="86" x2="374" y2="86" class="grid-line" />
+    <line x1="290" y1="114" x2="374" y2="114" class="grid-line" />
+    <line x1="290" y1="142" x2="374" y2="142" class="grid-line" />
+    <line x1="290" y1="170" x2="374" y2="170" class="grid-line" />
+    <line x1="290" y1="198" x2="374" y2="198" class="grid-line" />
+    <line x1="290" y1="226" x2="374" y2="226" class="grid-line" />
+    <line x1="290" y1="254" x2="374" y2="254" class="grid-line" />
+
+    <!-- Vertical Grid Lines -->
+    <line x1="290" y1="30" x2="290" y2="254" class="grid-line" />
+    <line x1="318" y1="30" x2="318" y2="254" class="grid-line" />
+    <line x1="346" y1="30" x2="346" y2="254" class="grid-line" />
+    <line x1="374" y1="30" x2="374" y2="254" class="grid-line" />
+
+    <!-- Labels -->
+    <text x="332" y="286" text-anchor="middle" class="text-outlined font-main">U</text>
+    <text x="378" y="252" text-anchor="start" class="text-outlined font-sub">mxk</text>
+  </g>
+
+  <!-- ================= MATRIX SIGMA (3x3) ================= -->
+  <g id="matrix-Sigma">
+    <!-- Cell Fills -->
+    <rect x="450" y="30" width="84" height="84" fill="#FFFFFF" />
+    <rect x="450" y="30" width="28" height="28" fill="#7BE188" />
+    <rect x="478" y="58" width="28" height="28" fill="#FBB019" />
+    <rect x="506" y="86" width="28" height="28" fill="#8BAAE8" />
+
+    <!-- Horizontal Grid Lines -->
+    <line x1="450" y1="30" x2="534" y2="30" class="grid-line" />
+    <line x1="450" y1="58" x2="534" y2="58" class="grid-line" />
+    <line x1="450" y1="86" x2="534" y2="86" class="grid-line" />
+    <line x1="450" y1="114" x2="534" y2="114" class="grid-line" />
+
+    <!-- Vertical Grid Lines -->
+    <line x1="450" y1="30" x2="450" y2="114" class="grid-line" />
+    <line x1="478" y1="30" x2="478" y2="114" class="grid-line" />
+    <line x1="506" y1="30" x2="506" y2="114" class="grid-line" />
+    <line x1="534" y1="30" x2="534" y2="114" class="grid-line" />
+
+    <!-- Labels -->
+    <text x="492" y="146" text-anchor="middle" class="text-outlined font-main" font-style="normal">Σ</text>
+    <text x="538" y="112" text-anchor="start" class="text-outlined font-sub">kxk</text>
+  </g>
+
+  <!-- ================= MATRIX V^T (6x3) ================= -->
+  <g id="matrix-VT">
+    <!-- Row Fills -->
+    <rect x="610" y="30" width="168" height="28" fill="#5C82BA" />
+    <rect x="610" y="58" width="168" height="28" fill="#F3E49E" />
+    <rect x="610" y="86" width="168" height="28" fill="#A15A3F" />
+
+    <!-- Horizontal Grid Lines -->
+    <line x1="610" y1="30" x2="778" y2="30" class="grid-line" />
+    <line x1="610" y1="58" x2="778" y2="58" class="grid-line" />
+    <line x1="610" y1="86" x2="778" y2="86" class="grid-line" />
+    <line x1="610" y1="114" x2="778" y2="114" class="grid-line" />
+
+    <!-- Vertical Grid Lines -->
+    <line x1="610" y1="30" x2="610" y2="114" class="grid-line" />
+    <line x1="638" y1="30" x2="638" y2="114" class="grid-line" />
+    <line x1="666" y1="30" x2="666" y2="114" class="grid-line" />
+    <line x1="694" y1="30" x2="694" y2="114" class="grid-line" />
+    <line x1="722" y1="30" x2="722" y2="114" class="grid-line" />
+    <line x1="750" y1="30" x2="750" y2="114" class="grid-line" />
+    <line x1="778" y1="30" x2="778" y2="114" class="grid-line" />
+
+    <!-- Labels -->
+    <text x="694" y="146" text-anchor="middle" class="text-outlined font-main">
+      V<tspan dy="-8" font-size="16">T</tspan>
+    </text>
+    <text x="782" y="112" text-anchor="start" class="text-outlined font-sub">kxn</text>
+  </g>
+
+  <!-- EQUATION BELOW -->
+  <text x="614" y="210" text-anchor="middle" class="text-red-outlined font-eq">
+    <tspan font-style="italic">k</tspan> = <tspan font-style="normal">min</tspan>(<tspan font-style="italic">m</tspan>,<tspan font-style="italic">n</tspan>)
+  </text>
+</svg>

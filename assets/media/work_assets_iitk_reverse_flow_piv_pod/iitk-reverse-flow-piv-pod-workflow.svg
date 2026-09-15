@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 1100" width="100%" height="100%">
+  <defs>
+    <!-- Arrowhead Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3182ce" />
+    </marker>
+    
+    <style>
+      .container { fill: none; stroke: #666666; stroke-width: 1.5; }
+      .header-box { fill: #e8963e; }
+      .node-shape { fill: #e8963e; }
+      .cutout-text { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #000000; text-anchor: middle; dominant-baseline: middle; }
+      .cutout-header { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; fill: #000000; text-anchor: middle; dominant-baseline: middle; }
+      .arrow-line { stroke: #3182ce; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+
+    <!-- Mask: White areas remain solid, Black text creates transparent cutouts -->
+    <mask id="text-cutout-mask">
+      <rect x="0" y="0" width="560" height="1100" fill="#ffffff" />
+      
+      <!-- Top Node Text -->
+      <text x="280" y="40" class="cutout-text">Obtain Raw PIV images</text>
+      
+      <!-- Section 1 Text -->
+      <text x="280" y="107.5" class="cutout-header">MATLAB: PIV Lab workflow</text>
+      <text x="280" y="160" class="cutout-text">import pairwise images in PIV Lab</text>
+      <text x="280" y="215" class="cutout-text">Apply mask and interpolation window sizes</text>
+      <text x="280" y="270" class="cutout-text">Apply calibration and Analyze the images</text>
+      <text x="280" y="325" class="cutout-text">Export the velocity field as mat file</text>
+
+      <!-- Section 2 Text -->
+      <text x="280" y="407.5" class="cutout-header">Python: Field Analysis Workflow</text>
+      <text x="280" y="460" class="cutout-text">import instantaneous velocity field mat file</text>
+      <text x="280" y="515" class="cutout-text">Calculate mean velocity field and gradients</text>
+      <text x="280" y="570" class="cutout-text">Obtain unsteady velocity component (u' v') from each snapshot</text>
+      <text x="280" y="625" class="cutout-text">Obtain vorticity, Q, and Reynolds Stress</text>
+      <text x="280" y="680" class="cutout-text">Plot the field analysis results</text>
+
+      <!-- Section 3 Text -->
+      <text x="280" y="762.5" class="cutout-header">Python: POD Workflow</text>
+      <text x="280" y="815" class="cutout-text">Form a column matrix from (u' v') for each instant</text>
+      <text x="280" y="870" class="cutout-text">Assemble the column matrix to form X</text>
+      <text x="280" y="925" class="cutout-text">Perform SVD on assembled matrix X=U&#931;V<tspan dy="-4" font-size="10">T</tspan><tspan dy="4" font-size="13">&#8203;</tspan></text>
+      <text x="280" y="980" class="cutout-text">Reconstruct by using desired number of modes</text>
+      <text x="280" y="1035" class="cutout-text">Plot the dominant modes and reconstruction</text>
+    </mask>
+  </defs>
+
+  <!-- Section Boxes & Arrows -->
+  <line x1="280" y1="62" x2="280" y2="88" class="arrow-line" />
+  <rect x="30" y="90" width="500" height="270" class="container" />
+  <line x1="280" y1="180" x2="280" y2="193" class="arrow-line" />
+  <line x1="280" y1="235" x2="280" y2="248" class="arrow-line" />
+  <line x1="280" y1="290" x2="280" y2="303" class="arrow-line" />
+  <line x1="280" y1="360" x2="280" y2="388" class="arrow-line" />
+
+  <rect x="30" y="390" width="500" height="325" class="container" />
+  <line x1="280" y1="480" x2="280" y2="493" class="arrow-line" />
+  <line x1="280" y1="535" x2="280" y2="548" class="arrow-line" />
+  <line x1="280" y1="590" x2="280" y2="603" class="arrow-line" />
+  <line x1="280" y1="645" x2="280" y2="658" class="arrow-line" />
+  <line x1="280" y1="715" x2="280" y2="743" class="arrow-line" />
+
+  <rect x="30" y="745" width="500" height="325" class="container" />
+  <line x1="280" y1="835" x2="280" y2="848" class="arrow-line" />
+  <line x1="280" y1="890" x2="280" y2="903" class="arrow-line" />
+  <line x1="280" y1="945" x2="280" y2="958" class="arrow-line" />
+  <line x1="280" y1="1000" x2="280" y2="1013" class="arrow-line" />
+
+  <!-- Orange Shapes Group with Cutout Mask Applied -->
+  <g mask="url(#text-cutout-mask)">
+    <ellipse cx="280" cy="40" rx="160" ry="22" class="node-shape" />
+    
+    <rect x="30" y="90" width="500" height="35" class="header-box" />
+    <polygon points="72.5,140 512.5,140 487.5,180 47.5,180" class="node-shape" />
+    <rect x="60" y="195" width="440" height="40" class="node-shape" />
+    <rect x="60" y="250" width="440" height="40" class="node-shape" />
+    <polygon points="72.5,305 512.5,305 487.5,345 47.5,345" class="node-shape" />
+
+    <rect x="30" y="390" width="500" height="35" class="header-box" />
+    <polygon points="72.5,440 512.5,440 487.5,480 47.5,480" class="node-shape" />
+    <rect x="60" y="495" width="440" height="40" class="node-shape" />
+    <rect x="60" y="550" width="440" height="40" class="node-shape" />
+    <rect x="60" y="605" width="440" height="40" class="node-shape" />
+    <polygon points="72.5,660 512.5,660 487.5,700 47.5,700" class="node-shape" />
+
+    <rect x="30" y="745" width="500" height="35" class="header-box" />
+    <polygon points="72.5,795 512.5,795 487.5,835 47.5,835" class="node-shape" />
+    <rect x="60" y="850" width="440" height="40" class="node-shape" />
+    <rect x="60" y="905" width="440" height="40" class="node-shape" />
+    <rect x="60" y="960" width="440" height="40" class="node-shape" />
+    <polygon points="72.5,1015 512.5,1015 487.5,1055 47.5,1055" class="node-shape" />
+  </g>
+</svg>

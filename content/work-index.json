@@ -150,6 +150,7 @@
     "status": "Completed",
     "thumbnail": "assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-vorticity-loop-poster.jpg",
     "media_type": "video",
+	"media_fit": "contain",
     "media_src": "assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-vorticity-loop.mp4",
     "quick_description": "A research internship post-processing existing PIV data of a NACA0015 airfoil operating in reverse flow at 12\u00b0 angle of attack \u2014 the regime a retreating rotorcraft blade sees in forward flight. I extracted mean velocity, vorticity, Q-criterion, turbulence intensity, and Reynolds stresses from 500 PIV snapshots, then used Proper Orthogonal Decomposition to pull out the dominant coherent structures in the separated wake and reconstruct it from a reduced set of modes.",
     "institution": "Research internship, IIT Kanpur, Experimental Aerodynamics Group, Flow Control Laboratory (Prof. Tufan K. Guha)",

@@ -23,15 +23,17 @@ The configuration was about as clean a baseline as reverse-flow studies get: a s
 
 Raw pairs went through PIVlab, a MATLAB-based, free and open-source PIV tool: masking out the region without seeding, CLAHE contrast enhancement, then a four-pass FFT window-deformation scheme (two passes at 64 px, two at 32 px) to get the cross-correlation right at multiple scales. Spatial calibration converted pixel displacement to physical units, giving a 1 px/frame → 3.34 m/s conversion factor once combined with the 17 μs time step. The output was instantaneous 2D velocity fields, exported to `.mat` and handed off to Python - the rest of the pipeline (NumPy, SciPy, Matplotlib) is where the actual analysis happened.
 
-<img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-piv-pod-workflow.png" alt="PIVlab and Python post-processing and POD workflow diagram" style="max-width:50%;display:block;margin:0 auto;">
+<img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-piv-pod-workflow.svg" alt="PIVlab and Python post-processing and POD workflow diagram" style="max-width:50%;display:block;margin:0 auto;">
 <span class="md-caption">The full post-processing pipeline: PIVlab for image-pair processing, then Python for field analysis and POD.</span>
 
 Inside PIVlab itself, that's three concrete stages on every image pair: mask out the airfoil (nothing valid is ever going to correlate inside solid metal), cross-correlate to get a raw vector field, then validate and interpolate over any spurious vectors before the field is trusted enough to export.
 
 <hero-carousel interval="2000" label="PIVlab processing stages on a single image pair" fit="contain">
-  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-mask.jpg" alt="PIVlab airfoil mask over the raw PIV image" data-caption="Step 1 - masking the airfoil out of the raw image before correlation.">
-  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-vector-overlay.jpg" alt="Raw PIVlab velocity magnitude overlay on the seeded image" data-caption="Step 2 - the raw cross-correlated velocity magnitude, overlaid on the seeded image.">
-  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-vector-validation.jpg" alt="PIVlab vector field validation, valid vectors in green" data-caption="Step 3 - vector validation: green is an accepted vector, red the masked-out region.">
+  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-piv-setup-image-seq.jpg" alt="image sequences of the pairwise seeded flow" data-caption="Step 1 - sequences of pair of images taken from camera.">
+  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-mask.jpg" alt="PIVlab airfoil mask over the raw PIV image" data-caption="Step 2 - masking the airfoil out of the raw image before correlation.">
+  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-analysis.jpg" alt="cross correlation of pair of images to extract velocity field" data-caption="Step 3 - cross correlation analysis of each image pair to get instantaneous velocity field (px/frame).">
+  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-calibration.jpg" alt="spatial and temporal calibration to get fields in physical units" data-caption="Step 4 - calibration of field data using physical units to get velocity field (m/s).">  
+  <img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-pivlab-results.jpg" alt="plotting of different field contours" data-caption="Step 5 - plotting different field results based on the instantaneous velocity field.">
 </hero-carousel>
 
 Each `u` and `v` matrix came in with shape `(500, 154, 206)` - 500 snapshots over a 154×206 spatial grid. Mean flow quantities were straightforward from there:
@@ -83,7 +85,7 @@ $$\mathbf{X} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^T$$
 
 $\mathbf{U}$'s columns are the spatial POD modes, $\mathbf{\Sigma}$'s diagonal holds the singular values (mode energies), and $\mathbf{V}^T$ carries the temporal coefficients. The energy fraction of the $k$-th mode is $E_k = \sigma_k^2 / \sum_i \sigma_i^2$, and a reduced-order reconstruction with just the first $r$ modes is $\mathbf{X}\_r = \sum\_{k=1}^{r}\sigma\_k\phi\_k v\_k^T$ - POD is optimal in exactly this sense: no other linear basis captures more energy for a given number of modes.
 
-<img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-svd-schematic.png" alt="Schematic of the SVD matrix decomposition used for POD" style="max-width:640px;display:block;margin:0 auto;">
+<img src="../assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-svd-schematic.svg" alt="Schematic of the SVD matrix decomposition used for POD" style="max-width:100%;display:block;margin:0 auto;">
 <span class="md-caption">The economy SVD used to compute the POD modes and their temporal coefficients.</span>
 
 ## What the modes show
