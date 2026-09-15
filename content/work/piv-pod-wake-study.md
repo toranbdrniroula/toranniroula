@@ -10,7 +10,7 @@ Part of a rotor blade sees reverse flow on every rotation, in every forward-flyi
 
 I spent three and a half weeks in that lab, under Asst. Prof. Dr. Tufan K. Guha, working on a narrower and more specific piece of that program: post-processing an already-acquired PIV dataset for the *baseline* NACA0015 case in reverse flow, extracting the flow physics from it, and applying Proper Orthogonal Decomposition to pull out the dominant coherent structures. I want to be upfront about scope, since it matters for how to read everything below: the wind-tunnel run, the PIV acquisition, and the experimental setup were all done before I arrived, by Ranga Srinivas Gokul and the EAG team. My internship started at the `.mat` files PIVlab produces and went from there.
 
-<a href="../assets/downloads/iitk-reverse-flow-piv-pod-internship-report.pdf"> [Download the full internship report (PDF)] (../assets/downloads/iitk-reverse-flow-piv-pod-internship-report.pdf) </a>
+[style="cursor: pointer;" onmouseover="this.style.color='#0000EE';" onmouseout="this.style.color='';">Download the full internship report (PDF)</span>] (../assets/downloads/iitk-reverse-flow-piv-pod-internship-report.pdf)
 
 ## The dataset
 
