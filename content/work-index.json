@@ -5,14 +5,23 @@
     "category": "research",
     "status": "In Progress",
     "thumbnail": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png",
-	"media_type": "carousel",
-	"media_fit": "contain",
-	"hero_interval": 2000,
-	"hero_slides": [
-	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_streamlines.png", "caption": "Streamlines and the recirculating bubble" },
-	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png", "caption": "Vorticity, counter-rotating vortex pair" },
-	  { "src": "assets/media/work_assests_dandelion_seed/seed_static_U.png", "caption": "Streamwise velocity" }
-	],
+    "media_type": "carousel",
+    "media_fit": "contain",
+    "hero_interval": 2000,
+    "hero_slides": [
+      {
+        "src": "assets/media/work_assests_dandelion_seed/seed_static_streamlines.png",
+        "caption": "Streamlines and the recirculating bubble"
+      },
+      {
+        "src": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png",
+        "caption": "Vorticity, counter-rotating vortex pair"
+      },
+      {
+        "src": "assets/media/work_assests_dandelion_seed/seed_static_U.png",
+        "caption": "Streamwise velocity"
+      }
+    ],
     "quick_description": "This is a dandelion seed falling through still air, simulated frame by frame. The faint ring forming above it is a separated vortex ring, a structure that keeps the seed aloft far longer than its size and weight should allow, and that nature seems to have stumbled onto long before fluid dynamicists had a name for it.",
     "institution": "University of Birmingham (collaboration)",
     "date": "2026",
@@ -120,7 +129,7 @@
     "thumbnail": "assets/media/uav-thumb.jpg",
     "media_type": "image",
     "media_src": "assets/media/uav-hero.jpg",
-    "quick_description": "A FOSSEE Fellowship project migrating a published ANSYS Fluent study of a small fixed-wing UAV with an inverted V-tail into OpenFOAM (simpleFoam, Spalart-Allmaras, snappyHexMesh), validating against the original results, then extending the study to blended winglets at 45° and 90° cant angles — finding a 14.95% lift-to-drag improvement at 45° over the baseline.",
+    "quick_description": "A FOSSEE Fellowship project migrating a published ANSYS Fluent study of a small fixed-wing UAV with an inverted V-tail into OpenFOAM (simpleFoam, Spalart-Allmaras, snappyHexMesh), validating against the original results, then extending the study to blended winglets at 45\u00b0 and 90\u00b0 cant angles \u2014 finding a 14.95% lift-to-drag improvement at 45\u00b0 over the baseline.",
     "institution": "FOSSEE Fellowship, IIT Bombay, mentored by Asst. Prof. Chandan Bose (University of Birmingham), Asst. Prof. Tushar Chourushi, and CFD Engineer Nikhil Bhamare",
     "date": "2025",
     "featured": false,
@@ -139,10 +148,10 @@
     "title": "PIV/POD Analysis of a NACA0015 Airfoil in Reverse Flow",
     "category": "research",
     "status": "Completed",
-    "thumbnail": "assets/media/piv-thumb.jpg",
-    "media_type": "image",
-    "media_src": "assets/media/piv-hero.jpg",
-    "quick_description": "A research internship post-processing existing PIV data of a NACA0015 airfoil operating in reverse flow at 12° angle of attack — the regime a retreating rotorcraft blade sees in forward flight. I extracted mean velocity, vorticity, Q-criterion, and Reynolds stresses, then used Proper Orthogonal Decomposition to reconstruct the dominant coherent structures in the separated wake from 500 PIV snapshots.",
+    "thumbnail": "assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-vorticity-loop-poster.jpg",
+    "media_type": "video",
+    "media_src": "assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-vorticity-loop.mp4",
+    "quick_description": "A research internship post-processing existing PIV data of a NACA0015 airfoil operating in reverse flow at 12\u00b0 angle of attack \u2014 the regime a retreating rotorcraft blade sees in forward flight. I extracted mean velocity, vorticity, Q-criterion, turbulence intensity, and Reynolds stresses from 500 PIV snapshots, then used Proper Orthogonal Decomposition to pull out the dominant coherent structures in the separated wake and reconstruct it from a reduced set of modes.",
     "institution": "Research internship, IIT Kanpur, Experimental Aerodynamics Group, Flow Control Laboratory (Prof. Tufan K. Guha)",
     "date": "2025",
     "featured": false,
@@ -151,6 +160,8 @@
       "POD",
       "PIVlab",
       "Python",
+      "Q-criterion",
+      "Reynolds Stress",
       "Experimental Aerodynamics"
     ],
     "supporting_media": [],
@@ -158,14 +169,14 @@
   },
   {
     "slug": "nimbus-agricultural-uav",
-    "title": "NIMBUS — Preliminary Design and Flight Dynamics of an Autonomous Agricultural UAV",
+    "title": "NIMBUS \u2014 Preliminary Design and Flight Dynamics of an Autonomous Agricultural UAV",
     "category": "research",
     "type": "coursework",
     "status": "Completed",
     "thumbnail": "assets/media/nimbus-thumb.jpg",
     "media_type": "image",
     "media_src": "assets/media/nimbus-hero.jpg",
-    "quick_description": "A team conceptual-design project for Nimbus, an autonomous electric crop-duster UAV: sizing and configuration from a matching plot and flight envelope, through a complete flight-dynamics characterization — dynamic stability modes, neutral point, stall/climb/descent performance, and a Cooper–Harper handling-quality assessment.",
+    "quick_description": "A team conceptual-design project for Nimbus, an autonomous electric crop-duster UAV: sizing and configuration from a matching plot and flight envelope, through a complete flight-dynamics characterization \u2014 dynamic stability modes, neutral point, stall/climb/descent performance, and a Cooper\u2013Harper handling-quality assessment.",
     "institution": "Aircraft Design and Flight Dynamics courses, IOE Pulchowk Campus, with Amogh Adhikari, Anup Bajgain, and Yogesh Dhami",
     "date": "2026",
     "featured": false,
@@ -206,7 +217,7 @@
     "thumbnail": "assets/media/gallery-schlieren-thumb.jpg",
     "media_type": "image",
     "media_src": "assets/media/gallery-schlieren-hero.jpg",
-    "quick_description": "A running visual notebook of schlieren and shadowgraph experiments — candle plumes, salt-water plumes, electric sparks, glycerin diffusion, and RSD filter-development shots — captured with a Chronus 2.1HD high-speed camera while building the thesis facility.",
+    "quick_description": "A running visual notebook of schlieren and shadowgraph experiments \u2014 candle plumes, salt-water plumes, electric sparks, glycerin diffusion, and RSD filter-development shots \u2014 captured with a Chronus 2.1HD high-speed camera while building the thesis facility.",
     "institution": "Flow Visualization Lab, IOE Pulchowk Campus",
     "date": "2025-2026",
     "featured": false,

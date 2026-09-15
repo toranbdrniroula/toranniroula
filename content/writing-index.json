@@ -1,7 +1,7 @@
 [
   {
     "slug": "propeller-wing-ami-setup",
-    "title": "Setting Up a Propeller–Wing Case in OpenFOAM: A Practical Guide to AMI",
+    "title": "Setting Up a Propeller\u2013Wing Case in OpenFOAM: A Practical Guide to AMI",
     "date": "2026-07-09",
     "excerpt": "A full walkthrough of building a physically consistent propeller-wing simulation with the Arbitrary Mesh Interface: meshing, MRF, dynamic mesh setup, boundary conditions, solver controls, and force extraction, dictionary by dictionary.",
     "thumbnail": "assets/media/writing_assets_propeller_wing_ami_setup/propeller-wing-ami-thumb.gif",

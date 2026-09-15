@@ -167,7 +167,6 @@ async function renderCaseFile(relPrefix) {
       <hr class="divider">
 
       <section class="case-section">
-        <p class="case-subhead">How it was done</p>
         <div class="case-technical">${technicalHtml}</div>
       </section>
 
