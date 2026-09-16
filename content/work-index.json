@@ -126,11 +126,11 @@
     "links": [
       {
         "label": "Full report (PDF)",
-        "url": "assets/downloads/hypersonics/hypersonics-advanced-propulsion-report.pdf"
+        "url": "../assets/downloads/hypersonics/hypersonics-advanced-propulsion-report.pdf"
       },
       {
         "label": "Python scripts (Cp, shock polar, intake design)",
-        "url": "assets/downloads/hypersonics/hypersonics-code.zip"
+        "url": "../assets/downloads/hypersonics/hypersonics-code.zip"
       }
     ],
     "media_fit": "contain",
