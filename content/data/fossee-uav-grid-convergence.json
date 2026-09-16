@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "C_L, baseline UAV at \u03b1=4\u00b0",
+      "x": [1.04, 2.60, 6.50],
+      "y": [0.5154, 0.5186, 0.5106],
+      "marker": { "size": 10 },
+      "hovertemplate": "%{x}M cells<br>C_L = %{y}<extra></extra>"
+    },
+    {
+      "type": "scatter",
+      "mode": "lines",
+      "name": "Richardson extrapolation (C_L = 0.5053)",
+      "x": [1.04, 6.50],
+      "y": [0.5053, 0.5053],
+      "line": { "dash": "dash" },
+      "hovertemplate": "Extrapolated C_L = %{y}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": "Mesh count (millions of cells)" },
+    "yaxis": { "title": "C_L", "range": [0.49, 0.53] },
+    "legend": { "orientation": "h", "y": -0.25 }
+  }
+}

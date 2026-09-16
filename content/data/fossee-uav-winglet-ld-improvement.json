@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "name": "Max L/D improvement over baseline",
+      "x": ["90\u00b0 winglet", "45\u00b0 winglet"],
+      "y": [10.9, 14.95],
+      "text": ["10.9%", "14.95%"],
+      "textposition": "outside",
+      "hovertemplate": "%{x}: %{y}%% max L/D improvement<extra></extra>"
+    }
+  ],
+  "layout": {
+    "yaxis": { "title": "Max improvement in C_L/C_D over baseline (%)", "range": [0, 18] },
+    "xaxis": { "title": "" }
+  }
+}
