@@ -60,7 +60,7 @@ async function renderCaseFile(relPrefix) {
     const mediaMarkup = piece.media_type === 'youtube'
       ? `<yt-embed videoid="${piece.media_src}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${heroFit}"></yt-embed>`
       : piece.media_type === 'video'
-        ? `<video-embed src="${relPrefix + piece.media_src}" poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${heroFit}"></video-embed>`
+        ? `<video-embed src="${relPrefix + piece.media_src}" poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}" label="${piece.title.replace(/"/g, '&quot;')}" fit="${heroFit}"${piece.media_autoplay ? ' autoplay="true"' : ''}${piece.media_loop ? ' loop="true"' : ''}${piece.media_controls === false ? ' controls="false"' : ''}></video-embed>`
         : piece.media_type === 'gif'
           ? `<video src="${relPrefix + piece.media_src}" controls muted loop playsinline poster="${piece.thumbnail ? relPrefix + piece.thumbnail : ''}"></video>`
           : piece.media_type === 'carousel'
@@ -159,10 +159,6 @@ async function renderCaseFile(relPrefix) {
       <figure class="case-hero${heroFitClass}"${heroFitStyle}>
         ${mediaMarkup}
       </figure>
-
-      <section class="case-section">
-        <p class="case-general">${piece.quick_description || ''}</p>
-      </section>
 
       <hr class="divider">
 

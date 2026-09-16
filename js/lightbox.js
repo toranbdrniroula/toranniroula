@@ -55,7 +55,10 @@
     const src = relPrefix + piece.media_src;
     if (piece.media_type === 'video') {
       const posterAttr = piece.thumbnail ? ` poster="${relPrefix + piece.thumbnail}"` : '';
-      return `<video-embed src="${src}"${posterAttr} label="${piece.title.replace(/"/g, '&quot;')}" fit="${fit}"></video-embed>`;
+      const autoplayAttr = piece.media_autoplay ? ' autoplay="true"' : '';
+      const loopAttr = piece.media_loop ? ' loop="true"' : '';
+      const controlsAttr = piece.media_controls === false ? ' controls="false"' : '';
+      return `<video-embed src="${src}"${posterAttr} label="${piece.title.replace(/"/g, '&quot;')}" fit="${fit}"${autoplayAttr}${loopAttr}${controlsAttr}></video-embed>`;
     }
     if (piece.media_type === 'gif') {
       const posterAttr = piece.thumbnail ? ` poster="${relPrefix + piece.thumbnail}"` : '';
