@@ -486,6 +486,20 @@
       // the box itself, not silence.
       try {
         const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
+        // BUG FIX: vtkMapper has its own ScalarRange, separate from the
+        // lookup table's mapping range, and it defaults to [0, 1]
+        // ("Construct with initial range (0,1)" in VTK's own vtkMapper.cxx).
+        // The mapper only defers to the lookup table's range when this flag
+        // is true; without it, every scalar value is silently normalized
+        // into [0,1] before hitting the colormap -- so any field whose real
+        // range extends past 1 (Mach number, pressure, velocity, ...) gets
+        // clamped to the top color for the vast majority of the mesh, while
+        // only the sliver of the field that happens to fall inside [0,1]
+        // (e.g. the low-Mach boundary layer near a wall) shows any color
+        // variation at all. Setting this once here makes the mapper always
+        // follow lookupTable.setMappingRange(...), which applyActiveColormap
+        // already calls on every field/colormap change.
+        mapper.setUseLookupTableScalarRange(true);
         mapper.setInputData(polydata);
 
         const actor = vtk.Rendering.Core.vtkActor.newInstance();
