@@ -1,94 +1,38 @@
 // <vtk-reader href="..." field="Q" colormap="viridis" interactive="true" clipping="true" controls="true" threshold="true" height="480" bg-color="#0a0a0f"></vtk-reader>
 //
-// `field`: either a literal array name in the file ("Q", "azimuth",
-// "velocity", "U", "P", ...) -- loaded directly, no picker shown -- or the
-// sentinel "user-defined" (also the default when the attribute is
-// omitted), which adds a Field <select> populated from whatever arrays
-// the file actually contains. Same pattern `colormap="user-defined"`
-// already used for the colormap picker.
-// `controls`: set to "false" to hide the entire bottom panel (pan/reset,
-// field picker, legend, threshold, clip row) for a bare viewer. Camera
-// drag/zoom is controlled separately by `interactive` and isn't affected.
-// `threshold`: set to "false" to hide just the min/max threshold sliders
-// while keeping the rest of the panel (field picker, legend, clipping).
+// Interactive scalar-field viewer for .vtp (vtkXMLPolyDataReader) files --
+// the one reader in the stack that understands "the underlying scalar
+// field," not just baked colors (that's what <stl-reader>/glTF is for).
+// .vtu (UnstructuredGrid) support is not yet implemented.
 //
-// Interactive scalar-field viewer – the one reader in the stack that
-// understands "the underlying scalar field," not just baked colors (that's
-// what <stl-reader>/glTF is for). Reads .vtp (vtkXMLPolyDataReader) today;
-// .vtu (UnstructuredGrid) is a planned addition, see note below.
+// Attributes:
+// `field`      literal array name in the file ("Q", "azimuth", "velocity",
+//              "U", "P", ...), loaded directly with no picker shown -- or
+//              the sentinel "user-defined" (also the default), which adds
+//              a Field <select> populated from whatever arrays the file
+//              actually contains. `colormap="user-defined"` works the
+//              same way for the colormap picker.
+// `controls`   "false" hides the entire bottom panel (pan/reset, field
+//              picker, legend, threshold, clip row). Camera drag/zoom is
+//              controlled separately by `interactive` and isn't affected.
+// `threshold`  "false" hides just the min/max threshold sliders while
+//              keeping the rest of the panel.
+// `clipping`   "true" adds an interactive clip-plane row. Independent of
+//              `interactive`/`controls` -- opt-in since most pieces don't
+//              want it.
 //
-// v3 (this version): colormap + clipping fixes/additions on top of v2.
+// Rotation is either unconstrained 3D trackball, or, when the loaded mesh
+// is detected as flat (planar CFD slice, one axis ~0 extent), constrained
+// to spinning about the plane's own normal -- tumbling a flat field
+// edge-on never shows anything useful. See the is2D block below.
 //
-// - COLORMAPS ARE NOW SELF-CONTAINED (see CUSTOM_COLORMAPS below). v2 asked
-//   vtk.js's own bundled preset registry, by name, for each colormap
-//   (`vtkColorMaps.getPresetByName(presetName)`), and only defined that
-//   name lookup for 5 of the values this component actually advertised.
-//   Two bugs stacked on top of each other:
-//     1. "inferno" and "jet" (and anything else not in the old
-//        COLORMAP_PRESETS dict) silently fell back to viridis -- no error,
-//        no console warning, just the wrong colormap.
-//     2. Even the mapped ones ("rainbow" -> "Rainbow Desaturated",
-//        "coolwarm" -> "Cool to Warm") depended on that exact string
-//        resolving inside whatever vtk.js build happens to be live on the
-//        unpkg CDN at load time. If it doesn't resolve, `preset` comes
-//        back undefined and the code quietly skips applying a colormap at
-//        all -- again with nothing visible to say why.
-//   Fixing #1 alone (just adding more dictionary entries) would still
-//   leave #2 in place for anyone hitting a future CDN version where a
-//   preset name changes. So instead every colormap this component
-//   supports is now defined directly, as an explicit RGBPoints control
-//   list, in this file -- no registry lookup, no CDN version dependency,
-//   nothing to silently miss. "coolwarm"/"rainbow"/"grayscale" below are
-//   verbatim reproductions of vtk.js's own "Cool to Warm"/"Rainbow
-//   Desaturated"/"Grayscale" presets (pulled from vtk.js's ColorMaps.json
-//   directly), so existing markup using those keys renders identically to
-//   before -- viridis/plasma/inferno/magma/jet/turbo are added the same
-//   way from well-established reference control points.
-// - CLIPPING: this version adds an interactive, freely-orientable clip
-//   plane (drag the sphere handle to translate; drag the shaft/cylinder
-//   itself to rotate -- it's a trackball manipulator underneath, so this
-//   is free 3D rotation, not constrained to one ring or axis -- standard
-//   vtk.js ImplicitPlaneWidget interaction), toggled from a "Clip" row in
-//   the controls. This uses vtk.js's actual GPU clipping
-//   (`mapper.addClippingPlane`), not a geometry rebuild, so it stays fast
-//   on large meshes. It's independent of the field/threshold controls --
-//   it also works on a piece with no scalar fields at all.
-//   It's opt-in per instance via `clipping="true"` -- deliberately not
-//   tied to `interactive`, since being able to drag the camera around
-//   doesn't mean every viewer should also grow a clip-plane row; most
-//   pieces probably don't want it, so it stays off unless asked for.
-//   v4 addition: vtk.js's default handle size (handleSizeRatio 0.05,
-//   axisScale 0.1) is tuned for a mouse on a large desktop viewport, and
-//   is genuinely hard to grab in a small embedded viewer, worse on
-//   touch/trackpad -- both are scaled up here. On top of that, dragging
-//   is inherently imprecise for "put the plane exactly here," so this
-//   version also adds X/Y/Z axis-lock buttons (set the normal to a world
-//   axis in one click) and numeric origin fields (type an exact
-//   coordinate) alongside the draggable widget, rather than instead of it.
-//   Not yet built:
-//   slicing (extracting a 2D cross-section as its own colored surface, as
-//   opposed to just cutting away one side) and streamlines -- deliberately
-//   deferred rather than widening scope further in one step.
-// - PAN: vtk.js's default trackball camera style binds pan to
-//   Shift+Left-drag, which nothing in the UI surfaces, and has no touch
-//   handling for it at all -- a real "can't pan" problem on touch/trackpad,
-//   not just a discoverability one. A "Pan" toggle button below temporarily
-//   detaches vtk.js's own interactor bindings and drives the camera pan
-//   directly off pointer events (covering mouse, touch, and pen alike via
-//   the Pointer Events API), then reattaches normal rotate/zoom when
-//   toggled off.
-//
-// - Uses the classic UMD build of vtk.js (https://unpkg.com/vtk.js),
-//   loaded lazily via a dynamically-injected <script> tag – same
-//   lazy-load pattern as the other readers, and matches vtk.js's own
-//   documented no-bundler "external script" usage. Exposes a global
-//   `vtk` namespace (e.g. vtk.IO.XML.vtkXMLPolyDataReader). Only fetched
-//   once a <vtk-reader> actually mounts, and only once per page.
-// - IntersectionObserver defers mounting until scrolled into view.
-// - Fails visibly (a message in the box, not a blank box) on a bad URL,
-//   an unparseable file, or a missing scalar field.
-// - No auto-rotation – CFD scalar fields are usually inspected rather
-//   than shown off, so this stays still until the user drags.
+// Uses the classic UMD build of vtk.js (https://unpkg.com/vtk.js), loaded
+// lazily via a dynamically-injected <script> tag, exposing a global `vtk`
+// namespace. Only fetched once a <vtk-reader> actually mounts, and only
+// once per page. IntersectionObserver defers mounting until scrolled into
+// view. Fails visibly (a message in the box) on a bad URL, an unparseable
+// file, or a missing scalar field. No auto-rotation -- CFD scalar fields
+// are usually inspected rather than shown off.
 
 (function () {
   const VTKJS_CDN = 'https://unpkg.com/vtk.js';
@@ -130,18 +74,14 @@
   }
 
   // Every colormap this component supports, defined by hand as [x, hex]
-  // control points (x in 0..1 – matches the domain vtk.js's own presets
-  // use, e.g. "Cool to Warm" below is x=[0, 0.5, 1], so setMappingRange
-  // rescales these into the actual data range the same way it already did
-  // for the presets that came from the CDN registry). See the file-header
-  // comment for why these are hand-defined instead of looked up by name.
-  //
-  // coolwarm/rainbow/grayscale are exact reproductions (RGB floats
-  // converted to hex, verified against vtk.js's ColorMaps.json source) of
-  // vtk.js's "Cool to Warm"/"Rainbow Desaturated"/"Grayscale" presets, so
-  // markup already using those three keys renders unchanged.
-  // viridis/plasma/inferno/magma/jet/turbo are standard, widely-published
-  // reference control points for those colormaps.
+  // control points (x in 0..1, rescaled into the real data range by
+  // lookupTable.setMappingRange) rather than looked up by name from
+  // vtk.js's own CDN-bundled preset registry -- keeps rendering identical
+  // across vtk.js versions instead of depending on a preset name resolving
+  // inside whatever build happens to be live at load time.
+  // "warm cold"/rainbow/grayscale are exact reproductions of vtk.js's own
+  // "Cool to Warm"/"Rainbow Desaturated"/"Grayscale" presets; the rest are
+  // standard, widely-published reference control points.
   const CUSTOM_COLORMAPS = {
     viridis: [
       [0.000, '#440154'], [0.111, '#482878'], [0.222, '#3e4989'], [0.333, '#31688e'],
@@ -172,9 +112,6 @@
       [0.444, '#1bcfd4'], [0.556, '#24eca6'], [0.667, '#61fc6c'], [0.778, '#a4fc3b'],
       [0.889, '#d1e834'], [1.000, '#7a0403']
     ],
-    coolwarm: [
-      [0.0, '#3b4cc0'], [0.5, '#dddddd'], [1.0, '#b40426']
-    ],
     'warm cold': [
       [0.0, '#3b4cc0'], [0.5, '#dddddd'], [1.0, '#b40426']
     ],
@@ -189,17 +126,22 @@
 
   const COLORMAP_LABELS = {
     viridis: 'Viridis', plasma: 'Plasma', inferno: 'Inferno', magma: 'Magma',
-    jet: 'Jet', turbo: 'Turbo', coolwarm: 'Cool to Warm', 'warm cold': 'Warm cold', rainbow: 'Rainbow Desaturated',
+    jet: 'Jet', turbo: 'Turbo', 'warm cold': 'Warm to Cool', rainbow: 'Rainbow Desaturated',
     grayscale: 'Grayscale'
   };
 
   const COLORMAP_CHOICES = [
-    'warm cold', 'viridis', 'plasma', 'inferno', 'magma', 'jet', 'turbo', 'coolwarm', 'rainbow', 'grayscale'
+    'warm cold', 'viridis', 'plasma', 'inferno', 'magma', 'jet', 'turbo', 'rainbow', 'grayscale'
   ];
 
+  // "coolwarm" was a duplicate of "warm cold" (identical control points,
+  // just a different key/label) -- kept as an alias only so any existing
+  // markup using the old key still resolves.
   const COLORMAP_ALIASES = {
     'warm-cold': 'warm cold',
-    warmcold: 'warm cold'
+    warmcold: 'warm cold',
+    coolwarm: 'warm cold',
+    'cool to warm': 'warm cold'
   };
 
   function normalizeColormapKey(colormapKey) {
@@ -477,28 +419,20 @@
         return;
       }
 
-      // Everything from here on (mapper/actor setup, colormap lookup,
-      // field-switcher/threshold/clip UI, first render) was previously
-      // unguarded -- any exception in any of it left the box permanently
-      // stuck on "Loading field data..." with nothing but a console.error
-      // to explain why, which is very likely what's actually happening.
-      // Wrapping it means a real failure now shows up as visible text in
-      // the box itself, not silence.
+      // Wraps mapper/actor setup, colormap lookup, field-switcher/
+      // threshold/clip UI, and first render -- so a real failure shows up
+      // as visible text in the box instead of it silently getting stuck
+      // on "Loading field data...".
       try {
         const mapper = vtk.Rendering.Core.vtkMapper.newInstance();
-        // BUG FIX: vtkMapper has its own ScalarRange, separate from the
-        // lookup table's mapping range, and it defaults to [0, 1]
-        // ("Construct with initial range (0,1)" in VTK's own vtkMapper.cxx).
-        // The mapper only defers to the lookup table's range when this flag
-        // is true; without it, every scalar value is silently normalized
-        // into [0,1] before hitting the colormap -- so any field whose real
-        // range extends past 1 (Mach number, pressure, velocity, ...) gets
-        // clamped to the top color for the vast majority of the mesh, while
-        // only the sliver of the field that happens to fall inside [0,1]
-        // (e.g. the low-Mach boundary layer near a wall) shows any color
-        // variation at all. Setting this once here makes the mapper always
-        // follow lookupTable.setMappingRange(...), which applyActiveColormap
-        // already calls on every field/colormap change.
+        // vtkMapper has its own ScalarRange, separate from the lookup
+        // table's mapping range, and defaults to [0, 1]; it only defers to
+        // the lookup table's range when this flag is set. Without it, every
+        // scalar value is normalized into [0,1] before hitting the
+        // colormap, so a field whose real range extends past 1 (Mach
+        // number, pressure, velocity, ...) clamps to the top color almost
+        // everywhere. Set once here; applyActiveColormap() keeps the
+        // lookup table's own range in sync on every field/colormap change.
         mapper.setUseLookupTableScalarRange(true);
         mapper.setInputData(polydata);
 
@@ -515,6 +449,45 @@
         // Pristine copy of cell connectivity – every threshold rebuild
         // starts from this, never from a previously-filtered array.
         const originalCells = polydata.getPolys().getData().slice();
+
+        // A mesh is treated as 2D when one axis has (near) zero extent --
+        // e.g. a planar CFD slice exported with z=0 everywhere. That axis
+        // is the field's normal; tumbling it edge-on in 3D never shows
+        // anything useful, so rotation is constrained to spinning about
+        // that normal instead (see the `is2D` branch further down).
+        const bounds = polydata.getBounds();
+        const extents = [bounds[1] - bounds[0], bounds[3] - bounds[2], bounds[5] - bounds[4]];
+        const maxExtent = Math.max(...extents);
+        const flatAxis = maxExtent > 0 ? extents.findIndex((e) => e <= maxExtent * 1e-4) : -1;
+        const is2D = flatAxis !== -1;
+
+        const camera = renderer.getActiveCamera();
+        if (is2D) {
+          // Point the camera straight down the flat axis so the field is
+          // seen face-on by default, rather than whatever edge-on angle
+          // vtk.js's stock default orientation happens to give it.
+          const center = [
+            (bounds[0] + bounds[1]) / 2,
+            (bounds[2] + bounds[3]) / 2,
+            (bounds[4] + bounds[5]) / 2
+          ];
+          const normal = [0, 0, 0];
+          normal[flatAxis] = 1;
+          const viewUp = flatAxis === 1 ? [0, 0, 1] : [0, 1, 0];
+          camera.setFocalPoint(center[0], center[1], center[2]);
+          camera.setPosition(center[0] + normal[0], center[1] + normal[1], center[2] + normal[2]);
+          camera.setViewUp(viewUp[0], viewUp[1], viewUp[2]);
+        }
+        renderer.resetCamera();
+        // Captured once, right after the initial framing above, so "Reset
+        // view" can restore orientation as well as zoom -- resetCamera()
+        // alone only refits distance along whatever orientation the
+        // camera currently has, it doesn't undo rotation.
+        const initialCamera = {
+          position: camera.getPosition().slice(),
+          focalPoint: camera.getFocalPoint().slice(),
+          viewUp: camera.getViewUp().slice()
+        };
 
         const vtkColorTransferFunction = vtk.Rendering.Core.vtkColorTransferFunction;
         const lookupTable = vtkColorTransferFunction.newInstance();
@@ -655,7 +628,8 @@
           const panBtn = makeControlButton('Pan');
           const resetViewBtn = makeControlButton('Reset view');
           const panHint = document.createElement('span');
-          panHint.textContent = 'drag to rotate · scroll to zoom';
+          const rotateHintText = is2D ? 'drag to spin in-plane · scroll to zoom' : 'drag to rotate · scroll to zoom';
+          panHint.textContent = rotateHintText;
           Object.assign(panHint.style, { opacity: '0.7', fontSize: '10px' });
 
           viewRow.appendChild(panBtn);
@@ -668,7 +642,7 @@
             panBtn.style.background = active ? 'var(--color-accent, #4FA8FF)' : 'transparent';
             panBtn.style.color = active ? '#0A0A0C' : 'var(--color-text-muted, #8C8C92)';
             panBtn.style.borderColor = active ? 'var(--color-accent, #4FA8FF)' : 'rgba(255,255,255,0.2)';
-            panHint.textContent = active ? 'drag to pan' : 'drag to rotate · scroll to zoom';
+            panHint.textContent = active ? 'drag to pan' : rotateHintText;
           };
 
           // Same display-coordinate conversion vtk.js's own interactor uses
@@ -686,7 +660,6 @@
             const canvas = canvasHost.querySelector('canvas');
             if (!canvas) return;
             const style = interactor.getInteractorStyle();
-            const camera = renderer.getActiveCamera();
             const focal = camera.getFocalPoint();
             const focalDisplay = style.computeWorldToDisplay(renderer, focal[0], focal[1], focal[2]);
             const focalDepth = focalDisplay[2];
@@ -726,15 +699,70 @@
             panLast = null;
           };
 
+          // Rotation: vtk.js's own trackball bindings (bindRotate/unbindRotate
+          // default to them) for a full 3D mesh; replaced below with a
+          // spin-only pointer handler for a 2D one, since free tumbling would
+          // let a flat field be viewed edge-on, which never shows anything.
+          let bindRotate = () => { try { interactor.bindEvents(canvasHost); } catch (err) { /* ignore */ } };
+          let unbindRotate = () => { try { interactor.unbindEvents(); } catch (err) { /* ignore */ } };
+
+          if (is2D) {
+            unbindRotate();
+            let rotatePointerId = null;
+            let rotateLast = null;
+            const onRotatePointerDown = (e) => {
+              if (typeof e.button === 'number' && e.button !== 0) return;
+              rotatePointerId = e.pointerId;
+              rotateLast = { x: e.clientX, y: e.clientY };
+              try { canvasHost.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+              e.preventDefault();
+            };
+            const onRotatePointerMove = (e) => {
+              if (rotatePointerId === null || e.pointerId !== rotatePointerId) return;
+              camera.roll((e.clientX - rotateLast.x) * 0.3);
+              rotateLast = { x: e.clientX, y: e.clientY };
+              renderWindow.render();
+              e.preventDefault();
+            };
+            const onRotatePointerUp = (e) => {
+              if (e.pointerId !== rotatePointerId) return;
+              try { canvasHost.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+              rotatePointerId = null;
+              rotateLast = null;
+            };
+            const onWheelZoom = (e) => {
+              e.preventDefault();
+              camera.dolly(e.deltaY < 0 ? 1.1 : 1 / 1.1);
+              renderer.resetCameraClippingRange();
+              renderWindow.render();
+            };
+            bindRotate = () => {
+              canvasHost.style.touchAction = 'none';
+              canvasHost.addEventListener('pointerdown', onRotatePointerDown);
+              canvasHost.addEventListener('pointermove', onRotatePointerMove);
+              canvasHost.addEventListener('pointerup', onRotatePointerUp);
+              canvasHost.addEventListener('pointercancel', onRotatePointerUp);
+              canvasHost.addEventListener('wheel', onWheelZoom, { passive: false });
+            };
+            unbindRotate = () => {
+              canvasHost.removeEventListener('pointerdown', onRotatePointerDown);
+              canvasHost.removeEventListener('pointermove', onRotatePointerMove);
+              canvasHost.removeEventListener('pointerup', onRotatePointerUp);
+              canvasHost.removeEventListener('pointercancel', onRotatePointerUp);
+              canvasHost.removeEventListener('wheel', onWheelZoom);
+            };
+            bindRotate();
+          }
+
           let panActive = false;
           const setPanActive = (active) => {
             panActive = active;
             setPanBtnActiveStyle(active);
             if (active) {
-              // Detach vtk.js's own rotate/zoom bindings so a plain
-              // left-drag doesn't also spin the camera while panning --
-              // reattached the moment pan mode is switched off.
-              try { interactor.unbindEvents(); } catch (err) { /* ignore */ }
+              // Detach rotate/zoom bindings so a plain left-drag doesn't
+              // also spin the camera while panning -- reattached the
+              // moment pan mode is switched off.
+              unbindRotate();
               canvasHost.style.touchAction = 'none';
               canvasHost.addEventListener('pointerdown', onPanPointerDown);
               canvasHost.addEventListener('pointermove', onPanPointerMove);
@@ -745,7 +773,7 @@
               canvasHost.removeEventListener('pointermove', onPanPointerMove);
               canvasHost.removeEventListener('pointerup', onPanPointerUp);
               canvasHost.removeEventListener('pointercancel', onPanPointerUp);
-              try { interactor.bindEvents(canvasHost); } catch (err) { /* ignore */ }
+              bindRotate();
             }
           };
 
@@ -753,6 +781,12 @@
           resetViewBtn.addEventListener('click', () => {
             setPanActive(false);
             restoreInitialFieldState();
+            // renderer.resetCamera() alone only refits zoom along whatever
+            // orientation the camera currently has -- restoring position/
+            // focalPoint/viewUp first is what actually undoes rotation.
+            camera.setPosition(...initialCamera.position);
+            camera.setFocalPoint(...initialCamera.focalPoint);
+            camera.setViewUp(...initialCamera.viewUp);
             renderer.resetCamera();
             renderer.resetCameraClippingRange();
             renderWindow.render();
@@ -760,6 +794,7 @@
 
           panTeardown = () => {
             if (panActive) setPanActive(false);
+            unbindRotate();
           };
         }
 
