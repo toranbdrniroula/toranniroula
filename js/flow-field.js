@@ -517,7 +517,6 @@
 
       const useProgram = (p) => gl.useProgram(p.program);
 
-      let last = null; // { x, y, t } in local CSS px
       let raf = null;
       // CPU-side estimate of how much kinetic energy is still in the sim.
       // Splats add to it; every step() decays it by the same factor the
@@ -570,26 +569,66 @@
         this._wake();
       };
 
-      const onPointerMove = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        if (x < 0 || y < 0 || x > rect.width || y > rect.height) { last = null; return; }
-        const now = performance.now();
-        if (last) {
-          const dt = Math.max(now - last.t, 1);
-          const dxPx = x - last.x, dyPx = y - last.y;
+      // Shared drag-tracking logic for both input sources. Mouse and touch
+      // get their own `last` cursor + their own sensitivity curve, fed
+      // through here, so a finger doesn't inherit the mouse's last known
+      // position (which would produce one huge spurious "teleport" splat)
+      // and can react more gently than a mouse does.
+      const trackMove = (x, y, rect, now, state, sens) => {
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) { state.last = null; return; }
+        if (state.last) {
+          const dt = Math.max(now - state.last.t, 1);
+          const dxPx = x - state.last.x, dyPx = y - state.last.y;
           const dist = Math.sqrt(dxPx * dxPx + dyPx * dyPx);
           const speed = dist / (dt / 1000);
-          if (speed > 3) {
+          if (speed > sens.threshold) {
             const dirX = dxPx / (dist || 1), dirY = dyPx / (dist || 1);
-            const speedNorm = Math.min(speed / 1400, 1.6);
+            const speedNorm = Math.min(speed / sens.divisor, sens.cap);
             splat(x / rect.width, 1 - y / rect.height, dirX, dirY, speedNorm);
           }
         }
-        last = { x, y, t: now };
+        state.last = { x, y, t: now };
+      };
+
+      const MOUSE_SENS = { threshold: 3, divisor: 1400, cap: 1.6 };
+      // Touch reacts at a noticeably softer, more damped rate than the
+      // mouse: a higher speed threshold before it registers at all, a
+      // bigger divisor so the same finger speed maps to a smaller
+      // speedNorm, and a lower cap so even a fast swipe stays gentle
+      // (speedNorm scales splat radius, dye amount and injected velocity
+      // directly -- see splat() above).
+      const TOUCH_SENS = { threshold: 5, divisor: 2600, cap: 0.85 };
+
+      const mouseState = { last: null };
+      const onPointerMove = (e) => {
+        // Touch is handled separately below: on most mobile browsers a
+        // touch's pointermove sequence gets silently cancelled the moment
+        // the browser recognizes the gesture as a page scroll (since
+        // pointer-events lets the touch fall through to scrollable content
+        // underneath), so relying on pointermove alone means touch barely
+        // does anything. Raw touchmove events don't have that problem --
+        // they keep firing for the whole drag even while the page scrolls.
+        if (e.pointerType === 'touch') return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        trackMove(x, y, rect, performance.now(), mouseState, MOUSE_SENS);
       };
       window.addEventListener('pointermove', onPointerMove, { passive: true });
+
+      const touchState = { last: null };
+      const onTouchMove = (e) => {
+        const touch = e.touches[0];
+        if (!touch) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        trackMove(x, y, rect, performance.now(), touchState, TOUCH_SENS);
+      };
+      const onTouchEnd = () => { touchState.last = null; };
+      window.addEventListener('touchmove', onTouchMove, { passive: true });
+      window.addEventListener('touchend', onTouchEnd, { passive: true });
+      window.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
       let bg = this._readColorRGB01('--color-bg', [0.04, 0.04, 0.05]);
       let accent = this._readColorRGB01('--color-accent', [0.31, 0.66, 1]);
@@ -738,6 +777,9 @@
       this._teardown = () => {
         if (raf) cancelAnimationFrame(raf);
         window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchend', onTouchEnd);
+        window.removeEventListener('touchcancel', onTouchEnd);
         document.removeEventListener('site:themechange', onThemeChange);
         resizeObserver.disconnect();
         const lose = gl.getExtension('WEBGL_lose_context');
