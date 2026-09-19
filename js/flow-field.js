@@ -590,8 +590,8 @@
       const MOUSE_SENS = { threshold: 3, divisor: 1400, cap: 1.6 };
       // speedNorm scales splat radius, dye amount and injected velocity
       // (see splat() above), so a bigger divisor + lower cap makes touch
-      // read as visibly softer than the mouse at the same swipe speed.
-      const TOUCH_SENS = { threshold: 5, divisor: 2600, cap: 0.85 };
+      // read as softer than the mouse at the same swipe speed.
+      const TOUCH_SENS = { threshold: 3, divisor: 1900, cap: 1.2 };
 
       const mouseState = { last: null };
       const onPointerMove = (e) => {
