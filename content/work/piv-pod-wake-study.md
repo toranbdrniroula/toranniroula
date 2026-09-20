@@ -38,7 +38,8 @@ Inside PIVlab itself, that's three concrete stages on every image pair: mask out
 
 Each `u` and `v` matrix came in with shape `(500, 154, 206)` - 500 snapshots over a 154×206 spatial grid. Mean flow quantities were straightforward from there:
 
-$$U_{mean}(x,y) = \frac{1}{N}\sum_{t=1}^{N} u(x,y,t), \qquad V_{mean}(x,y) = \frac{1}{N}\sum_{t=1}^{N} v(x,y,t)$$
+$$U_{mean}(x,y) = \frac{1}{N}\sum_{t=1}^{N} u(x,y,t)$$ 
+$$V_{mean}(x,y) = \frac{1}{N}\sum_{t=1}^{N} v(x,y,t)$$
 
 with vorticity computed from the velocity gradients of the mean field,
 

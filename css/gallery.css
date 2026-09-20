@@ -53,7 +53,12 @@
   font-size: 11px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-text);
+  /* Fixed light color, not var(--color-text): this badge always sits on a
+     fixed dark translucent overlay (regardless of light/dark mode) because
+     it's laid over a thumbnail image. Tying it to --color-text made it
+     near-black-on-near-black in light mode, since --color-text switches to
+     a dark value there. */
+  color: #F0EFEA;
   background: rgba(10, 10, 12, 0.7);
   padding: 4px 8px;
 }
@@ -79,7 +84,10 @@
   padding: 14px 14px 12px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-text);
+  /* Fixed light color -- same reasoning as .tile-tag above: this sits on a
+     fixed dark gradient overlay in both themes, so it shouldn't follow
+     --color-text, which flips to a dark value in light mode. */
+  color: #F0EFEA;
   background: linear-gradient(to top, rgba(10,10,12,0.85), rgba(10,10,12,0));
 }
 
