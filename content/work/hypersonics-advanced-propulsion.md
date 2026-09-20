@@ -40,7 +40,7 @@ This started as a homework assignment and I let it run longer than it needed to.
 
 ## What was learned
 
-Modified Newtonian theory tracked the CFD C_p distribution most uniformly across the cylinder's windward face, while the Tangent Wedge and Shock-Expansion methods did better near the shoulder (θ ≈ 40–70°) where the local geometry actually resembles a wedge - all three struggle at the stagnation point itself, where the CFD peak C_p exceeded the Modified Newtonian prediction by about 11%.
+Modified Newtonian theory tracked the CFD C_p distribution most uniformly across the cylinder's windward face, while the Tangent Wedge and Shock-Expansion methods did better near the shoulder (θ ≈ 40-70°) where the local geometry actually resembles a wedge - all three struggle at the stagnation point itself, where the CFD peak C_p exceeded the Modified Newtonian prediction by about 11%.
 
 <plotly-chart href="../content/data/hypersonics/cylinder_cp_comparison.json" type="scatter" title="Cylinder C_p: CFD vs. local-inclination methods" height="380"></plotly-chart>
 

@@ -11,17 +11,17 @@ date: "2025-2026"
 
 ## What this is
 
-A loose, growing collection of compressible-flow CFD runs done for no reason other than wanting to see what a particular flow looks like — the same OpenFOAM/`rhoCentralFoam` toolchain used for coursework like the [hypersonics assignment](case-file.html?slug=hypersonics-advanced-propulsion&category=research), pointed at whatever came to mind that week rather than a specific deliverable.
+A loose, growing collection of compressible-flow CFD runs done for no reason other than wanting to see what a particular flow looks like - the same OpenFOAM/`rhoCentralFoam` toolchain used for coursework like the [hypersonics assignment](case-file.html?slug=hypersonics-advanced-propulsion&category=research), pointed at whatever came to mind that week rather than a specific deliverable.
 
 **Key parameters**
 
 `solver`: rhoCentralFoam, OpenFOAM
 `regimes`: subsonic through hypersonic
-`subjects (so far)`: supersonic bullet, flow past a cylinder across the subsonic–hypersonic range, a Tesla valve
+`subjects (so far)`: supersonic bullet, flow past a cylinder across the subsonic-hypersonic range, a Tesla valve
 
 ## REPLACE ME: supersonic bullet
 
-A classic Schlieren-style compressible-flow validation case — a bullet in supersonic flight, bow shock and expansion fans visualized from the density field.
+A classic Schlieren-style compressible-flow validation case - a bullet in supersonic flight, bow shock and expansion fans visualized from the density field.
 
 ## REPLACE ME: flow past a cylinder, subsonic to hypersonic
 

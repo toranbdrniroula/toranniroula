@@ -138,7 +138,7 @@
     "hero_slides": [
       {
         "src": "assets/media/work_assets_hypersonics/hero-1-typeII-mach-interaction.png",
-        "caption": "Type II (Mach) interaction at M∞ = 3 — Mach stem, triple point, and slipstream"
+        "caption": "Type II (Mach) interaction at M∞ = 3 - Mach stem, triple point, and slipstream"
       },
       {
         "src": "assets/media/work_assets_hypersonics/hero-2-cylinder-mach.png",
@@ -174,14 +174,14 @@
       },
       {
         "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-winglet-performance.png",
-        "caption": "Winglet cant angle study — up to 14.95% L/D improvement at 45°"
+        "caption": "Winglet cant angle study - up to 14.95% L/D improvement at 45°"
       },
       {
         "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-qcriterion-isosurface-q2000.png",
-        "caption": "Q-criterion isosurfaces — wingtip vortex suppression by the winglet"
+        "caption": "Q-criterion isosurfaces - wingtip vortex suppression by the winglet"
       }
     ],
-    "quick_description": "A FOSSEE Fellowship project migrating a published ANSYS Fluent study of a small fixed-wing UAV with an inverted V-tail into OpenFOAM (simpleFoam, Spalart-Allmaras, snappyHexMesh), validating against the original results, then extending the study to blended winglets at 45° and 90° cant angles — finding a 14.95% lift-to-drag improvement at 45° over the baseline.",
+    "quick_description": "A FOSSEE Fellowship project migrating a published ANSYS Fluent study of a small fixed-wing UAV with an inverted V-tail into OpenFOAM (simpleFoam, Spalart-Allmaras, snappyHexMesh), validating against the original results, then extending the study to blended winglets at 45° and 90° cant angles - finding a 14.95% lift-to-drag improvement at 45° over the baseline.",
     "institution": "FOSSEE Fellowship, IIT Bombay, mentored by Asst. Prof. Chandan Bose (University of Birmingham), Asst. Prof. Tushar Chourushi, and CFD Engineer Nikhil Bhamare",
     "date": "2025",
     "featured": false,

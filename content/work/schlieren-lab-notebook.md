@@ -11,7 +11,7 @@ date: "2025-2026"
 
 ## What this is
 
-A running collection of schlieren and shadowgraph shots taken while building the RSD facility for [my thesis](case-file.html?slug=compressible-wall-jet-rsd&category=research) and generally messing around with the setup afterward — this is the "why I actually love fluid dynamics" page as much as it's a lab record. Everything here was shot with a Chronus 2.1HD high-speed camera on a single- or twin-mirror schlieren rig at the Flow Visualization Lab, IOE Pulchowk Campus.
+A running collection of schlieren and shadowgraph shots taken while building the RSD facility for [my thesis](case-file.html?slug=compressible-wall-jet-rsd&category=research) and generally messing around with the setup afterward - this is the "why I actually love fluid dynamics" page as much as it's a lab record. Everything here was shot with a Chronus 2.1HD high-speed camera on a single- or twin-mirror schlieren rig at the Flow Visualization Lab, IOE Pulchowk Campus.
 
 **Key parameters**
 
@@ -21,7 +21,7 @@ A running collection of schlieren and shadowgraph shots taken while building the
 
 ## REPLACE ME: candle plume and thermal plumes
 
-A knife-edge schlieren shot of a candle flame and its rising thermal plume — the first thing I visualized when getting the rig aligned, and still the fastest way to check a new setup is working.
+A knife-edge schlieren shot of a candle flame and its rising thermal plume - the first thing I visualized when getting the rig aligned, and still the fastest way to check a new setup is working.
 
 ## REPLACE ME: salt-water and glycerin diffusion
 
