@@ -3,7 +3,7 @@ title: "OpenFOAM CFD for a Fixed-Wing UAV, and the Effect of Blended Winglets"
 date: "2025"
 ---
 
-This was a Research Migration Project for the FOSSEE Fellowship at IIT Bombay: take a published ANSYS Fluent study of a small fixed-wing UAV and reproduce it entirely in OpenFOAM, then push past replication into a design question the original paper never asked. The reference is S.M.A. Meftah et al., "Numerical Simulation of a Flow Around an Unmanned Aerial Vehicle" (*Mechanika*, 2011) - a small UAV with an inverted V-tail and twin boom, analysed at 20 m/s with the Spalart-Allmaras turbulence model, validated against experimental data for an isolated wing. Meftah et al. never looked at winglets. Once the baseline was replicated and validated, I added blended winglets at 45° and 90° cant angles to the same wing and asked whether - and how much - they help.
+This was a Research Migration Project for the FOSSEE Fellowship at IIT Bombay: take a published ANSYS Fluent study of a small fixed-wing UAV and reproduce it entirely in OpenFOAM, then push past replication into a design question the original paper never asked. The reference is S.M.A. Meftah et al., "Numerical Simulation of a Flow Around an Unmanned Aerial Vehicle" (*Mechanika*, 2011) - a small UAV with an inverted V-tail and twin boom, analysed at 20 m/s with the Spalart-Allmaras turbulence model, validated against experimental data for an isolated wing. Meftah et al. never looked at winglets. Once the baseline was replicated and validated, I added blended winglets at 45° and 90° cant angles to the same wing and asked whether and how much they help.
 
 **Key parameters**
 
@@ -25,7 +25,7 @@ All three airframes actually flown through the solver - drag to rotate, scroll t
 <stl-reader href="https://cdn.jsdelivr.net/gh/toranbdrniroula/Aerodynamics-of-Fixed-Wing-UAV@75716a79f7f26e2d4c405ca55fc55dd5a5473e26/geometry/cant90.stl" bg-color="#ffffff:#000000" surface-color="#8a6fd1" height="380"></stl-reader>
 <span class="md-caption">90° cant angle winglet - same tip chord (0.1 m), same 0.2 m blend length, same 0.05 m wing extension as the 45° case.</span>
 
-[Download the full internship report (PDF)](../assets/downloads/fossee-uav-cfd-internship-report.pdf) &middot; [Full case setup, ready to run (GitHub)](https://github.com/toranbdrniroula/Aerodynamics-of-Fixed-Wing-UAV)
+[Download the full internship report (PDF)](../assets/downloads/fossee-uav-cfd-internship-report.pdf) &middot; [Full case setup, ready to run](https://cfd.fossee.in/research-migration-project/full-download/project/62)
 
 ## Governing equations
 
@@ -37,11 +37,11 @@ with the turbulent eddy viscosity $\mu_t = \rho\nu_t$ carried by a transport equ
 
 $$\mathbf{u}\cdot\nabla\tilde{\nu} = c_{b1}\tilde{S}\tilde{\nu} - c_{w1}f_w\left(\frac{\tilde{\nu}}{d}\right)^2 + \frac{1}{\sigma}\left[\nabla\cdot\left((\nu+\tilde{\nu})\nabla\tilde{\nu}\right) + c_{b2}(\nabla\tilde{\nu})^2\right]$$
 
-SA was chosen over the (generally more accurate for separated flow) K-Omega SST specifically because it's more forgiving of mesh quality at the cell counts this project could afford, and because it's what the reference study used - matching the closure model was part of making the validation meaningful.
+SA was chosen over the (generally more accurate for separated flow) K-Omega SST specifically because it's more forgiving of mesh quality at the cell counts this project could afford, and because it's what the reference study used, so matching the closure model was part of making the validation meaningful.
 
 ## Geometry, domain, and mesh
 
-The longitudinal half-geometry (steady flight, no sideslip, so the symmetry plane is justified) was built in CATIA V5R21 from Meftah et al.'s published dimensions and figures. Several dimensions weren't given in the original paper - fuselage length and cross-section, tail chord, wing-to-tail distance, boom diameter - and were estimated from proportions in the published schematics. That's a real source of discrepancy discussed below, not swept under the rug. What is fixed: 2900 mm projected wingspan, 1955 mm total length, 236 mm wing chord, 1080 mm projected tail span, 4° dihedral, 4° wing incidence, Clark YH airfoil on the wing, NACA 0012 on the tail. The exported STL was cleaned in MeshLab before meshing.
+The longitudinal half-geometry (steady flight, no sideslip, so the symmetry plane is justified) was built in CATIA V5R21 from Meftah et al.'s published dimensions and figures. Several dimensions weren't given in the original paper, so fuselage length and cross-section, tail chord, wing-to-tail distance, boom diameter and were estimated from proportions in the published schematics. What is fixed: 2900 mm projected wingspan, 1955 mm total length, 236 mm wing chord, 1080 mm projected tail span, 4° dihedral, 4° wing incidence, Clark YH airfoil on the wing, NACA 0012 on the tail. The exported STL was cleaned in MeshLab before meshing.
 
 <div class="md-figure-row">
   <img src="../assets/media/work_assets_fossee_uav_cfd/fossee-uav-domain-setup.png" alt="Simulation domain setup showing inlet, outlet, side, and symmetry boundaries">
@@ -76,7 +76,7 @@ Before committing to Spalart-Allmaras for the full sweep, I cross-checked it aga
 Grid independence was checked at α = 4° across three mesh densities with a refinement ratio of 2.5, using Richardson extrapolation and the Grid Convergence Index:
 
 <plotly-chart href="../content/data/fossee-uav-grid-convergence.json" type="scatter" title="C_L vs Mesh Count - Grid Convergence Study" height="360"></plotly-chart>
-<span class="md-caption">C_L is non-monotonic across the three grids (0.5154 → 0.5186 → 0.5106) but stays within 0.8% of the Richardson-extrapolated value throughout. GCI was 0.67% coarse-to-medium and 0.27% medium-to-fine, both comfortably under the 1% threshold - the medium grid (2.60M cells) was carried forward for every subsequent run.</span>
+<span class="md-caption">C_L is non-monotonic across the three grids (0.5154 $$\rightarrow$$ 0.5186 $$\rightarrow$$ 0.5106) but stays within 0.8% of the Richardson-extrapolated value throughout. GCI was 0.67% coarse-to-medium and 0.27% medium-to-fine, both comfortably under the 1% threshold - the medium grid (2.60M cells) was carried forward for every subsequent run.</span>
 
 <img src="../assets/media/work_assets_fossee_uav_cfd/fossee-uav-mesh-density-comparison.png" alt="Cross-sectional comparison of coarse, medium, and fine mesh density around the UAV">
 <span class="md-caption">Cross-sections of the coarse (1.04M), medium (2.60M), and fine (6.50M) grids used for the convergence study.</span>
