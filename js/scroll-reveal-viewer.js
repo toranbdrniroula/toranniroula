@@ -308,10 +308,22 @@ class ScrollRevealViewer extends HTMLElement {
       const box = new THREE.Box3().setFromObject(obj);
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
-      obj.position.sub(center);
       const maxDim = Math.max(size.x, size.y, size.z) || 1;
       const scale = 1.6 / maxDim;
       obj.scale.setScalar(scale);
+      // Three composes an object's world transform as position + scale*local,
+      // so centering it on the origin AFTER scaling requires the position
+      // offset to be scaled down by the same factor (-center*scale), not the
+      // raw, unscaled center. Using the raw center here was the bug: it left
+      // the (correctly tiny) fitted mesh displaced by whatever the model's
+      // real-world center offset was -- e.g. several feet of fuselage length
+      // -- which at this scene's scale (whole aircraft = 1.6 units) is a
+      // displacement several times the model's own size, so the camera's
+      // orbit around (0,0,0)-ish targets mostly framed empty space instead
+      // of the aircraft. This is unrelated to source units (feet vs.
+      // meters): the ratio-based fit above is unit-agnostic, so the same bug
+      // would occur regardless of what units the STL was exported in.
+      obj.position.copy(center).multiplyScalar(-scale);
       pivot.add(obj);
       halfExtent = size.multiplyScalar(scale / 2);
     };
