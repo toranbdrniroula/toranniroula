@@ -1,8 +1,11 @@
-// <scroll-reveal-viewer mode="images|model" bg-color="..." surface-color="...">
-//   <reveal-frame src="..." alt="...">          <!-- mode="images" -->
+// <scroll-reveal-viewer mode="images|model" bg-color="..." surface-color="..." label="...">
+//   <reveal-frame src="..." alt="...">                                     <!-- mode="images" -->
 //     <reveal-caption><span class="tag">...</span><h4>...</h4><p>...</p></reveal-caption>
 //   </reveal-frame>
-//   <reveal-frame href="model.stl" rot="0,90,0">  <!-- mode="model" -->
+//   <reveal-frame href="model.stl" azimuth="20" elevation="16" distance="3.1" target="0,0,0">  <!-- mode="model" -->
+//     <reveal-caption>...</reveal-caption>
+//   </reveal-frame>
+//   <reveal-frame azimuth="80" elevation="6" distance="0.85" target="0,0,-0.8">
 //     <reveal-caption>...</reveal-caption>
 //   </reveal-frame>
 //   ...
@@ -22,13 +25,32 @@
 //   point (see TRANSITION_BAND below): each frame holds at full opacity for
 //   most of its step and swaps quickly near the midpoint, so there's a
 //   short, crisp cut rather than a long blend.
-// - mode="model" loads one Three.js model (STL via STLLoader, or GLB/GLTF
-//   via GLTFLoader, auto-detected from the href extension) and continuously
-//   interpolates its rotation between each frame's rot="x,y,z" (degrees,
-//   Euler XYZ) waypoint as the track scrolls -- true orbiting motion tied to
-//   scroll rather than a sequence of flat images. Swapping mode="images" for
-//   mode="model" (plus a real exported model) is a markup-only change; the
-//   scroll-progress/caption/progress-dot logic is shared by both modes.
+// - mode="model" loads exactly one Three.js model -- STL via STLLoader, or
+//   GLB/GLTF via GLTFLoader, auto-detected from the extension on the FIRST
+//   <reveal-frame href="...">; later frames don't need their own href -- and
+//   flies a camera around it as the track scrolls. Each <reveal-frame> is a
+//   waypoint:
+//     azimuth    orbit angle around the model, degrees. Plain lerp between
+//                waypoints (no wraparound), so pick a monotonically
+//                increasing (or decreasing) sequence across frames for one
+//                continuous sweep rather than jumping back and forth.
+//     elevation  camera height above the horizontal plane, degrees.
+//     distance   camera distance from its target, in world units *after*
+//                the model has been fit to a 1.6-unit longest dimension --
+//                so roughly 0.8-1.2 reads as a close-up on a detail and
+//                2.5-3.5 as a full establishing shot.
+//     target     "x,y,z", each a fraction of the model's own half-extent on
+//                that axis: 0 is the model's center, +1/-1 is that axis's
+//                extreme edge. E.g. target="0,0,-1" points the camera at
+//                whatever sits at the model's forward-most tip. Resolved to
+//                a real point once the model's actual bounding box is known
+//                (all defaulting to "0,0,0", the model's center, if unset).
+//   The model itself never rotates -- only the camera dollies and orbits --
+//   which is what makes "zoom in on this one part" actually read as zooming
+//   rather than the whole object just spinning in place around a fixed
+//   frame. Three.js loads lazily via dynamic import() resolved through the
+//   page's <script type="importmap">, the same pattern <stl-reader> uses,
+//   so no extra module-loader script is needed on the page.
 // - Colors default to this site's CSS custom properties (--color-bg-elevated,
 //   --color-accent, --color-divider, --color-text, --color-text-muted) so
 //   the viewer re-themes automatically with the site's light/dark toggle;
@@ -36,11 +58,23 @@
 // - Respects prefers-reduced-motion: locks to the frame nearest the current
 //   scroll position with no interpolation or transition at all.
 
-const TRANSITION_BAND = 0.18; // fraction of each inter-frame step spent blending; rest is a clean hold
+const TRANSITION_BAND = 0.18; // mode="images": fraction of each step spent blending; rest is a clean hold
 
 function smoothstep(edge0, edge1, x) {
   const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
   return t * t * (3 - 2 * t);
+}
+
+let threeModulesPromise = null;
+function loadThreeModules() {
+  if (!threeModulesPromise) {
+    threeModulesPromise = Promise.all([
+      import('three'),
+      import('three/addons/loaders/STLLoader.js'),
+      import('three/addons/loaders/GLTFLoader.js')
+    ]);
+  }
+  return threeModulesPromise;
 }
 
 class ScrollRevealViewer extends HTMLElement {
@@ -70,6 +104,10 @@ class ScrollRevealViewer extends HTMLElement {
         will-change: opacity;
       }
       .srv-inner canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; }
+      .srv-msg {
+        position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+        text-align: center; padding: 16px; font-size: 13px; color: var(--color-text-muted, #8C8C92);
+      }
       .srv-cap {
         position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%);
         text-align: center; opacity: 0; transition: opacity .25s ease;
@@ -136,12 +174,19 @@ class ScrollRevealViewer extends HTMLElement {
         inner.appendChild(img);
         layers.push(img);
       } else {
-        fr._rot = (fr.getAttribute('rot') || '0,0,0').split(',').map(Number);
+        const az = parseFloat(fr.getAttribute('azimuth'));
+        const el = parseFloat(fr.getAttribute('elevation'));
+        const dist = parseFloat(fr.getAttribute('distance'));
+        const targetFrac = (fr.getAttribute('target') || '0,0,0').split(',').map(Number);
+        fr._view = {
+          azimuth: Number.isFinite(az) ? az : 0,
+          elevation: Number.isFinite(el) ? el : 12,
+          distance: Number.isFinite(dist) && dist > 0 ? dist : 2.4,
+          targetFrac: [targetFrac[0] || 0, targetFrac[1] || 0, targetFrac[2] || 0],
+          target: null // resolved to a real Vector3 once the model's bounding box is known
+        };
       }
     });
-
-    let model = null;
-    if (mode === 'model') model = this._setupModel(inner, frameEls[0]);
 
     const onScroll = () => {
       const rect = track.getBoundingClientRect();
@@ -151,10 +196,10 @@ class ScrollRevealViewer extends HTMLElement {
       const pos = p * (n - 1);
       const idx = Math.min(n - 2, Math.floor(pos));
       const rawFrac = pos - idx;
-      // Map the raw 0..1 inter-step position through a narrow band centered
-      // on the midpoint so most of the step is a clean hold, not a blend.
+      // mode="images": map through a narrow band centered on the midpoint so
+      // most of the step is a clean hold, not a blend -- see TRANSITION_BAND.
       const lo = 0.5 - TRANSITION_BAND / 2, hi = 0.5 + TRANSITION_BAND / 2;
-      const frac = reduced ? (rawFrac < 0.5 ? 0 : 1) : smoothstep(lo, hi, rawFrac);
+      const imageFrac = reduced ? (rawFrac < 0.5 ? 0 : 1) : smoothstep(lo, hi, rawFrac);
       const activeIdx = rawFrac < 0.5 ? idx : Math.min(idx + 1, n - 1);
 
       caps.forEach((c, i) => c.classList.toggle('active', i === activeIdx));
@@ -163,36 +208,71 @@ class ScrollRevealViewer extends HTMLElement {
       if (mode === 'images') {
         layers.forEach((img, i) => {
           let op = 0;
-          if (i === idx) op = 1 - frac;
-          else if (i === idx + 1) op = frac;
+          if (i === idx) op = 1 - imageFrac;
+          else if (i === idx + 1) op = imageFrac;
           img.style.opacity = op;
         });
       } else if (model) {
-        const a = frameEls[idx]._rot, b = frameEls[Math.min(idx + 1, n - 1)]._rot;
-        model.setRotationDeg(
-          a[0] + (b[0] - a[0]) * frac,
-          a[1] + (b[1] - a[1]) * frac,
-          a[2] + (b[2] - a[2]) * frac
-        );
+        // mode="model": the camera flight needs to move continuously across
+        // the *whole* step, not hold-then-snap like the image crossfade, so
+        // this uses a full-range ease instead of the narrow TRANSITION_BAND.
+        const modelFrac = reduced ? (rawFrac < 0.5 ? 0 : 1) : smoothstep(0, 1, rawFrac);
+        const va = frameEls[idx]._view, vb = frameEls[Math.min(idx + 1, n - 1)]._view;
+        if (va && vb && va.target && vb.target) {
+          model.setView(
+            va.azimuth + (vb.azimuth - va.azimuth) * modelFrac,
+            va.elevation + (vb.elevation - va.elevation) * modelFrac,
+            va.distance + (vb.distance - va.distance) * modelFrac,
+            va.target.clone().lerp(vb.target, modelFrac)
+          );
+        }
       }
     };
+
+    let model = null;
+    if (mode === 'model') {
+      this._setupModel(inner, frameEls).then((m) => { model = m; onScroll(); });
+    }
 
     window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
     window.addEventListener('resize', () => { if (model) model.resize(); onScroll(); });
     onScroll();
   }
 
-  // mode="model" needs Three.js (STLLoader/GLTFLoader) loaded as an ES module
-  // with an import map before this script runs -- see body.md for the exact
-  // <script type="importmap"> block. Kept as a separate method so mode="images"
-  // (the common case) never pays for Three.js at all.
-  _setupModel(container, frame0) {
-    if (!window.THREE_SRV) {
-      console.warn('scroll-reveal-viewer: mode="model" requires window.THREE_SRV = { THREE, STLLoader, GLTFLoader } to be set before this element upgrades.');
+  _showMessage(container, msg) {
+    const el = document.createElement('div');
+    el.className = 'srv-msg';
+    el.textContent = msg;
+    container.appendChild(el);
+  }
+
+  // mode="model": lazy-loads Three.js (STLLoader/GLTFLoader) through the
+  // page's <script type="importmap"> -- same pattern as <stl-reader> -- fits
+  // the model to a 1.6-unit box, and returns a controller whose setView()
+  // points a spherical-orbit camera at a resolved target. Kept as a separate
+  // async method so mode="images" (the common case) never pays for Three.js
+  // at all.
+  async _setupModel(container, frameEls) {
+    const frame0 = frameEls[0];
+    const href = frame0 && frame0.getAttribute('href');
+    if (!href) {
+      this._showMessage(container, 'Model unavailable (missing href on the first reveal-frame).');
       return null;
     }
-    const { THREE, STLLoader, GLTFLoader } = window.THREE_SRV;
-    const href = frame0.getAttribute('href');
+    if (!window.WebGLRenderingContext) {
+      this._showMessage(container, "This browser doesn't support WebGL.");
+      return null;
+    }
+
+    let modules;
+    try {
+      modules = await loadThreeModules();
+    } catch (err) {
+      console.error('scroll-reveal-viewer: failed to load Three.js', err);
+      this._showMessage(container, "Couldn't load the 3D viewer library.");
+      return null;
+    }
+    const [THREE, { STLLoader }, { GLTFLoader }] = modules;
     const surfaceColor = this.getAttribute('surface-color') || '#c9d3de';
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -201,13 +281,28 @@ class ScrollRevealViewer extends HTMLElement {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 100);
-    camera.position.set(0, 0.6, 3.2);
     scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-    const dir = new THREE.DirectionalLight(0xffffff, 0.9);
-    dir.position.set(2, 3, 4);
-    scene.add(dir);
+    const key = new THREE.DirectionalLight(0xffffff, 0.95);
+    key.position.set(2, 3, 4);
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.3);
+    rim.position.set(-3, -1.5, -2);
+    scene.add(rim);
     const pivot = new THREE.Group();
     scene.add(pivot);
+
+    const render = () => renderer.render(scene, camera);
+    const resize = () => {
+      const w = container.clientWidth, h = container.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      render();
+    };
+
+    let halfExtent = new THREE.Vector3(0.8, 0.8, 0.8);
+    const toLocal = (fx, fy, fz) => new THREE.Vector3(fx * halfExtent.x, fy * halfExtent.y, fz * halfExtent.z);
 
     const fit = (obj) => {
       const box = new THREE.Box3().setFromObject(obj);
@@ -215,34 +310,50 @@ class ScrollRevealViewer extends HTMLElement {
       const center = box.getCenter(new THREE.Vector3());
       obj.position.sub(center);
       const maxDim = Math.max(size.x, size.y, size.z) || 1;
-      obj.scale.setScalar(1.6 / maxDim);
+      const scale = 1.6 / maxDim;
+      obj.scale.setScalar(scale);
       pivot.add(obj);
-      render();
+      halfExtent = size.multiplyScalar(scale / 2);
     };
 
-    if (/\.glb$|\.gltf$/i.test(href)) {
-      new GLTFLoader().load(href, (gltf) => fit(gltf.scene), undefined, console.warn);
-    } else {
-      new STLLoader().load(href, (geom) => {
-        geom.computeVertexNormals();
-        const mat = new THREE.MeshStandardMaterial({ color: surfaceColor, metalness: 0.1, roughness: 0.6 });
-        fit(new THREE.Mesh(geom, mat));
-      }, undefined, console.warn);
-    }
+    const loaded = await new Promise((resolve) => {
+      const onError = (err) => {
+        console.error('scroll-reveal-viewer: failed to load model', href, err);
+        this._showMessage(container, "Couldn't load this model — check the file and try again.");
+        resolve(false);
+      };
+      if (/\.glb$|\.gltf$/i.test(href)) {
+        new GLTFLoader().load(href, (gltf) => { fit(gltf.scene); resolve(true); }, undefined, onError);
+      } else {
+        new STLLoader().load(href, (geom) => {
+          geom.computeVertexNormals();
+          const mat = new THREE.MeshStandardMaterial({ color: surfaceColor, metalness: 0.1, roughness: 0.6 });
+          fit(new THREE.Mesh(geom, mat));
+          resolve(true);
+        }, undefined, onError);
+      }
+    });
+    if (!loaded) return null;
 
-    const render = () => renderer.render(scene, camera);
-    const resize = () => {
-      const w = container.clientWidth, h = container.clientHeight;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      render();
-    };
+    // Now that the model's real half-extent is known, resolve every
+    // waypoint's target="x,y,z" fraction into an actual local-space point.
+    frameEls.forEach((fr) => {
+      if (fr._view) fr._view.target = toLocal(...fr._view.targetFrac);
+    });
+
     resize();
 
     return {
-      setRotationDeg(rx, ry, rz) {
-        pivot.rotation.set(THREE.MathUtils.degToRad(rx), THREE.MathUtils.degToRad(ry), THREE.MathUtils.degToRad(rz));
+      setView(azimuthDeg, elevationDeg, distance, target) {
+        const az = THREE.MathUtils.degToRad(azimuthDeg);
+        const el = THREE.MathUtils.degToRad(elevationDeg);
+        const r = Math.cos(el) * distance;
+        camera.position.set(
+          target.x + r * Math.sin(az),
+          target.y + distance * Math.sin(el),
+          target.z + r * Math.cos(az)
+        );
+        camera.lookAt(target);
         render();
       },
       resize
