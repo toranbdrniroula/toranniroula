@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "Wall heat transfer coefficient",
+      "x": [35400, 68949, 140400, 278052],
+      "y": [362.75, 367.94, 374.64, 375.93],
+      "marker": { "size": 10 },
+      "hovertemplate": "%{x:,} elements<br>HTC = %{y:.2f} W/m\u00b2K<extra></extra>"
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": { "text": "Number of elements" }, "type": "log" },
+    "yaxis": { "title": { "text": "Wall HTC (W m\u207b\u00b2 K\u207b\u00b9)" }, "range": [355, 382] },
+    "margin": { "t": 30, "r": 24, "b": 48, "l": 56 }
+  }
+}

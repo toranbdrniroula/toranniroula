@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "Nozzle exit velocity",
+      "x": [97278, 116288, 153003, 278710, 517104, 1464343],
+      "y": [256.1818, 257.8299, 258.9033, 260.3153, 260.4467, 260.4928],
+      "marker": { "size": 9 },
+      "hovertemplate": "%{x:,} elements<br>%{y:.2f} m/s<extra></extra>"
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": { "text": "Number of elements" }, "type": "log" },
+    "yaxis": { "title": { "text": "Nozzle exit velocity (m/s)" }, "range": [254, 262] },
+    "margin": { "t": 30, "r": 24, "b": 48, "l": 56 }
+  }
+}
