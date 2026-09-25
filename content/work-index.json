@@ -49,6 +49,7 @@
     "status": "Completed",
     "thumbnail": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-candle-plume.png",
     "media_type": "carousel",
+	"media_fit": "contain",
     "quick_description": "My final year thesis: designing and building a Rainbow Schlieren Deflectometry (RSD) facility from scratch to quantitatively image density-gradient fields around a heated, compressible wall jet over a temperature-controlled flat plate, benchmarked against 2D CFD and a natural-convection validation case, with pyrsd, a Python library I wrote to turn the raw color images into density fields.",
     "institution": "IOE Pulchowk Campus, Final Year Project, supervised by Asst. Prof. Kamal Darlami (now a PhD student at the University of Southern Queensland, working on experimental hypervelocity re-entry vehicle imaging) and Asst. Prof. Laxman Motra, Deputy HOD, Department of Mechanical and Aerospace Engineering",
     "date": "2025-2026",
@@ -67,7 +68,7 @@
         "url": "https://github.com/toranbdrniroula/pyrsd"
       }
     ],
-    "hero_interval": 2200,
+    "hero_interval": 2000,
     "hero_slides": [
       {
         "src": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-candle-plume.png",
