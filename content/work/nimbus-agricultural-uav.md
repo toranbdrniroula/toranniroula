@@ -19,25 +19,27 @@ The structural envelope got the same treatment. A V-n diagram was built from a F
 <img src="../assets/media/work_assets_nimbus/nimbus-vn-diagram-real.svg" alt="V-n diagram with maneuvering and gust envelopes for Nimbus">
 <span class="md-caption">V-n diagram: n = 3.5 / −1.5 maneuvering limits with ±7.5 and ±15 m/s gust lines out to V_ne = 56 m/s.</span>
 
-That sizing converged on a high-wing monoplane - NACA 2412 wing (12 m span, 12.569 m² reference area, AR 11.4, taper 0.75, 4° dihedral), NACA 0012 horizontal stabilizer, swept NACA 2412 vertical stabilizer - at a 576 kg MTOW with an 83 kg Li-ion pack (265 Wh/kg), modeled in CATIA V5. Below is the actual geometry, not a render standing in for it: scroll and the camera walks the fuselage, wing station, gear, and tail in turn, at whatever distance makes each one legible instead of one static hero shot doing all the work.
+That sizing converged on a high-wing monoplane - NACA 2412 wing (12 m span, 12.569 m² reference area, AR 11.4, taper 0.75, 4° dihedral), NACA 0012 horizontal stabilizer, swept NACA 2412 vertical stabilizer - at a 576 kg MTOW with an 83 kg Li-ion pack (265 Wh/kg), modeled in CATIA V5. 
 
-<scroll-reveal-viewer mode="model" surface-color="#c9d3de" label="Nimbus airframe — scroll to fly around it">
-  <reveal-frame href="../assets/media/work_assets_nimbus/nimbus_aircraft.stl" azimuth="20" elevation="16" distance="3.1" target="0,0,0">
+<!-- Camera waypoints are in the GLB's own frame (nose = +Z, up = +Y, azimuth 0 = camera dead ahead of the nose,
+     increasing toward the +X side). target="x,y,z" is a fraction of the model's half-extent on each axis. -->
+<scroll-reveal-viewer mode="model" environment="studio" env-intensity="0.6" label="Nimbus airframe - scroll viewer">
+  <reveal-frame href="../assets/media/work_assets_nimbus/nimbus_aircraft.glb" azimuth="25" elevation="16" distance="2.0" target="0,0,0">
     <reveal-caption><span class="tag">Airframe</span><h4>High-wing monoplane</h4><p>NACA 2412 wing, AR 11.4, taper 0.75, 4° dihedral, tricycle gear, twin wing motors, swept tail - the shape the matching plot above converged on.</p></reveal-caption>
   </reveal-frame>
-  <reveal-frame azimuth="80" elevation="6" distance="0.85" target="0,0,-0.85">
+  <reveal-frame azimuth="40" elevation="6" distance="0.85" target="0,-0.1,0.81">
     <reveal-caption><span class="tag">Fuselage</span><h4>Nose and CG envelope</h4><p>Everything forward of the wing box is sized around the CG-travel range worked out in the weight-and-balance section below.</p></reveal-caption>
   </reveal-frame>
-  <reveal-frame azimuth="140" elevation="10" distance="1.0" target="0.55,0,0.05">
+  <reveal-frame azimuth="80" elevation="10" distance="1.0" target="0.34,-0.05,0.59">
     <reveal-caption><span class="tag">Propulsion</span><h4>Wing-mounted motor station</h4><p>One motor per wing, keeping the fuselage centerline clear for the 200 L hopper.</p></reveal-caption>
   </reveal-frame>
-  <reveal-frame azimuth="200" elevation="-6" distance="0.95" target="0,-0.9,0.05">
+  <reveal-frame azimuth="130" elevation="-6" distance="1.0" target="0,-0.7,0.55">
     <reveal-caption><span class="tag">Undercarriage</span><h4>Fixed tricycle gear</h4><p>Sized against the takeoff/landing constraint lines on the matching plot above - the part of the sizing that ended up with the least margin, as it turns out.</p></reveal-caption>
   </reveal-frame>
-  <reveal-frame azimuth="260" elevation="20" distance="1.15" target="0,0.4,0.9">
+  <reveal-frame azimuth="200" elevation="20" distance="1.15" target="0,0.32,-0.8">
     <reveal-caption><span class="tag">Empennage</span><h4>NACA 0012 tail + swept NACA 2412 fin</h4><p>0.885 tail volume coefficient - the number that resurfaces almost unchanged in the flight-test neutral-point cross-check below.</p></reveal-caption>
   </reveal-frame>
-  <reveal-frame azimuth="320" elevation="14" distance="3.1" target="0,0,0">
+  <reveal-frame azimuth="265" elevation="14" distance="2.0" target="0,0,0">
     <reveal-caption><span class="tag">Sizing</span><h4>576 kg MTOW</h4><p>12 m span, 12.569 m² reference area, 83 kg Li-ion pack at 265 Wh/kg - the numbers behind the shape you just flew around.</p></reveal-caption>
   </reveal-frame>
 </scroll-reveal-viewer>

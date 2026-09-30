@@ -51,6 +51,19 @@
 //   frame. Three.js loads lazily via dynamic import() resolved through the
 //   page's <script type="importmap">, the same pattern <stl-reader> uses,
 //   so no extra module-loader script is needed on the page.
+// - Interactive toggle (mode="model" only): a "Scroll tour | Interactive"
+//   switch is shown on the stage. "Interactive" collapses the pinned scroll
+//   track and mounts a regular <stl-reader> (free orbit / zoom / pan, same
+//   as the Dandelion page) in its place; switching back unmounts it (frees
+//   the GPU context) and restores the previous scroll position in the tour.
+//     interactive-href  model for the interactive view (default: the first
+//                       <reveal-frame href>)
+//     no-toggle         hide the switch and keep the scroll tour only
+// - environment="studio" (optional): image-based lighting for glTF/GLB
+//   models with PBR materials (glossy paint, clearcoat). Off by default so
+//   flat/vertex-colored exports keep their exact colors. env-intensity
+//   (default 0.9) scales it. The same attributes are forwarded to the
+//   interactive <stl-reader>.
 // - Colors default to this site's CSS custom properties (--color-bg-elevated,
 //   --color-accent, --color-divider, --color-text, --color-text-muted) so
 //   the viewer re-themes automatically with the site's light/dark toggle;
@@ -123,6 +136,23 @@ class ScrollRevealViewer extends HTMLElement {
       .srv-progress { position: absolute; top: 22px; right: 22px; display: flex; flex-direction: column; gap: 7px; }
       .srv-progress i { width: 5px; height: 20px; border-radius: 3px; background: var(--color-divider, #232328); transition: background .3s; }
       .srv-progress i.active { background: var(--color-accent, #4FA8FF); }
+      .srv-toggle {
+        display: inline-flex; border: 1px solid var(--color-divider, #232328); border-radius: 999px;
+        overflow: hidden; font-family: var(--font-mono, monospace); font-size: 10.5px;
+        letter-spacing: .08em; text-transform: uppercase;
+        background: var(--srv-bg, var(--color-bg-elevated, #141417));
+      }
+      .srv-toggle button {
+        background: transparent; color: var(--color-text-muted, #8C8C92); border: 0; margin: 0;
+        padding: 6px 12px; cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit;
+      }
+      .srv-toggle button.on { background: var(--color-accent, #4FA8FF); color: #0A0A0C; }
+      .srv-stage > .srv-toggle { position: absolute; top: 46px; left: 22px; z-index: 3; }
+      .srv-ibar {
+        display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 16px;
+        padding: 0 0 10px; font-family: var(--font-mono, monospace); font-size: 10.5px;
+        letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted, #8C8C92);
+      }
       .srv-hint {
         position: absolute; top: 22px; left: 22px; font-family: var(--font-mono, monospace);
         font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted, #8C8C92); opacity: .7;
@@ -188,7 +218,95 @@ class ScrollRevealViewer extends HTMLElement {
       }
     });
 
+    // ---- Scroll tour <-> free interactive viewer (mode="model" only) ----
+    let interactive = false;
+    let savedProgress = 0;
+    const interactiveHref = this.getAttribute('interactive-href') || (frameEls[0] && frameEls[0].getAttribute('href'));
+    const canToggle = mode === 'model' && !this.hasAttribute('no-toggle') && !!interactiveHref
+      && !!customElements.get('stl-reader');
+    const toggles = [];
+    let panel = null, panelHost = null;
+
+    const syncToggles = () => toggles.forEach((wrap) => wrap.querySelectorAll('button').forEach((b) => {
+      const on = (b.dataset.mode === 'free') === interactive;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    }));
+    const makeToggle = () => {
+      const wrap = document.createElement('div');
+      wrap.className = 'srv-toggle';
+      wrap.setAttribute('role', 'group');
+      wrap.setAttribute('aria-label', 'Viewer mode');
+      [['tour', 'Scroll tour'], ['free', 'Interactive']].forEach(([key, text]) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.dataset.mode = key;
+        b.textContent = text;
+        b.addEventListener('click', () => setInteractive(key === 'free'));
+        wrap.appendChild(b);
+      });
+      toggles.push(wrap);
+      return wrap;
+    };
+    // html { scroll-behavior: smooth } would animate a plain scrollTo, and the
+    // layout jump here must be instant.
+    const jumpTo = (top) => window.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'instant' });
+    const currentProgress = () => {
+      const rect = track.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      return total > 0 ? Math.max(0, Math.min(1, -rect.top / total)) : 0;
+    };
+
+    const setInteractive = (on) => {
+      if (!canToggle || on === interactive) return;
+      if (on) {
+        savedProgress = currentProgress();
+        interactive = true;
+        track.style.display = 'none';
+        panel.hidden = false;
+        const reader = document.createElement('stl-reader');
+        reader.setAttribute('href', interactiveHref);
+        reader.setAttribute('height', String(Math.round(Math.max(360, Math.min(window.innerHeight * 0.75, 680)))));
+        reader.setAttribute('surface-color', this.getAttribute('surface-color') || '#c9d3de');
+        ['bg-color', 'environment', 'env-intensity'].forEach((a) => {
+          if (this.hasAttribute(a)) reader.setAttribute(a, this.getAttribute(a));
+        });
+        panelHost.appendChild(reader);
+        // The N*100svh track just vanished, so whatever was on screen moved;
+        // re-anchor on the top of this component (88px clears the sticky nav).
+        jumpTo(this.getBoundingClientRect().top + window.scrollY - 88);
+      } else {
+        interactive = false;
+        panelHost.innerHTML = ''; // disconnects <stl-reader>, which disposes its GPU resources
+        panel.hidden = true;
+        track.style.display = '';
+        const total = track.offsetHeight - window.innerHeight;
+        const trackTop = track.getBoundingClientRect().top + window.scrollY;
+        jumpTo(trackTop + savedProgress * Math.max(total, 0)); // back to where the tour was left
+        if (model) model.resize(); // canvas measured 0x0 while hidden
+        onScroll();
+      }
+      syncToggles();
+    };
+
+    if (canToggle) {
+      stage.appendChild(makeToggle());
+      panel = document.createElement('div');
+      panel.className = 'srv-interactive';
+      panel.hidden = true;
+      const bar = document.createElement('div');
+      bar.className = 'srv-ibar';
+      const help = document.createElement('span');
+      help.textContent = 'Drag to orbit · scroll or pinch to zoom · right-drag or Pan to move';
+      bar.append(help, makeToggle());
+      panelHost = document.createElement('div');
+      panel.append(bar, panelHost);
+      this.appendChild(panel);
+      syncToggles();
+    }
+
     const onScroll = () => {
+      if (interactive) return; // track is display:none while the free viewer is up
       const rect = track.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
       let p = total > 0 ? (-rect.top) / total : 0;
@@ -244,6 +362,7 @@ class ScrollRevealViewer extends HTMLElement {
     el.className = 'srv-msg';
     el.textContent = msg;
     container.appendChild(el);
+    return el;
   }
 
   // mode="model": lazy-loads Three.js (STLLoader/GLTFLoader) through the
@@ -275,13 +394,15 @@ class ScrollRevealViewer extends HTMLElement {
     const [THREE, { STLLoader }, { GLTFLoader }] = modules;
     const surfaceColor = this.getAttribute('surface-color') || '#c9d3de';
 
+    const loadingMsg = this._showMessage(container, 'Loading model\u2026');
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
     container.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 100);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambient);
     const key = new THREE.DirectionalLight(0xffffff, 0.95);
     key.position.set(2, 3, 4);
     scene.add(key);
@@ -290,6 +411,23 @@ class ScrollRevealViewer extends HTMLElement {
     scene.add(rim);
     const pivot = new THREE.Group();
     scene.add(pivot);
+
+    // Optional studio lighting for PBR glTF/GLB (glossy paint, clearcoat), which
+    // reads flat and dark under punctual lights alone. Opt-in: see header.
+    if (this.getAttribute('environment') === 'studio' && /\.(glb|gltf)(\?|$)/i.test(href)) {
+      try {
+        const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+        const pmrem = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+        pmrem.dispose();
+        const envI = parseFloat(this.getAttribute('env-intensity'));
+        scene.environmentIntensity = Number.isFinite(envI) ? envI : 0.9;
+        renderer.toneMapping = THREE.NeutralToneMapping;
+        ambient.intensity = 0.15; key.intensity = 0.6; rim.intensity = 0.2; // env carries most of the light now
+      } catch (err) {
+        console.warn('scroll-reveal-viewer: studio environment unavailable, using plain lights', err);
+      }
+    }
 
     const render = () => renderer.render(scene, camera);
     const resize = () => {
@@ -334,7 +472,7 @@ class ScrollRevealViewer extends HTMLElement {
         this._showMessage(container, "Couldn't load this model — check the file and try again.");
         resolve(false);
       };
-      if (/\.glb$|\.gltf$/i.test(href)) {
+      if (/\.(glb|gltf)(\?|$)/i.test(href)) {
         new GLTFLoader().load(href, (gltf) => { fit(gltf.scene); resolve(true); }, undefined, onError);
       } else {
         new STLLoader().load(href, (geom) => {
@@ -345,6 +483,7 @@ class ScrollRevealViewer extends HTMLElement {
         }, undefined, onError);
       }
     });
+    loadingMsg.remove();
     if (!loaded) return null;
 
     // Now that the model's real half-extent is known, resolve every

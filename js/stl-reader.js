@@ -15,6 +15,10 @@
 //   idle auto-rotation is allowed (matches the homepage-hero decision) but
 //   stops the moment the user drags, and never runs at all if the user's
 //   OS is set to prefers-reduced-motion.
+// - environment="studio" (optional, glTF/GLB only): image-based studio lighting
+//   for PBR materials (glossy paint, clearcoat) plus neutral tone mapping.
+//   Off by default so baked vertex-color exports keep their exact colors.
+//   env-intensity (default 0.9) scales it.
 // - Fails visibly, not silently, on a bad href or a WebGL/parse error.
 // - Disposes all GPU resources on disconnect (page navigation, removal).
 // - OrbitControls already pans (right-click-drag on desktop, two-finger
@@ -117,6 +121,10 @@
       }
       const [THREE, { STLLoader }, { GLTFLoader }, { OrbitControls }] = modules;
 
+      // The element can be removed while Three.js is still downloading (e.g. a
+      // wrapper toggled away); bail out before any renderer/rAF loop exists.
+      if (!this.isConnected) return;
+
       if (!window.WebGLRenderingContext) {
         this._showMessage("This browser doesn't support WebGL.");
         return;
@@ -159,7 +167,8 @@
       document.addEventListener('site:themechange', this._themeHandler);
       applyThemeBackground();
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
       const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
       keyLight.position.set(3, 5, 4);
       scene.add(keyLight);
@@ -231,7 +240,7 @@
         const size = box.getSize(new THREE.Vector3());
         const center = box.getCenter(new THREE.Vector3());
         const maxDim = Math.max(size.x, size.y, size.z) || 1;
-        const fitDist = (maxDim / (2 * Math.tan((camera.fov * Math.PI / 180) / 2))) * 1.6;
+        const fitDist = (maxDim / (2 * Math.tan((camera.fov * Math.PI / 180) / 2))) * 1.05;
         camera.position.set(center.x, center.y, center.z + fitDist);
         camera.near = Math.max(fitDist / 100, 0.01);
         camera.far = fitDist * 100;
@@ -247,6 +256,22 @@
 
       const isGltf = /\.(glb|gltf)(\?|$)/i.test(href);
       let currentObject = null;
+
+      if (isGltf && this.getAttribute('environment') === 'studio') {
+        try {
+          const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+          const pmrem = new THREE.PMREMGenerator(renderer);
+          scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+          pmrem.dispose();
+          const envI = parseFloat(this.getAttribute('env-intensity'));
+          scene.environmentIntensity = Number.isFinite(envI) ? envI : 0.9;
+          renderer.toneMapping = THREE.NeutralToneMapping;
+          ambientLight.intensity = 0.15; keyLight.intensity = 0.6; rimLight.intensity = 0.2;
+        } catch (err) {
+          console.warn('stl-reader: studio environment unavailable, using plain lights', err);
+        }
+        if (!this.isConnected) { renderer.dispose(); return; }
+      }
 
       if (isGltf) {
         new GLTFLoader().load(href, (gltf) => {
