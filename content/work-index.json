@@ -1,25 +1,33 @@
 [
   {
     "slug": "dandelion-seed-vortex",
-    "title": "Dandelion Seed Vortex Formation",
+    "title": "Dandelion Seed Vortex Formation: Resolved-Filament CFD of a Falling Pappus",
     "category": "research",
     "status": "In Progress",
-    "thumbnail": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png",
+    "thumbnail": "assets/media/work_assets_dandelion_seed/dandelion-thumb.jpg",
     "media_type": "carousel",
     "media_fit": "contain",
     "hero_interval": 2000,
     "hero_slides": [
       {
-        "src": "assets/media/work_assests_dandelion_seed/seed_static_streamlines.png",
-        "caption": "Streamlines and the recirculating bubble"
+        "src": "assets/media/work_assets_dandelion_seed/dandelion-6dof-q-uy.png",
+        "caption": "Falling seed (6DoF): Q-criterion isosurface, the separated vortex ring above the pappus"
       },
       {
-        "src": "assets/media/work_assests_dandelion_seed/seed_static_vorticity.png",
-        "caption": "Vorticity, counter-rotating vortex pair"
+        "src": "assets/media/work_assets_dandelion_seed/dandelion-6dof-streamlines-q.png",
+        "caption": "Falling seed: streamlines and the large recirculation loops around the ring"
       },
       {
-        "src": "assets/media/work_assests_dandelion_seed/seed_static_U.png",
-        "caption": "Streamwise velocity"
+        "src": "assets/media/work_assets_dandelion_seed/dandelion-static-uy-streamlines.png",
+        "caption": "Fixed seed, Re ≈ 684: streamlines and the recirculating bubble"
+      },
+      {
+        "src": "assets/media/work_assets_dandelion_seed/dandelion-static-vorticity-z.png",
+        "caption": "Fixed seed: out-of-plane vorticity, counter-rotating vortex pair"
+      },
+      {
+        "src": "assets/media/work_assets_dandelion_seed/dandelion-mesh-overview.png",
+        "caption": "All 42 filaments are geometrically resolved, no porous-media model"
       }
     ],
     "quick_description": "This is a dandelion seed falling through still air, simulated frame by frame. The faint ring forming above it is a separated vortex ring, a structure that keeps the seed aloft far longer than its size and weight should allow, and that nature seems to have stumbled onto long before fluid dynamicists had a name for it.",
@@ -29,18 +37,17 @@
     "tags": [
       "OpenFOAM",
       "Overset Mesh",
+      "6DoF",
       "snappyHexMesh",
       "CFD"
     ],
     "supporting_media": [
-      "assets/media/dandelion-plot1.png"
+      "assets/media/work_assets_dandelion_seed/dandelion-static-cd-vs-time.png",
+      "assets/media/work_assets_dandelion_seed/dandelion-6dof-force.png",
+      "assets/media/work_assets_dandelion_seed/dandelion-6dof-moment.png",
+      "assets/media/work_assets_dandelion_seed/dandelion-flatdisk-q-uy.png"
     ],
-    "links": [
-      {
-        "label": "Code",
-        "url": ""
-      }
-    ]
+    "links": []
   },
   {
     "slug": "compressible-wall-jet-rsd",
@@ -181,7 +188,7 @@
     "thumbnail": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-cfd-thumb.png",
     "media_type": "carousel",
     "media_fit": "contain",
-    "hero_interval": 3000,
+    "hero_interval": 2000,
     "hero_slides": [
       {
         "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-isometric-geometry.png",
