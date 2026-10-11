@@ -17,15 +17,18 @@ layout: layouts/base.njk
     <ul>{% for heading in headings %}<li{% if heading.level == "h3" %} class="contents-subsection"{% endif %}><a href="#{{ heading.id }}">{{ heading.title }}</a></li>{% endfor %}</ul>
   </nav>
   <div class="case-section case-technical">{{ content | safe }}</div>
+  {% if supporting %}<section class="case-section case-supporting" aria-labelledby="supporting-media"><h2 id="supporting-media">Supporting media</h2>{{ supporting | safe }}</section>{% endif %}
+  {% if related.length %}
   <section class="case-section project-related" aria-labelledby="related-work">
     <h2 id="related-work">Related work</h2>
-    <ul>{% for item in related %}<li><a href="{{ item.href }}">{{ item.title }}</a></li>{% endfor %}</ul>
+    <div class="project-related-grid">{% for item in related %}<a class="project-related-card" href="{{ item.href }}"><img src="{{ item.thumbnail }}" alt="" width="{{ item.thumbnailDimensions.width }}" height="{{ item.thumbnailDimensions.height }}" loading="lazy" decoding="async"><span>{{ item.title }}</span></a>{% endfor %}</div>
   </section>
+  {% endif %}
   <footer class="case-footer">
     <div class="case-links">{% for link in piece.links %}<a href="{{ link.url }}">{{ link.label }}</a>{% endfor %}</div>
     <nav class="case-pager" aria-label="Adjacent pieces">
-      {% if previous %}<a class="case-pager-link" href="{{ previous.href }}"><span>Previous<br>{{ previous.title }}</span></a>{% endif %}
-      {% if next %}<a class="case-pager-link case-pager-next" href="{{ next.href }}"><span>Next<br>{{ next.title }}</span></a>{% endif %}
+      {% if previous %}<a class="case-pager-link case-pager-prev" href="{{ previous.href }}" rel="prev"><span class="case-pager-arrow" aria-hidden="true">←</span><span><span class="case-pager-label">Previous project</span><span class="case-pager-title">{{ previous.title }}</span></span></a>{% endif %}
+      {% if next %}<a class="case-pager-link case-pager-next" href="{{ next.href }}" rel="next"><span class="case-pager-arrow" aria-hidden="true">→</span><span><span class="case-pager-label">Next project</span><span class="case-pager-title">{{ next.title }}</span></span></a>{% endif %}
     </nav>
     <a class="back-link" href="/work.html">← Back to work</a>
   </footer>

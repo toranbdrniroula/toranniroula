@@ -133,7 +133,7 @@ $('[href], [src]').each((_, element) => {
   }
 });
 $('img').each((_, element) => {
-  assert($(element).attr('alt'), 'Scientific images need descriptive alt text');
+  assert($(element).attr('alt') || $(element).closest('.project-related-card').length, 'Scientific images need descriptive alt text');
   assert(Number($(element).attr('width')) > 0 && Number($(element).attr('height')) > 0);
 });
 for (const file of ['CNAME', '.nojekyll', 'feed.xml', 'robots.txt']) {
@@ -165,6 +165,9 @@ for (const slug of WORK_SLUGS.filter(slug => slug !== RSD_SLUG)) {
   assert.equal(page('link[rel=canonical]').attr('href'), project.canonical);
   assert.equal(JSON.parse(page('script[type="application/ld+json"]').text()).mainEntityOfPage, project.canonical);
   const technical = normalize(page('.case-technical').text());
+  assert.deepEqual(page('.case-supporting-grid img').map((_, el) => page(el).attr('src')).get(), (project.piece.supporting_media || []).map(src => `/${src}`), 'Preserve every supporting image');
+  assert.deepEqual(page('.project-related-card').map((_, el) => page(el).attr('href')).get(), project.related.map(item => item.href), 'Related cards must match category-based selection');
+  assert.equal(page('.project-related-card img').length, project.related.length);
   sourceDOM('p, li, h2, h3, h4, span.md-caption').each((_, el) => {
     const text = normalize(sourceDOM(el).text());
     if (text) assert(technical.includes(text), `${slug}: scientific text lost: ${text.slice(0, 80)}`);
@@ -204,7 +207,7 @@ for (const slug of WORK_SLUGS.filter(slug => slug !== RSD_SLUG)) {
     }
   });
   page('img').each((_, el) => {
-    assert(page(el).attr('alt'));
+    assert(page(el).attr('alt') || page(el).closest('.project-related-card').length);
     if (page(el).attr('src').startsWith('/')) assert(Number(page(el).attr('width')) > 0 && Number(page(el).attr('height')) > 0);
   });
   let redirected;

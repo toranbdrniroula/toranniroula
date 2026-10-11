@@ -204,9 +204,18 @@ function pilotData(slug = RSD_SLUG) {
   }
   const hero = prepareHTML(heroSource, { eagerFirst: true }).html;
   const index = pieces.indexOf(piece);
-  const related = ['pyrsd-library', 'piv-pod-wake-study', 'hypersonics-advanced-propulsion']
-    .map(slug => pieces.find(item => item.slug === slug));
-  const legacyLink = item => item && ({ ...item, href: resolveLegacyURL(`case-file.html?slug=${item.slug}&category=${item.category}`) });
+  const related = pieces.filter(item => item.category === piece.category && item.slug !== slug).slice(0, 3);
+  const legacyLink = item => item && ({ ...item, thumbnail: fs.existsSync(path.join(ROOT, item.thumbnail)) ? `/${item.thumbnail}` : '/assets/media/og-banner.jpg', thumbnailDimensions: imageDimensions(`/${fs.existsSync(path.join(ROOT, item.thumbnail)) ? item.thumbnail : 'assets/media/og-banner.jpg'}`), href: resolveLegacyURL(`case-file.html?slug=${item.slug}&category=${item.category}`) });
+  const supportingDOM = cheerio.load('<div class="case-supporting-grid"></div>', {}, false);
+  for (const src of piece.supporting_media || []) {
+    const slide = (piece.hero_slides || []).find(item => item.src === src);
+    const caption = slide?.caption || `Supporting visualization for ${piece.title}`;
+    const figure = supportingDOM('<figure></figure>');
+    figure.append(supportingDOM('<img>').attr({src: `/${src}`, alt: caption}));
+    if (slide) figure.append(supportingDOM('<figcaption></figcaption>').text(caption));
+    supportingDOM('.case-supporting-grid').append(figure);
+  }
+  const supporting = (piece.supporting_media || []).length ? prepareHTML(supportingDOM.html()).html : '';
   const route = `/work/${slug}/`;
   const dom = cheerio.load(prepared.html + hero);
   const scripts = ['hero-carousel', 'plotly-chart', 'vtk-reader', 'stl-reader', 'video-embed', 'scroll-reveal-viewer']
@@ -225,7 +234,7 @@ function pilotData(slug = RSD_SLUG) {
   };
   return {
     site, piece: {...piece, links: piece.links.map(link => ({...link, url: resolveLegacyURL(link.url.startsWith('assets/') ? `/${link.url}` : link.url)}))}, body: prepared.html, hero, headings: prepared.headings,
-    scope: scopes[slug], related: related.filter(item => item.slug !== slug).map(legacyLink), previous: legacyLink(pieces[index - 1]), next: legacyLink(pieces[index + 1]),
+    scope: scopes[slug], supporting, related: related.map(legacyLink), previous: legacyLink(pieces[index - 1]), next: legacyLink(pieces[index + 1]),
     canonical: absoluteURL(route, site.site_url),
     structuredData: JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Article',

@@ -40,6 +40,26 @@
 .figure-dialog-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
 .figure-dialog-controls button { padding: 8px 16px; cursor: pointer; }
 .figure-dialog-caption { margin: 12px 0 0; font-size: .9rem; }
+[data-static-project] .case-supporting h2 { font-size: 20px; }
+[data-static-project] .case-supporting-grid img { display: block; width: 100%; height: auto; }
+[data-static-project] .project-related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+[data-static-project] .project-related a.project-related-card { display: flex; flex-direction: column; border: 1px solid var(--color-divider); border-radius: 8px; overflow: hidden; background: var(--color-bg-elevated); color: var(--color-text); text-decoration: none; }
+[data-static-project] .project-related-card img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+[data-static-project] .project-related-card span { padding: 14px 16px; font-size: 14px; line-height: 1.5; }
+[data-static-project] .project-related-card:hover { border-color: var(--color-accent); }
+[data-static-project] .case-pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+[data-static-project] .case-pager-link { width: 100%; max-width: none; min-height: 112px; padding: 20px; border: 1px solid var(--color-divider); border-radius: 8px; background: var(--color-bg-elevated); gap: 16px; box-sizing: border-box; }
+[data-static-project] .case-pager-next { grid-column: 2; margin-left: 0; }
+[data-static-project] .case-pager-label { margin-bottom: 8px; }
+[data-static-project] .case-pager-title { font-size: 15px; font-weight: 600; }
+[data-static-project] .case-pager-arrow { font-size: 24px; color: var(--color-accent); }
+[data-static-project] .case-pager-link:hover { border-color: var(--color-accent); }
+[data-static-project] .case-pager-link:focus-visible, [data-static-project] .project-related-card:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+@media (max-width: 640px) {
+  [data-static-project] .project-related-grid, [data-static-project] .case-pager { grid-template-columns: 1fr; }
+  [data-static-project] .case-pager-next { grid-column: 1; }
+  [data-static-project] .case-pager-link { min-height: 96px; }
+}
 [data-static-project] plotly-chart { display: block; min-height: 360px; }
 [data-static-project] plotly-chart:not(:defined) { display: none; }
 [data-static-project] hero-carousel:not(:defined) { display: block; }
