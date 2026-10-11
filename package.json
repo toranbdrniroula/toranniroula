@@ -1,0 +1,18 @@
+{
+  "name": "toranniroula-research-site",
+  "private": true,
+  "engines": { "node": ">=20.19" },
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "build": "node tools/clean-site.mjs && eleventy && node tools/prepare-preview.mjs && node tools/validate-site.mjs && node tools/check-artifact.mjs",
+    "dev": "node tools/preview.mjs",
+    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.6",
+    "cheerio": "1.1.2",
+    "image-size": "2.0.2",
+    "katex": "0.16.11",
+    "markdown-it": "14.1.0"
+  }
+}

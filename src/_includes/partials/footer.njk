@@ -1,0 +1,11 @@
+<div class="page-container">
+  <footer class="footer">
+    <span>&copy; {{ year }} {{ site.name }}</span>
+    <div class="footer-links">
+      {% if site.social.github %}<a href="{{ site.social.github }}">GitHub</a>{% endif %}
+      {% if site.social.linkedin %}<a href="{{ site.social.linkedin }}">LinkedIn</a>{% endif %}
+      {% if site.social.youtube %}<a href="{{ site.social.youtube }}">YouTube</a>{% endif %}
+      <a href="mailto:{{ site.email }}">Email</a>
+    </div>
+  </footer>
+</div>

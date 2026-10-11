@@ -1,0 +1,32 @@
+---
+layout: layouts/base.njk
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/index.html">Home</a> / <a href="/work.html">Work</a> / <span aria-current="page">{{ piece.title }}</span></nav>
+<article>
+  <header class="case-header">
+    <h1 class="case-title">{{ piece.title }}</h1>
+    <div class="case-context"><span>{{ piece.date }}</span><span class="case-status-badge">{{ piece.status }}</span><span>{{ piece.institution }}</span></div>
+    <p class="project-summary">{{ piece.quick_description }}</p>
+    <p class="project-scope">{{ scope }}</p>
+    <div class="case-tags">{% for tag in piece.tags %}<span class="tag-chip">{{ tag }}</span>{% endfor %}</div>
+    <div class="project-actions">{% if piece.slug == 'compressible-wall-jet-rsd' %}<a href="/assets/downloads/wall-jet-rsd-thesis-report.pdf">Full thesis report (PDF)</a>{% endif %}<a href="/{{ site.resume }}">CV</a></div>
+  </header>
+  {% if hero %}<div class="{% if piece.media_type == 'video' %}project-video-hero{% else %}case-hero hero-fit-contain{% if piece.media_type == 'carousel' %} hero-carousel-media{% endif %}{% endif %}">{{ hero | safe }}</div>{% endif %}
+  <nav class="project-contents" aria-label="On this page">
+    <h2>On this page</h2>
+    <ul>{% for heading in headings %}<li{% if heading.level == "h3" %} class="contents-subsection"{% endif %}><a href="#{{ heading.id }}">{{ heading.title }}</a></li>{% endfor %}</ul>
+  </nav>
+  <div class="case-section case-technical">{{ content | safe }}</div>
+  <section class="case-section project-related" aria-labelledby="related-work">
+    <h2 id="related-work">Related work</h2>
+    <ul>{% for item in related %}<li><a href="{{ item.href }}">{{ item.title }}</a></li>{% endfor %}</ul>
+  </section>
+  <footer class="case-footer">
+    <div class="case-links">{% for link in piece.links %}<a href="{{ link.url }}">{{ link.label }}</a>{% endfor %}</div>
+    <nav class="case-pager" aria-label="Adjacent pieces">
+      {% if previous %}<a class="case-pager-link" href="{{ previous.href }}"><span>Previous<br>{{ previous.title }}</span></a>{% endif %}
+      {% if next %}<a class="case-pager-link case-pager-next" href="{{ next.href }}"><span>Next<br>{{ next.title }}</span></a>{% endif %}
+    </nav>
+    <a class="back-link" href="/work.html">← Back to work</a>
+  </footer>
+</article>

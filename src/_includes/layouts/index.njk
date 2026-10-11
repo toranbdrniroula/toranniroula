@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+---
+{% if isHome %}
+<section class="hero">
+  <flow-field cell-size="5" aria-hidden="true"></flow-field><div class="hero-scrim"></div>
+  <div class="hero-copy">
+    <span class="eyebrow">{{ site.hero.eyebrow }}</span><h1 class="hero-name">{{ site.name }}</h1>
+    <p class="hero-intro">{{ site.hero.intro }}</p>
+    <div class="hero-actions"><a class="hero-btn primary" href="/work.html">See the work →</a><a class="hero-btn" href="/{{ site.resume }}">Download CV</a><a class="hero-btn" href="/about.html">About</a></div>
+  </div>
+</section>
+<div class="section-heading-row"><h2 class="section-heading">Selected work</h2><a class="back-link" href="/work.html">View all →</a></div>
+{% else %}
+<div class="section-heading-row"><h1 class="section-heading">{{ piece.title }}</h1></div>
+<div class="tag-filter" data-index-filter hidden role="group" aria-label="Filter {{ kind }} by category">
+  <button type="button" data-category="all" class="tag-filter-btn active" aria-pressed="true">All</button>
+  {% for category in categories %}<button type="button" class="tag-filter-btn" data-category="{{ category.value }}" aria-pressed="false">{{ category.label }}</button>{% endfor %}
+</div>
+<p class="index-result-count" data-result-count aria-live="polite">{{ items.length }} {{ kind == 'writing' and 'posts' or 'projects' }}</p>
+{% endif %}
+<div class="{{ isWriting and 'writing-list' or 'gallery-grid' }}" data-index-list>
+{% for item in items %}
+  {% if isWriting %}
+  <a class="writing-entry{% if loop.index0 % 2 %} reverse{% endif %}" href="{{ item.href }}" data-index-item data-category="{{ item.category }}">
+    {% if item.image %}<img class="writing-entry-thumb{% if item.image.animated %} animated-thumbnail{% endif %}" src="{{ item.image.src }}" alt="" width="{{ item.image.width }}" height="{{ item.image.height }}" loading="lazy" decoding="async">{% endif %}
+    <div class="writing-entry-body"><h2 class="writing-entry-title">{{ item.title }}</h2><div class="writing-entry-meta"><time datetime="{{ item.date }}">{{ item.dateLabel }}</time> · {{ item.label }}</div><p class="writing-entry-excerpt">{{ item.excerpt }}</p><span class="writing-entry-link">Read →</span></div>
+  </a>
+  {% else %}
+  <a class="gallery-tile" href="{{ item.href }}" data-index-item data-category="{{ item.category }}">
+    {% if item.image %}<img src="{{ item.image.src }}" alt="" width="{{ item.image.width }}" height="{{ item.image.height }}" loading="lazy" decoding="async">{% else %}<span class="thumbnail-fallback">{{ item.label }} · {{ item.date }}</span>{% endif %}
+    <span class="tile-tag">{{ item.label }}</span><span class="tile-status {{ item.statusClass }}">{{ item.status }}</span><span class="tile-title">{{ item.title }}</span>
+  </a>
+  {% endif %}
+{% endfor %}
+</div>

@@ -1,0 +1,13 @@
+[data-static-project] .about-grid { justify-items: stretch; }
+[data-static-project] .about-grid > h1 { margin-bottom: 20px; }
+[data-static-project] .about-grid h2 { font-size: var(--text-subhead); font-weight: 600; margin-bottom: 20px; }
+[data-static-project] .about-grid .divider { width: 100%; }
+[data-static-project] .about-photo { height: auto; }
+[data-static-project] .contact-text p { margin-bottom: 20px; }
+[data-static-project] .contact-info-side, [data-static-project] .contact-form-side { min-width: 0; }
+[data-static-project] .contact-links a, [data-static-project] .skills-chips { overflow-wrap: anywhere; }
+[data-static-project] .form-field input, [data-static-project] .form-field textarea { color: var(--color-text); background: var(--color-bg-elevated); border-color: var(--color-divider); }
+[data-static-project] .form-field :is(input,textarea):focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+[data-static-project] #submit-btn { min-height: 44px; background: var(--color-accent); }
+[data-static-project] .secure-contact-form { margin-top: 24px; }
+[data-static-project] .section-heading { font-family: var(--font-display); font-size: 28px; font-weight: 400; margin-top: 16px; }

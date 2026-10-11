@@ -1,0 +1,13 @@
+[data-static-project] .gallery-tile { text-decoration: none; }
+[data-static-project] .thumbnail-fallback { display: grid; place-items: center; height: 100%; padding: 32px; background: linear-gradient(135deg, var(--color-bg-elevated), var(--color-bg)); color: var(--color-text-muted); }
+[data-static-project] .index-result-count { margin: 12px 0; font-size: 13px; color: var(--color-text-muted); }
+[data-static-project] .tag-filter button { min-height: 44px; }
+[data-static-project] .writing-entry-title { font-size: 24px; }
+[data-static-project] .writing-entry-excerpt { margin: 0; }
+[data-static-project] .hero { margin-bottom: 40px; }
+[data-static-project] .tile-title { background: linear-gradient(to top, rgba(10,10,12,.97), rgba(10,10,12,.65)); }
+@media (prefers-reduced-motion: reduce) {
+  [data-static-project] .animated-thumbnail { display: none; }
+  [data-static-project] .gallery-tile { transition: none; }
+}
+[data-static-project].has-hero .top-strip .identity { opacity: 1; visibility: visible; pointer-events: auto; }

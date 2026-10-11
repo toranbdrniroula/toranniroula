@@ -1,0 +1,41 @@
+---
+layout: layouts/base.njk
+---
+{% if kind == 'about' %}
+<div class="about-grid">
+  <h1 class="section-heading">About</h1>
+  <figure class="about-photo-frame"><img class="about-photo" src="{{ photo.src }}" alt="{{ site.about.photo_alt }}" width="{{ photo.width }}" height="{{ photo.height }}" decoding="async" fetchpriority="high"><img class="about-photo about-photo-color" src="{{ colorPhoto.src }}" alt="" aria-hidden="true" width="{{ colorPhoto.width }}" height="{{ colorPhoto.height }}" loading="lazy" decoding="async"></figure>
+  <div class="about-bio" id="about-bio">{% for paragraph in site.about.bio %}<p>{{ paragraph }}</p>{% endfor %}</div>
+  <hr class="divider">
+  <section aria-labelledby="research-interests"><h2 id="research-interests">Research interests</h2><div class="about-bio">{% for paragraph in site.about.research_interests %}<p>{{ paragraph }}</p>{% endfor %}</div></section>
+  <hr class="divider">
+  <section aria-labelledby="publications"><h2 id="publications">Publications</h2><div class="publications-list">
+    {% for pub in publications %}<article class="publication-item"><div class="publication-top-row"><span class="tag-chip">{{ pub.typeLabel }}</span><h3 class="publication-title">{% if pub.relatedHref %}<a href="{{ pub.relatedHref }}">{{ pub.title }}</a>{% else %}{{ pub.title }}{% endif %}</h3></div><p class="publication-meta">{{ pub.institution }} · {{ pub.date }}</p><div class="publication-links">{% if pub.link %}<a href="{{ pub.link }}">Download ↓</a>{% endif %}{% if pub.relatedHref %}<a href="{{ pub.relatedHref }}">Related work →</a>{% endif %}</div></article>{% endfor %}
+  </div></section>
+  <hr class="divider">
+  <section aria-labelledby="timeline-heading"><h2 id="timeline-heading">Timeline</h2><ul class="timeline">{% for item in site.about.timeline %}<li><span class="timeline-year">{{ item.year }}</span><span class="timeline-label">{{ item.label }}</span></li>{% endfor %}</ul></section>
+  <hr class="divider">
+  <section aria-labelledby="beliefs-heading"><h2 id="beliefs-heading">Things I believe</h2><div class="beliefs-list">{% for belief in site.about.beliefs %}<p class="belief-item">{{ belief }}</p>{% endfor %}</div></section>
+  <hr class="divider">
+  <section aria-labelledby="currently-heading"><h2 id="currently-heading">Currently</h2><div class="currently-card"><dl><div><dt>Reading</dt><dd>{{ site.about.currently.reading }}</dd></div><div><dt>Working on</dt><dd>{{ site.about.currently.working_on }}</dd></div><div><dt>Listening to</dt><dd>{{ site.about.currently.listening_to }}</dd></div></dl></div></section>
+  <hr class="divider">
+  <section aria-labelledby="skills-heading"><h2 id="skills-heading">Skills &amp; Tools</h2><div class="skills-list">{% for group in site.skills %}<div><h3 class="skills-group-label">{{ group.group }}</h3><div class="skills-chips">{% for item in group.items %}<span class="tag-chip">{{ item }}</span>{% endfor %}</div></div>{% endfor %}</div></section>
+  <a class="back-link" href="/{{ site.resume }}">Download CV ↓</a>
+</div>
+{% else %}
+<h1 class="section-heading">Contact</h1>
+<div class="contact-grid-layout">
+  <div class="contact-info-side"><div class="contact-text">{% for paragraph in contactParagraphs %}<p>{{ paragraph }}</p>{% endfor %}</div><div class="contact-links"><a href="mailto:{{ site.email }}">{{ site.email }}</a>{% if site.social.linkedin %}<a href="{{ site.social.linkedin }}">LinkedIn</a>{% endif %}{% if site.social.github %}<a href="{{ site.social.github }}">GitHub</a>{% endif %}</div></div>
+  <div class="contact-form-side">
+    <noscript><p>You can contact me using the email link above.</p></noscript>
+    <form id="sheet-form" class="secure-contact-form" data-endpoint="{{ endpoint }}" hidden>
+      <div class="form-field"><label for="form-name">Name</label><input id="form-name" name="name" autocomplete="name" required></div>
+      <div class="form-field"><label for="form-email">Email</label><input id="form-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="form-field"><label for="form-message">Message</label><textarea id="form-message" name="message" rows="5" required></textarea></div>
+      <input type="text" name="_honeypot" hidden tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" id="submit-btn" disabled>Submit</button>
+      <p id="form-feedback" class="form-feedback-msg" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
+  </div>
+</div>
+{% endif %}

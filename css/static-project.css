@@ -1,0 +1,64 @@
+/* Pilot-page additions only: the existing site retains its CSS behavior. */
+[data-static-project] .skip-link {
+  position: fixed; top: 8px; left: 8px; z-index: 100;
+  padding: 12px 16px; background: var(--color-bg); color: var(--color-text);
+  transform: translateY(-180%);
+}
+[data-static-project] .skip-link:focus { transform: none; }
+[data-static-project] [hidden] { display: none !important; }
+[data-static-project] .breadcrumbs {
+  max-width: var(--content-max); margin: 0 auto 20px;
+  font-size: 13px; color: var(--color-text-muted); line-height: 1.8;
+}
+[data-static-project] .project-summary { margin-top: 20px; line-height: 1.75; }
+[data-static-project] .project-scope { margin-top: 14px; color: var(--color-text-muted); font-size: 14px; line-height: 1.7; }
+[data-static-project] .project-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 18px; }
+[data-static-project] .project-actions a,
+[data-static-project] .project-contents a,
+[data-static-project] .project-related a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+[data-static-project] .project-contents { max-width: var(--content-max); margin: 0 auto 36px; }
+[data-static-project] .project-contents h2,
+[data-static-project] .project-related h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; }
+[data-static-project] .project-contents ul { padding-left: 22px; line-height: 1.7; font-size: 15px; }
+[data-static-project] .contents-subsection { margin-left: 20px; }
+[data-static-project] .project-related { margin-top: 36px; margin-bottom: 32px; }
+[data-static-project] .project-related li { margin-bottom: 12px; }
+[data-static-project] .case-technical h3 { margin: 28px 0 14px; font-size: 18px; font-weight: 600; }
+[data-static-project] h2[id], [data-static-project] h3[id] { scroll-margin-top: 120px; }
+[data-static-project] .table-scroll { max-width: 100%; overflow-x: auto; margin-bottom: 24px; }
+[data-static-project] table { width: 100%; border-collapse: collapse; font-size: 14px; }
+[data-static-project] th, [data-static-project] td { padding: 10px 12px; border: 1px solid var(--color-divider); text-align: left; }
+[data-static-project] .katex-display { overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
+[data-static-project] .chart-data { margin-bottom: 24px; }
+[data-static-project] .chart-data summary { cursor: pointer; padding: 12px 0; }
+[data-static-project] plotly-chart { display: block; min-height: 360px; }
+[data-static-project] plotly-chart:not(:defined) { display: none; }
+[data-static-project] hero-carousel:not(:defined) { display: block; }
+[data-static-project] .case-hero:has(hero-carousel:not(:defined)) { max-height: none; overflow: visible; aspect-ratio: auto; }
+[data-static-project] .case-hero hero-carousel:not(:defined) { max-height: none; }
+[data-static-project] hero-carousel:not(:defined) img { height: auto; max-height: none; }
+[data-static-project] .carousel-fallback figcaption { padding: 10px 14px; }
+html[data-theme="light"] body[data-static-project] { --color-accent: #1769aa; --color-status-complete: #1769aa; }
+@media (max-width: 639px) {
+  /* Navigation remains in normal flow until its controls have initialized. */
+  [data-static-project]:not(.navigation-enhanced) .top-strip { flex-direction: column; }
+  [data-static-project]:not(.navigation-enhanced) .site-nav {
+    position: static; transform: none; width: 100%; padding: 8px 0;
+    flex-direction: row; flex-wrap: wrap; gap: 14px 20px; border: 0;
+  }
+  [data-static-project].navigation-enhanced .nav-toggle { z-index: 70; position: relative; min-width: 44px; min-height: 44px; }
+  [data-static-project].navigation-enhanced .site-nav { overflow-y: auto; }
+  [data-static-project] .case-title { font-size: 30px; }
+  [data-static-project] .case-context { line-height: 1.7; }
+  [data-static-project] .case-technical { min-width: 0; }
+  [data-static-project] h2[id], [data-static-project] h3[id] { scroll-margin-top: 24px; }
+}
+body[data-static-project] .scientific-fallback { margin: 1rem 0 2rem; }
+body[data-static-project] .scientific-fallback img { width: 100%; height: auto; max-height: 480px; object-fit: contain; }
+body[data-static-project] .scientific-fallback figcaption { color: var(--text-secondary); font-size: .9rem; line-height: 1.6; }
+body[data-static-project] .model-captions { margin: 1rem 0 2rem; }
+body[data-static-project] .model-captions section { padding: 1rem; }
+body[data-static-project] :is(vtk-reader, stl-reader, scroll-reveal-viewer, video-embed):not(:defined) { display: none; }
+body[data-static-project] .project-video-hero { max-width: var(--content-max); margin: 0 auto 32px; }
+body[data-static-project] .case-technical p { overflow-wrap: anywhere; }
+body[data-static-project] .katex { position: relative; }
