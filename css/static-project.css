@@ -17,6 +17,20 @@
 [data-static-project] .project-contents a,
 [data-static-project] .project-related a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
 [data-static-project] .project-contents { max-width: var(--content-max); margin: 0 auto 36px; }
+[data-static-project] .project-contents {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-divider) transparent;
+}
+[data-static-project] .project-contents:is(:hover, :focus-within) {
+  scrollbar-color: var(--color-text-muted) transparent;
+}
+[data-static-project] .project-contents::-webkit-scrollbar { width: 5px; height: 5px; }
+[data-static-project] .project-contents::-webkit-scrollbar-track { background: transparent; }
+[data-static-project] .project-contents::-webkit-scrollbar-thumb {
+  background: var(--color-divider); border-radius: 999px;
+}
+[data-static-project] .project-contents:is(:hover, :focus-within)::-webkit-scrollbar-thumb { background: var(--color-text-muted); }
+[data-static-project] .project-contents::-webkit-scrollbar-button { display: none; }
 [data-static-project] .project-contents h2,
 [data-static-project] .project-related h2 { font-size: 20px; font-weight: 600; margin-bottom: 14px; }
 [data-static-project] .project-contents ul { padding-left: 22px; line-height: 1.7; font-size: 15px; }
