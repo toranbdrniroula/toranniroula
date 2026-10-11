@@ -280,3 +280,5 @@ Regression tests cover pending, failure, readiness, recovery, nested ownership
 and context loss. Browser checks cover successful STL/GLB/VTK renders, broken
 model/data URLs, GLB tour/free-view switching, video loaded data, and a loaded
 static image with scripts blocked. The complete content build still validates.
+Local scripts and CSS use content hashes in their URLs so an existing browser
+cache cannot pair newly generated markup with an older component implementation.

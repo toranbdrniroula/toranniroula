@@ -172,8 +172,8 @@ for (const slug of WORK_SLUGS.filter(slug => slug !== RSD_SLUG)) {
     assert.equal(shell.children('.media-reference').length, 1);
     assert.equal(shell.children('.media-reference').attr('hidden'), undefined);
   });
-  assert.equal(page('script[src="/js/media-fallback.js"]').length, 1);
-  if (project.piece.media_type === 'carousel') assert(page('script[src="/js/hero-carousel.js"]').length);
+  assert.equal(page('script[src^="/js/media-fallback.js?v="]').length, 1);
+  if (project.piece.media_type === 'carousel') assert(page('script[src^="/js/hero-carousel.js?v="]').length);
   if (project.needsThree) assert.equal(page('script[type="importmap"]').length, 1);
   sourceDOM(tags).each((index, el) => {
     const actual = page('.case-technical').find(tags).eq(index);

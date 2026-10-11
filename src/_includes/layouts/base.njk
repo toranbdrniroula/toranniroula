@@ -19,11 +19,11 @@
   <meta name="twitter:title" content="{{ piece.title }}">
   <meta name="twitter:description" content="{{ description }}">
   <meta name="twitter:image" content="{{ (socialImage or piece.thumbnail) | absoluteURL(site.site_url) }}">
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/nav.css">
-  <link rel="stylesheet" href="/css/case-file.css">
-  <link rel="stylesheet" href="/css/static-project.css">
-  {% for style in extraStyles %}<link rel="stylesheet" href="/css/{{ style }}">{% endfor %}
+  <link rel="stylesheet" href="{{ '/css/base.css' | assetURL }}">
+  <link rel="stylesheet" href="{{ '/css/nav.css' | assetURL }}">
+  <link rel="stylesheet" href="{{ '/css/case-file.css' | assetURL }}">
+  <link rel="stylesheet" href="{{ '/css/static-project.css' | assetURL }}">
+  {% for style in extraStyles %}<link rel="stylesheet" href="{{ ('/css/' ~ style) | assetURL }}">{% endfor %}
   {% if isWriting %}<link rel="alternate" type="application/rss+xml" title="Writing | {{ site.name }}" href="/feed.xml">{% endif %}
   {% if hasMath %}<link rel="stylesheet" href="/assets/vendor/katex/katex.min.css">{% endif %}
   {% if needsThree %}<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"}}</script>{% endif %}
@@ -40,8 +40,8 @@
     {{ content | safe }}
   </main>
   {% include "partials/footer.njk" %}
-  <script src="/js/static-project.js" defer></script>
-  <script src="/js/media-fallback.js" defer></script>
-  {% for script in scripts %}<script src="/js/{{ script }}" defer></script>{% endfor %}
+  <script src="{{ '/js/static-project.js' | assetURL }}" defer></script>
+  <script src="{{ '/js/media-fallback.js' | assetURL }}" defer></script>
+  {% for script in scripts %}<script src="{{ ('/js/' ~ script) | assetURL }}" defer></script>{% endfor %}
 </body>
 </html>
