@@ -1,6 +1,6 @@
 {
   "sourceCommit": "64aa4d9",
-  "note": "Pre-migration prose tokens and media attributes; headings and paragraph order may change, content must remain complete.",
+  "note": "Pre-migration prose tokens and media attributes; headings and paragraph order may change, content must remain complete. Hypersonics viewer heights and initial rainbow colormap updated at user request.",
   "pages": {
     "dandelion-seed-vortex": {
       "wordCount": 1942,
@@ -24,7 +24,7 @@
       "wordCount": 673,
       "proseHash": "2d49ad1ac05158af38a6ca473831fe366d33096598305c5bc8883df3c04ad5bf",
       "mediaCount": 9,
-      "mediaHash": "4aa34b23c5c3a9d9854662d867b2605d9bfbf72d979dcd9b586b297d4fbc6176"
+      "mediaHash": "04147cfe279898d0fe99bb76f52f01d9ffa65fc20677bcf2ddd6c76b52d46de5"
     },
     "fossee-uav-cfd": {
       "wordCount": 1533,

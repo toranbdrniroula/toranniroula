@@ -177,3 +177,5 @@ Prose section, plain markdown.
 Prose section, plain markdown.
 
 <!-- Current media behavior: static references remain visible until the interactive view has loaded and rendered successfully; they return on failure. Ordinary figures have an enlargement overlay with a direct original-image fallback. Chart downloads offer build-generated CSV from the source JSON; do not store generated CSV in the repository. Use root-relative asset paths. -->
+
+<!-- VTK colormap picker: use colormap='user-defined' with initial-colormap='rainbow' to start at Rainbow Desaturated while retaining the picker. The height attribute controls the viewer height in pixels; 540-560 provides more room for detailed flow fields. -->

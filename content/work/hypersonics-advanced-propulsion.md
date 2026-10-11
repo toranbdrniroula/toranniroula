@@ -18,7 +18,7 @@ This started as a homework assignment and I let it run longer than it needed to.
 
 **Cylinder pressure distribution at Mach 6.** Three local-inclination methods - Modified Newtonian theory, the Tangent Wedge method, and Shock-Expansion theory - were used to predict the surface C_p distribution on a circular cylinder, then checked against inviscid CFD on a pear-shaped mesh aligned with the bow shock.
 
-<vtk-reader href="../content/data/hypersonics/cylinder.vtp" field="user-defined" colormap="user-defined" interactive="true" clipping="true" threshold="true" height="440"></vtk-reader>
+<vtk-reader href="../content/data/hypersonics/cylinder.vtp" field="user-defined" colormap="user-defined" initial-colormap="rainbow" interactive="true" clipping="true" threshold="true" height="560"></vtk-reader>
 *Field data from the actual CFD run, sliced to the case's 2D mid-plane - drag to pan/zoom, switch between Ma, p, T and rho from the field dropdown below, and threshold or clip to isolate the bow shock and entropy layer.*
 
 <span id="what-was-learned" aria-hidden="true"></span>
@@ -34,10 +34,10 @@ Modified Newtonian theory tracked the CFD C_p distribution most uniformly across
 <img src="../assets/media/work_assets_hypersonics/support-shockpolar-typeI.png" alt="Shock polar construction for the Type I, ±15 degree case, showing the downstream polars intersecting on the weak-shock branch">
 <img src="../assets/media/work_assets_hypersonics/support-shockpolar-typeII.png" alt="Shock polar construction for the Type II, ±30 degree case, showing no intersection on the weak-shock branch">
 
-<vtk-reader href="../content/data/hypersonics/typeI.vtp" field="user-defined" colormap="user-defined" interactive="true" clipping="true" threshold="true" height="420"></vtk-reader>
+<vtk-reader href="../content/data/hypersonics/typeI.vtp" field="user-defined" colormap="user-defined" initial-colormap="rainbow" interactive="true" clipping="true" threshold="true" height="540"></vtk-reader>
 *Type I: two incident shocks crossing symmetrically into a clean regular reflection, no Mach stem.*
 
-<vtk-reader href="../content/data/hypersonics/typeII.vtp" field="user-defined" colormap="user-defined" interactive="true" clipping="true" threshold="true" height="420"></vtk-reader>
+<vtk-reader href="../content/data/hypersonics/typeII.vtp" field="user-defined" colormap="user-defined" initial-colormap="rainbow" interactive="true" clipping="true" threshold="true" height="540"></vtk-reader>
 *Type II: the same setup at ±30°, now with a Mach stem, two triple points and a slipstream - switch to the `Ma` field and threshold around 1.0 to pick out the subsonic pocket behind the stem.*
 
 The shock-shock CFD matched the polar predictions cleanly: the ±15° case showed a clean regular reflection with a visible slip line and negligible total-pressure loss, while the ±30° case showed the full signature of a Mach interaction - a near-normal Mach stem, two triple points, a slipstream, and a substantially larger entropy rise across the stem than across either oblique shock.
@@ -46,7 +46,7 @@ The shock-shock CFD matched the polar predictions cleanly: the ±15° case showe
 
 **A single-ramp scramjet intake at Mach 6.** Given a target static pressure ratio (π = 20) and a 50 mm isolator height, the oblique-shock relations and θ-β-M equation were solved simultaneously for the ramp angle (14.15°) and resulting geometry (1.026 m ramp length, 0.301 m capture height). Both an inviscid and a RANS (k-ω SST) simulation of the resulting intake were run to check the design against CFD.
 
-<vtk-reader href="../content/data/hypersonics/intake.vtp" field="user-defined" colormap="user-defined" interactive="true" clipping="true" threshold="true" height="420"></vtk-reader>
+<vtk-reader href="../content/data/hypersonics/intake.vtp" field="user-defined" colormap="user-defined" initial-colormap="rainbow" interactive="true" clipping="true" threshold="true" height="540"></vtk-reader>
 *Inviscid intake field (leading-edge shock, cowl shock, shock-on-lip condition) - the RANS run below shows the same geometry with a boundary layer.*
 
 <img src="../assets/media/work_assets_hypersonics/support-rans-intake-mach.png" alt="RANS Mach number field on the scramjet intake, showing boundary layer growth and a small separation bubble at the cowl shock impingement">

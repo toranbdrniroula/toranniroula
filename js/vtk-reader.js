@@ -317,7 +317,9 @@
       const requestedField = userDefinedField ? null : fieldAttr;
       const requestedColormap = normalizeColormapKey(this.getAttribute('colormap') || 'viridis');
       const userDefinedColormap = requestedColormap === 'user-defined';
-      const initialColormapKey = userDefinedColormap ? 'warm cold' : requestedColormap;
+      const initialColormapKey = userDefinedColormap
+        ? normalizeColormapKey(this.getAttribute('initial-colormap') || 'warm cold')
+        : requestedColormap;
       const interactive = this.getAttribute('interactive') !== 'false';
       // Clipping is opt-in, separate from `interactive`. Being interactive
       // just means the camera can be dragged around – it doesn't imply
