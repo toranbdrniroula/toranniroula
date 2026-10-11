@@ -9,7 +9,7 @@ layout: layouts/base.njk
     <p class="project-summary">{{ piece.quick_description }}</p>
     <p class="project-scope">{{ scope }}</p>
     <div class="case-tags">{% for tag in piece.tags %}<span class="tag-chip">{{ tag }}</span>{% endfor %}</div>
-    <div class="project-actions">{% if piece.slug == 'compressible-wall-jet-rsd' %}<a href="/assets/downloads/wall-jet-rsd-thesis-report.pdf">Full thesis report (PDF)</a>{% endif %}<a href="/{{ site.resume }}">CV</a></div>
+    {% if piece.slug == 'compressible-wall-jet-rsd' %}<div class="project-actions"><a href="/assets/downloads/wall-jet-rsd-thesis-report.pdf">Full thesis report (PDF)</a></div>{% endif %}
   </header>
   {% if hero %}<div class="{% if piece.media_type == 'video' %}project-video-hero{% else %}case-hero hero-fit-contain{% if piece.media_type == 'carousel' %} hero-carousel-media{% endif %}{% endif %}">{{ hero | safe }}</div>{% endif %}
   <nav class="project-contents" aria-label="On this page">
