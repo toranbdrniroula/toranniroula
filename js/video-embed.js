@@ -53,6 +53,10 @@
 //   a plain <img> would, which this element doesn't have.
 
 class VideoEmbed extends HTMLElement {
+  _setMediaState(state) {
+    this.setAttribute('data-media-state', state);
+    this.dispatchEvent(new CustomEvent('media:state', { bubbles: true, detail: { state } }));
+  }
   connectedCallback() {
     if (this._mounted) return;
     this._controls = true;
@@ -190,6 +194,7 @@ class VideoEmbed extends HTMLElement {
     this.style.overflow = 'hidden';
 
     if (!src) {
+      this._setMediaState('failed');
       this.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--color-text-muted, #8C8C92);font-size:13px;">
         Video unavailable (missing src).
       </div>`;
@@ -228,10 +233,12 @@ class VideoEmbed extends HTMLElement {
     const facade = this.querySelector('.video-embed-facade');
     facade.addEventListener('click', () => this._loadVideo(src, label, fit));
     this._wireToggleBar();
+    this._setMediaState('ready');
   }
 
   _loadVideo(src, label, fit) {
     const video = document.createElement('video');
+    video.addEventListener('loadeddata', () => this._setMediaState('ready'));
     video.src = src;
     video.setAttribute('aria-label', label);
     video.controls = this._controls;
@@ -250,6 +257,7 @@ class VideoEmbed extends HTMLElement {
     video.style.objectFit = fit;
     video.style.background = fit === 'contain' ? '#000' : 'transparent';
     video.addEventListener('error', () => {
+      this._setMediaState('failed');
       this.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--color-text-muted, #8C8C92);font-size:13px;">
         Couldn't load this video.
       </div>`;

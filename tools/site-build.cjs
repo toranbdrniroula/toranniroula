@@ -114,11 +114,14 @@ function prepareHTML(html, { eagerFirst = false, legacyPath = '/work/case-file.h
     if (src) figure.append($('<img>').attr({src, alt: label}));
     figure.append($('<figcaption></figcaption>').text(`${label}. Static reference; use the viewer for interactive inspection. `)
       .append($('<a>Download original file</a>').attr('href', href)));
-    viewer.after(figure);
+    viewer.wrap('<div class="scientific-media" data-media-state="pending"></div>');
+    viewer.attr({'aria-hidden': 'true', inert: ''});
+    const reference = $('<div class="media-reference"></div>').append(figure);
+    viewer.after(reference);
     if (viewer.is('scroll-reveal-viewer')) {
       const captions = $('<details class="model-captions"><summary>Read the airframe tour</summary></details>');
       viewer.find('reveal-caption').each((_, caption) => captions.append($('<section></section>').html($(caption).html())));
-      figure.after(captions);
+      reference.append(captions);
     }
   });
   $('img').each((index, element) => {

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node tools/clean-site.mjs && eleventy && node tools/prepare-preview.mjs && node tools/validate-site.mjs && node tools/check-artifact.mjs",
     "dev": "node tools/preview.mjs",
-    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs"
+    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs tools/media-fallback.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.6",

@@ -271,13 +271,17 @@
   }
 
   class VtkReader extends HTMLElement {
+    _setMediaState(state) {
+      this.setAttribute('data-media-state', state);
+      this.dispatchEvent(new CustomEvent('media:state', { bubbles: true, detail: { state } }));
+    }
     connectedCallback() {
       this._teardown = () => {};
       if (this._mounted) return;
       this._observer = new IntersectionObserver((entries) => {
         if (entries.some(e => e.isIntersecting)) {
           this._observer.disconnect();
-          this._mount();
+          this._mount().catch(() => { this._teardown(); this._setMediaState('failed'); });
         }
       }, { rootMargin: '200px' });
       this._observer.observe(this);
@@ -293,6 +297,7 @@
     }
 
     _showMessage(msg) {
+      if (!msg.startsWith('Loading')) this._setMediaState('failed');
       this.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;min-height:120px;color:var(--color-text-muted, #8C8C92);font-size:13px;text-align:center;padding:16px;">${msg}</div>`;
     }
 
@@ -403,6 +408,10 @@
       }
 
       const reader = vtk.IO.XML.vtkXMLPolyDataReader.newInstance();
+      this._teardown = () => {
+        reader.delete();
+        genericRenderWindow.delete();
+      };
       let polydata;
       try {
         const bytes = await loadVtpBytes(href);
@@ -411,11 +420,13 @@
       } catch (err) {
         console.error('vtk-reader: failed to load/parse', href, err);
         this._showMessage("Couldn't load or parse this field data file (" + (err && err.message ? err.message : 'unknown error') + ').');
+        this._teardown();
         return;
       }
 
       if (!polydata || !polydata.getPoints || polydata.getPoints().getNumberOfPoints() === 0) {
         this._showMessage('Field data file loaded but contains no geometry.');
+        this._teardown();
         return;
       }
 
@@ -1157,6 +1168,7 @@
           genericRenderWindow.resize();
         });
         resizeObserver.observe(canvasHost);
+        this._setMediaState('ready');
 
         this._teardown = () => {
           resizeObserver.disconnect();

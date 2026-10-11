@@ -60,13 +60,17 @@
   }
 
   class StlReader extends HTMLElement {
+    _setMediaState(state) {
+      this.setAttribute('data-media-state', state);
+      this.dispatchEvent(new CustomEvent('media:state', { bubbles: true, detail: { state } }));
+    }
     connectedCallback() {
       this._teardown = () => {};
       if (this._mounted) return;
       this._observer = new IntersectionObserver((entries) => {
         if (entries.some(e => e.isIntersecting)) {
           this._observer.disconnect();
-          this._mount();
+          this._mount().catch(() => { this._teardown(); this._setMediaState('failed'); });
         }
       }, { rootMargin: '200px' });
       this._observer.observe(this);
@@ -78,6 +82,7 @@
     }
 
     _showMessage(msg) {
+      if (!msg.startsWith('Loading')) this._setMediaState('failed');
       this.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;min-height:120px;color:var(--color-text-muted, #8C8C92);font-size:13px;text-align:center;padding:16px;">${msg}</div>`;
     }
 
@@ -252,6 +257,7 @@
       const onError = (err) => {
         console.error('stl-reader: failed to load', href, err);
         this._showMessage("Couldn't load this model – check the file and try again.");
+        this._teardown();
       };
 
       const isGltf = /\.(glb|gltf)(\?|$)/i.test(href);
@@ -275,20 +281,30 @@
 
       if (isGltf) {
         new GLTFLoader().load(href, (gltf) => {
-          scene.add(gltf.scene);
-          currentObject = gltf.scene;
-          fitCameraToObject(gltf.scene);
+          try {
+            if (new THREE.Box3().setFromObject(gltf.scene).isEmpty()) throw new Error('Empty model');
+            scene.add(gltf.scene);
+            currentObject = gltf.scene;
+            fitCameraToObject(gltf.scene);
+            renderer.render(scene, camera);
+            this._setMediaState('ready');
+          } catch (error) { onError(error); }
         }, undefined, onError);
       } else {
         new STLLoader().load(href, (geometry) => {
-          geometry.computeVertexNormals();
-          const material = geometry.hasColors
-            ? new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.55, metalness: 0.05 })
-            : new THREE.MeshStandardMaterial({ color: new THREE.Color(surfaceColor), roughness: 0.55, metalness: 0.05 });
-          const mesh = new THREE.Mesh(geometry, material);
-          scene.add(mesh);
-          currentObject = mesh;
-          fitCameraToObject(mesh);
+          try {
+            if (!geometry.getAttribute('position')?.count) throw new Error('Empty model');
+            geometry.computeVertexNormals();
+            const material = geometry.hasColors
+              ? new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.55, metalness: 0.05 })
+              : new THREE.MeshStandardMaterial({ color: new THREE.Color(surfaceColor), roughness: 0.55, metalness: 0.05 });
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+            currentObject = mesh;
+            fitCameraToObject(mesh);
+            renderer.render(scene, camera);
+            this._setMediaState('ready');
+          } catch (error) { onError(error); }
         }, undefined, onError);
       }
 

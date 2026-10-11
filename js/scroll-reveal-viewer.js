@@ -91,6 +91,10 @@ function loadThreeModules() {
 }
 
 class ScrollRevealViewer extends HTMLElement {
+  _setMediaState(state) {
+    this.setAttribute('data-media-state', state);
+    this.dispatchEvent(new CustomEvent('media:state', { bubbles: true, detail: { state } }));
+  }
   connectedCallback() {
     if (this._built) return;
     this._built = true;
@@ -266,6 +270,11 @@ class ScrollRevealViewer extends HTMLElement {
         panel.hidden = false;
         const reader = document.createElement('stl-reader');
         reader.setAttribute('href', interactiveHref);
+        this._setMediaState('pending');
+        reader.addEventListener('media:state', (event) => {
+          event.stopPropagation();
+          this._setMediaState(event.detail.state);
+        });
         reader.setAttribute('height', String(Math.round(Math.max(360, Math.min(window.innerHeight * 0.75, 680)))));
         reader.setAttribute('surface-color', this.getAttribute('surface-color') || '#c9d3de');
         ['bg-color', 'environment', 'env-intensity'].forEach((a) => {
@@ -285,6 +294,7 @@ class ScrollRevealViewer extends HTMLElement {
         jumpTo(trackTop + savedProgress * Math.max(total, 0)); // back to where the tour was left
         if (model) model.resize(); // canvas measured 0x0 while hidden
         onScroll();
+        this._setMediaState(model ? 'ready' : 'failed');
       }
       syncToggles();
     };
@@ -349,7 +359,9 @@ class ScrollRevealViewer extends HTMLElement {
 
     let model = null;
     if (mode === 'model') {
-      this._setupModel(inner, frameEls).then((m) => { model = m; onScroll(); });
+      this._setupModel(inner, frameEls).then((m) => {
+        model = m; onScroll(); this._setMediaState(m ? 'ready' : 'failed');
+      }).catch(() => this._setMediaState('failed'));
     }
 
     window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
@@ -484,7 +496,7 @@ class ScrollRevealViewer extends HTMLElement {
       }
     });
     loadingMsg.remove();
-    if (!loaded) return null;
+    if (!loaded) { renderer.dispose(); renderer.domElement.remove(); return null; }
 
     // Now that the model's real half-extent is known, resolve every
     // waypoint's target="x,y,z" fraction into an actual local-space point.

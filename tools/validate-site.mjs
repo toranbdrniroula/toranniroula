@@ -165,6 +165,14 @@ for (const slug of WORK_SLUGS.filter(slug => slug !== RSD_SLUG)) {
   assert.deepEqual(page('.case-technical annotation').map((_, el) => page(el).text()).get(), sourceDOM('annotation').map((_, el) => sourceDOM(el).text()).get());
   const tags = 'vtk-reader, stl-reader, scroll-reveal-viewer, video-embed';
   assert.equal(page('.case-technical .scientific-fallback').length, sourceDOM(tags).length);
+  page('.scientific-media').each((_, el) => {
+    const shell = page(el);
+    assert.equal(shell.attr('data-media-state'), 'pending');
+    assert.equal(shell.children().first().attr('aria-hidden'), 'true');
+    assert.equal(shell.children('.media-reference').length, 1);
+    assert.equal(shell.children('.media-reference').attr('hidden'), undefined);
+  });
+  assert.equal(page('script[src="/js/media-fallback.js"]').length, 1);
   if (project.piece.media_type === 'carousel') assert(page('script[src="/js/hero-carousel.js"]').length);
   if (project.needsThree) assert.equal(page('script[type="importmap"]').length, 1);
   sourceDOM(tags).each((index, el) => {

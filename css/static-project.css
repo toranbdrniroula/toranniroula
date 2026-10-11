@@ -54,6 +54,9 @@ html[data-theme="light"] body[data-static-project] { --color-accent: #1769aa; --
   [data-static-project] h2[id], [data-static-project] h3[id] { scroll-margin-top: 24px; }
 }
 body[data-static-project] .scientific-fallback { margin: 1rem 0 2rem; }
+.scientific-media { position: relative; }
+.scientific-media:not([data-media-state="ready"]) > :first-child { position: absolute !important; top: 0; left: 0; width: 100%; visibility: hidden; pointer-events: none; }
+.scientific-media > .media-reference[hidden] { display: none !important; }
 body[data-static-project] .scientific-fallback img { width: 100%; height: auto; max-height: 480px; object-fit: contain; }
 body[data-static-project] .scientific-fallback figcaption { color: var(--text-secondary); font-size: .9rem; line-height: 1.6; }
 body[data-static-project] .model-captions { margin: 1rem 0 2rem; }

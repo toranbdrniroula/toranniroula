@@ -262,3 +262,21 @@ Live contact delivery and exhaustive scientific-viewer interaction remain
 unverified; no test message was sent. The two gallery draft scaffolds retain
 their existing content limitations. Earlier sections record the migration
 stages and are historical rather than the current deployment status.
+
+## Static-first scientific media
+
+Scientific media now pairs a custom element with a visible HTML reference in
+one container. The viewer loads without taking space from the reference until
+it reports its first successful render. Only then is the reference hidden and
+the viewer exposed to interaction and assistive technology. A library, asset,
+parse or renderer failure keeps the reference; lost WebGL context restores it.
+No script, blocked scripts and unsupported component APIs leave the same HTML
+image/download baseline intact. Readiness of a nested GLB free-view reader is
+forwarded by its parent tour, so mode changes cannot falsely hide the reference.
+Video playback reports readiness after loaded data; its click-to-play facade
+can replace the reference when available and playback errors restore it.
+
+Regression tests cover pending, failure, readiness, recovery, nested ownership
+and context loss. Browser checks cover successful STL/GLB/VTK renders, broken
+model/data URLs, GLB tour/free-view switching, video loaded data, and a loaded
+static image with scripts blocked. The complete content build still validates.
