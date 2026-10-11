@@ -1,91 +1,38 @@
-# Work index entry template
+# Work index entry
 
-Copy the object below into the array in `content/work-index.json`. Every
-field is explained underneath. Delete this file's prose before pasting —
-only the JSON block goes into the real file (JSON has no comment syntax).
+Add an object to content/work-index.json and the article to content/work/<slug>.md. The build creates /work/<slug>/ automatically. Metadata paths are relative to the repository root, without ../.
 
 ```json
 {
   "slug": "your-piece-slug",
-  "title": "Human-Readable Title Of The Piece",
+  "title": "Your Project Title",
   "category": "research",
   "status": "In Progress",
   "thumbnail": "assets/media/your-piece-thumb.jpg",
-  "media_type": "youtube",
-  "media_src": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
-  "quick_description": "One or two sentences. This shows on the gallery tile and is used as the page's meta description.",
+  "media_type": "image",
+  "media_src": "assets/media/your-piece-hero.png",
+  "quick_description": "Optional legacy preview text; not displayed on project pages.",
   "institution": "",
   "date": "2026",
   "featured": false,
   "tags": ["OpenFOAM", "CFD"],
-  "supporting_media": ["assets/media/your-piece-supporting-1.png"],
-  "links": [
-    { "label": "Code", "url": "https://github.com/you/your-repo" }
-  ]
+  "supporting_media": ["assets/media/your-piece-supporting.png"],
+  "links": [{"label": "Code", "url": "https://github.com/you/your-repo"}]
 }
 ```
 
-## Field by field
+- slug matches the Markdown filename and canonical URL.
+- title, category, status, and thumbnail identify the direct-link work card.
+- media_type supports image, video, and carousel. An animated GIF is an image. Still heroes use their natural aspect ratio on mobile.
+- media_src is the local image/video file. Video accepts media_autoplay, media_loop, media_controls and media_fit; its thumbnail supplies the poster.
+- For a carousel, set hero_slides to an array of objects with src and caption, with optional hero_interval in milliseconds.
+- quick_description is retained for compatibility; it is not article prose. Put the introduction in the Markdown body. No overlay summaries or CV buttons are added to project headers.
+- institution, date and tags appear in the header. The home page selects the first eight entries; ordering controls adjacent-project navigation.
+- supporting_media renders as a gallery with image enlargement. Matching carousel captions are reused.
+- Related work automatically selects up to three other entries in the same category, with thumbnail cards.
 
-- **slug** — URL-safe identifier, lowercase-with-hyphens. Must exactly
-  match the filename of the matching markdown file:
-  `content/work/<slug>.md`. This is also what shows up in the URL:
-  `work/case-file.html?slug=<slug>&category=<category>`.
-- **title** — Shown as the H1 on the case-file page and the gallery tile.
-- **category** — Currently `"research"` or `"creative"` (drives the
-  Work page's filter tabs in `js/work.js`). Adding a third value like
-  `"teaching"` needs no code changes — the filter bar picks up whatever
-  categories exist in the data.
-- **status** — Free text, but `js/case-file.js` specifically checks
-  whether it contains the word "progress" (case-insensitive) to pick the
-  orange "in progress" badge style vs. the default "completed" style. Use
-  `"In Progress"` or `"Completed"`, or something else if you want the
-  default badge styling.
-- **thumbnail** — Image shown on the gallery tile. Relative to the site
-  root (no leading `../`), even for pages nested under `work/` — the
-  gallery/tile code adds the relative prefix for you.
-- **media_type** — One of `"youtube"`, `"video"`, `"gif"`, or `"image"`.
-  Controls what renders in the hero `<figure class="case-hero">` at the
-  top of the case-file page:
-  - `"youtube"` → `<yt-embed videoid="{media_src}">` (accepts either a
-    bare video ID or a full/short YouTube URL — paste straight from the
-    browser bar).
-  - `"video"` → `<video-embed src="{media_src}">`, self-hosted `.mp4`.
-  - `"gif"` → a plain looping `<video muted loop playsinline>` (no
-    click-to-play facade, since GIFs are expected to be short/silent).
-  - `"image"` → a plain `<img>`.
-  - There's no `"stl"`/`"vtk"` hero option yet — if you want a 3D model or
-    scalar field as the *hero* (not just in the write-up body), that's a
-    small addition to the `mediaMarkup` ternary in `js/case-file.js`, not
-    something this template can paper over. In the meantime put your
-    `<stl-reader>`/`<vtk-reader>` in the markdown body instead (see
-    `body.md`) — that's fully supported today and is where the dandelion
-    piece's viewers actually live.
-- **quick_description** — Used as the gallery tile blurb and the page's
-  `<meta name="description">`. Keep it to 1-2 sentences.
-- **institution** — Optional. Shown next to the date on the case-file
-  page if non-empty (e.g. `"University of Birmingham (collaboration)"`).
-  Leave as `""` if not applicable.
-- **date** — Free text, shown as-is (`"2026"`, `"2025-2026"`, etc.).
-- **featured** — `true` for at most one piece at a time in practice — the
-  homepage pulls the first `featured: true` piece as the hero teaser.
-  Everything else, featured or not, still shows in the "Selected work"
-  grid and on the Work page.
-- **tags** — Short strings, shown as chips on the tile and case-file page.
-- **supporting_media** — Array of image paths, rendered in a "Supporting
-  media" grid at the bottom of the case-file page. Can be `[]`.
-- **links** — Array of `{ "label": "...", "url": "..." }`. Rendered as a
-  row of outbound links (Code, Paper, Dataset, etc.) near the bottom of
-  the page. Can be `[]`.
+Use subject-specific headings from ## through ######. Heading IDs and contents are generated during the build, including a sticky desktop rail and current-section marker. Do not write a separate contents list. Preserve the full scientific narrative.
 
-## Where large files live
+Scientific viewers show their static reference until successfully rendered, and restore it on failure. Figure images open an enlargement overlay; plain links to original images work without scripts. Charts offer CSV downloads generated from source JSON during the build: do not commit generated CSV files. Scroll-tour distances are relative to the normalized model and adapt to narrow viewports.
 
-Per the project's hosting setup: thumbnails and small supporting images
-can live in `assets/media/` and be committed normally. Anything large —
-`.stl`, `.glb`, `.vtp`, `.vtu`, self-hosted `.mp4` — should NOT be
-committed into normal git history. Upload it as an attachment on a GitHub
-Release and reference it by its `https://cdn.jsdelivr.net/gh/<user>/<repo>@<tag>/<path>`
-URL instead (see the project's top-level instructions for the full
-rationale). Remember to version the filename when you update one of these
-(`q-criterion-v2.vtp`, not overwriting `q-criterion.vtp` in place) — jsDelivr
-caches aggressively and may keep serving the old file otherwise.
+Run pnpm build, then pnpm dev to inspect. Existing work has a preservation baseline: review intentional scientific text/media changes and update the baseline explicitly instead of removing the check.

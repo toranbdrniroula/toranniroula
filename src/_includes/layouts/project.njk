@@ -10,11 +10,13 @@ layout: layouts/base.njk
     {% if piece.slug == 'compressible-wall-jet-rsd' %}<div class="project-actions"><a href="/assets/downloads/wall-jet-rsd-thesis-report.pdf">Full thesis report (PDF)</a></div>{% endif %}
   </header>
   {% if hero %}<div class="{% if piece.media_type == 'video' %}project-video-hero{% else %}case-hero hero-fit-contain{% if piece.media_type == 'carousel' %} hero-carousel-media{% endif %}{% endif %}">{{ hero | safe }}</div>{% endif %}
+  <div class="article-layout">
   <nav class="project-contents" aria-label="On this page">
     <h2>On this page</h2>
-    <ul>{% for heading in headings %}<li{% if heading.level == "h3" %} class="contents-subsection"{% endif %}><a href="#{{ heading.id }}">{{ heading.title }}</a></li>{% endfor %}</ul>
+    <ul>{% for heading in headings %}<li class="contents-{{ heading.level }}"><a href="#{{ heading.id }}">{{ heading.title }}</a></li>{% endfor %}</ul>
   </nav>
   <div class="case-section case-technical">{{ content | safe }}</div>
+  </div>
   {% if supporting %}<section class="case-section case-supporting" aria-labelledby="supporting-media"><h2 id="supporting-media">Supporting media</h2>{{ supporting | safe }}</section>{% endif %}
   {% if related.length %}
   <section class="case-section project-related" aria-labelledby="related-work">

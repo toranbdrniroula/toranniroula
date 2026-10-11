@@ -151,8 +151,10 @@ function prepareHTML(html, { eagerFirst = false, legacyPath = '/work/case-file.h
   $('table').wrap('<div class="table-scroll" tabindex="0" role="region" aria-label="Scientific data table"></div>');
   const usedIds = new Set();
   const headings = [];
-  $('h2, h3').each((_, element) => {
+  $('h2, h3, h4, h5, h6').each((_, element) => {
     const heading = $(element);
+    // Viewer captions are transient UI, not navigable article sections.
+    if (heading.closest('reveal-frame, .model-captions').length) return;
     const title = heading.text();
     const base = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     let id = base;

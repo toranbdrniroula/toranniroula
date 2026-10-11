@@ -63,3 +63,32 @@ if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     video.setAttribute('controls', 'true');
   });
 }
+// Contents are generated at build time; scrolling only updates their current marker.
+(() => {
+  const contents = document.querySelector('.project-contents');
+  if (!contents) return;
+  const links = Array.from(contents.querySelectorAll('a[href^="#"]'));
+  const entries = links.map(link => ({link, heading: document.getElementById(link.hash.slice(1))})).filter(entry => entry.heading);
+  let scheduled = false;
+  let active;
+  function update() {
+    scheduled = false;
+    let current = entries[0];
+    for (const entry of entries) {
+      if (entry.heading.getBoundingClientRect().top <= 150) current = entry;
+    }
+    if (!current || current === active) return;
+    if (active) active.link.removeAttribute('aria-current');
+    current.link.setAttribute('aria-current', 'location');
+    active = current;
+    if (matchMedia('(min-width: 1100px)').matches) {
+      const bounds = contents.getBoundingClientRect();
+      const item = current.link.getBoundingClientRect();
+      if (item.bottom > bounds.bottom || item.top < bounds.top) contents.scrollTop += item.top - bounds.top - 50;
+    }
+  }
+  function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', schedule, {passive:true});
+  window.addEventListener('resize', schedule);
+  update();
+})();

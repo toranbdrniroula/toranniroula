@@ -17,15 +17,17 @@ date: "2026-07-16"
 
 Ordinary prose, headers, code fences, and inline/display math ($Re$,
 $$C_p = 1 - (V/V_\infty)^2$$) all render the same way as in a Work
-write-up. Code blocks additionally get syntax highlighting via
-highlight.js on this page (not loaded on the Work case-file page).
+write-up. Markdown and math render at build time; code blocks retain their
+original text and receive copy buttons. Contents are generated from headings,
+so no manual contents list is needed. Optional hero metadata is described in
+index-entry.md.
 
 ## Embedding a figure inline
 
 A local video:
 
 ```html
-<video-embed src="assets/downloads/your-clip.mp4" poster="assets/media/your-clip-poster.jpg" label="What this clip shows" height="400"></video-embed>
+<video-embed src="/assets/downloads/your-clip.mp4" poster="/assets/media/your-clip-poster.jpg" label="What this clip shows" height="400"></video-embed>
 ```
 
 A YouTube video:
@@ -49,7 +51,7 @@ An interactive scalar field (`.vtp`/`.vtu`, XML format from ParaView):
 A derived chart from a small JSON file:
 
 ```html
-<plotly-chart href="content/data/your-chart.json" type="scatter" title="Your Chart Title" height="360"></plotly-chart>
+<plotly-chart href="/content/data/your-chart.json" type="scatter" title="Your Chart Title" height="360"></plotly-chart>
 ```
 
 For the full attribute reference (bg-color theme-pairing syntax, what

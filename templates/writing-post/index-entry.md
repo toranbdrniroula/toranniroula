@@ -1,34 +1,23 @@
-# Writing index entry template
+# Writing index entry
 
-Copy the object below into the array in `content/writing-index.json`.
-Delete this file's prose before pasting — only the JSON block goes into
-the real file.
+Add this object to content/writing-index.json and the article to content/writing/<slug>.md. The build generates /writing/<slug>/.
 
 ```json
 {
   "slug": "your-post-slug",
   "title": "Your Post Title",
   "date": "2026-07-16",
-  "excerpt": "One or two sentences shown on the writing listing page card.",
-  "thumbnail": "../assets/media/your-post-thumb.jpg",
+  "excerpt": "A short introduction for the writing listing.",
+  "thumbnail": "assets/media/your-post-thumb.gif",
+  "hero": "assets/media/your-post-thumb.gif",
+  "hero_alt": "Describe what the hero image shows",
   "pdf": "assets/downloads/your-post.pdf",
   "category": "technical"
 }
 ```
 
-## Field by field
+Use repository-root paths without ../. hero and hero_alt are optional: an image or animated GIF appears below the title and PDF link, with image enlargement. Omit hero to have no hero. pdf is optional. Dates use YYYY-MM-DD and sort newest first. excerpt appears on the listing; the article introduction belongs in its Markdown body.
 
-- **slug** — must exactly match `content/writing/<slug>.md`.
-- **title** — shown as the H1 on the post page and the listing card.
-- **date** — `YYYY-MM-DD`. Used for sort order (newest first) as well as
-  display, so keep it in that format rather than free text.
-- **excerpt** — 1-2 sentences for the listing card.
-- **thumbnail** — path relative to the site root, same convention as
-  `work-index.json`'s `thumbnail` (no `../` prefix — `js/writing.js`
-  prepends the right relative prefix itself depending on which page is
-  rendering it).
-- **pdf** — optional. If present, shows a "Download PDF" affordance on
-  the post page. Omit the key entirely (not `""`) if there isn't one.
-- **category** — free text, used to group/filter on the writing listing
-  page (existing values are `"technical"` and `"reflection"`, but like
-  Work's categories, a new one needs no code changes).
+Use ## through ###### for sections/subsections. The build generates heading IDs and contents links, with a sticky desktop rail and current-section marker. Do not maintain a separate contents list. Math renders during the build and code examples remain intact, with optional copy buttons.
+
+Run pnpm build, then pnpm dev to inspect the generated page.

@@ -89,7 +89,7 @@ assert.equal($('link[rel="canonical"]').attr('href'), data.canonical);
 assert.equal($('meta[property="og:url"]').attr('content'), data.canonical);
 assert.equal($('meta[property="og:title"]').attr('content'), data.piece.title);
 assert.equal(JSON.parse($('script[type="application/ld+json"]').text()).mainEntityOfPage, data.canonical);
-assert.equal($('.case-technical h2, .case-technical h3').length, data.headings.length);
+assert.equal($('.case-technical :is(h2,h3,h4,h5,h6)[id]').length, data.headings.length);
 assert($('.case-technical').text().includes('Direct velocity measurement never happened.'));
 assert($('.case-technical').text().includes('CFD agrees with the RSD measurements on shape but not magnitude'));
 const source = fs.readFileSync(path.join(ROOT, 'content/work', `${RSD_SLUG}.md`), 'utf8')

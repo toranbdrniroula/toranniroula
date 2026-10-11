@@ -10,22 +10,22 @@ date: "2026"
   entry already carries both), so it's optional but harmless to keep in
   sync with your work-index.json entry.
 
-  Section headers (## How it was done, ## What was learned, etc.) are a
-  convention this site has settled into, not a hard requirement -- marked.js
-  renders whatever markdown you write, in any structure. Keep the ones that
-  make sense for this piece.
+  Use subject-specific headings. The build renders Markdown and math and
+  generates contents from ## through ###### headings automatically.
+  Keep the complete scientific narrative; no generic three-section structure
+  or manual contents list is required. Desktop contents stick beside the text.
 -->
 
-## How it was done
+## Experimental or computational setup
 
 Ordinary markdown works as usual: **bold**, *italic*, `inline code`,
 [links](https://example.com), bullet lists, and fenced code blocks all
-render normally through marked.js. Inline math like $Re = \rho V L / \mu$
+render at build time. Inline math like $Re = \rho V L / \mu$
 and display math:
 
 $$C_p = 1 - \left(\frac{V}{V_\infty}\right)^2$$
 
-render via KaTeX (already wired up on the case-file page).
+render via KaTeX during the build, including accessible MathML.
 
 **Key parameters** (the site's existing convention for a quick specs
 line -- inline code spans, not a table):
@@ -40,7 +40,7 @@ line -- inline code spans, not a table):
 ```html
 <video-embed
   src="https://cdn.jsdelivr.net/gh/you/your-repo@v1/videos/run.mp4"
-  poster="assets/media/run-poster.jpg"
+  poster="/assets/media/run-poster.jpg"
   label="Descriptive label for accessibility"
   height="420">
 </video-embed>
@@ -146,7 +146,7 @@ static shape.
 
 ```html
 <plotly-chart
-  href="content/data/your-spectrum.json"
+  href="/content/data/your-spectrum.json"
   type="scatter"
   title="POD Mode Energy Spectrum"
   height="360">
@@ -168,10 +168,12 @@ plotted with Plotly:
 `heatmap`) so a minimal file can omit `"type"` per-trace if every trace
 in the file is the same kind.
 
-## What was learned
+## Results and validation
 
 Prose section, plain markdown.
 
-## What's still open
+## Limitations and further analysis
 
 Prose section, plain markdown.
+
+<!-- Current media behavior: static references remain visible until the interactive view has loaded and rendered successfully; they return on failure. Ordinary figures have an enlargement overlay with a direct original-image fallback. Chart downloads offer build-generated CSV from the source JSON; do not store generated CSV in the repository. Use root-relative asset paths. -->

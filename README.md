@@ -20,6 +20,19 @@ Open `http://127.0.0.1:8080/`. Rebuild after editing content or templates.
 Every build removes only the generated `_site` directory, then renders and
 checks the complete site. Dependencies and generated output are Git-ignored.
 
+## Authoring
+
+Use `templates/work-piece/` or `templates/writing-post/` for new entries.
+The shared layouts include image enlargement, supporting galleries, related
+thumbnails, responsive heroes and adjacent-project navigation. Writing supports
+optional `hero` and `hero_alt` metadata, including animated GIFs.
+
+Contents are generated from article headings (`h2` through `h6`) during the
+build; do not maintain a manual contents list. Viewer captions are excluded.
+On wide screens the contents rail sticks beside the article and highlights
+the current section. Narrow screens retain the normal contents list.
+Chart CSV downloads are generated from source JSON and remain untracked.
+
 ## GitHub Pages
 
 `.github/workflows/pages.yml` runs tests and a clean, validated build for pull

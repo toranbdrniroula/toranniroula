@@ -115,7 +115,7 @@ class ScrollRevealViewer extends HTMLElement {
         background: var(--srv-bg, var(--color-bg-elevated, #141417));
         color: var(--color-text, #F0EFEA);
       }
-      .srv-inner { position: relative; width: min(80vw, 680px); height: min(62vh, 540px); }
+      .srv-inner { position: relative; width: min(90%, 680px); height: min(62vh, 540px); }
       .srv-inner img {
         position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
         will-change: opacity;
@@ -128,7 +128,7 @@ class ScrollRevealViewer extends HTMLElement {
       .srv-cap {
         position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%);
         text-align: center; opacity: 0; transition: opacity .25s ease;
-        width: min(90vw, 420px); pointer-events: none;
+        width: min(90%, 420px); pointer-events: none;
       }
       .srv-cap.active { opacity: 1; }
       .srv-cap .tag {
@@ -510,10 +510,13 @@ class ScrollRevealViewer extends HTMLElement {
       setView(azimuthDeg, elevationDeg, distance, target) {
         const az = THREE.MathUtils.degToRad(azimuthDeg);
         const el = THREE.MathUtils.degToRad(elevationDeg);
-        const r = Math.cos(el) * distance;
+        // Preserve the authored horizontal framing as a viewport narrows.
+        // Distances remain relative to the normalized 1.6-unit model.
+        const framedDistance = distance * Math.max(1, (680 / 540) / camera.aspect);
+        const r = Math.cos(el) * framedDistance;
         camera.position.set(
           target.x + r * Math.sin(az),
-          target.y + distance * Math.sin(el),
+          target.y + framedDistance * Math.sin(el),
           target.z + r * Math.cos(az)
         );
         camera.lookAt(target);
