@@ -167,9 +167,13 @@ function prepareHTML(html, { eagerFirst = false, legacyPath = '/work/case-file.h
     const href = chart.attr('href');
     const downloads = $('<p class="chart-downloads">Chart data: </p>');
     downloads.append($('<a>Download CSV</a>').attr({href: href.replace(/\.json$/, '.csv'), download: path.basename(href).replace(/\.json$/, '.csv')}));
-    downloads.append(' · ');
-    downloads.append($('<a>Download original JSON</a>').attr({href, download: path.basename(href)}));
     chart.after(downloads);
+  });
+  $('img').each((_, element) => {
+    const image = $(element);
+    if (!image.closest('a').length && image.attr('src')) {
+      image.wrap($('<a class="figure-open"></a>').attr({ href: image.attr('src'), 'aria-label': `Enlarge image: ${image.attr('alt') || 'figure'}` }));
+    }
   });
   return { html: $.html(), headings };
 }

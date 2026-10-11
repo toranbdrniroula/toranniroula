@@ -104,6 +104,8 @@ class HeroCarousel extends HTMLElement {
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     this._render();
+    this.addEventListener('figure:open', () => { this._figureOpen = true; this._stopAutoplay(); });
+    this.addEventListener('figure:close', () => { this._figureOpen = false; this._startAutoplay(); });
     this._wireInteraction();
     this._wireVisibilityAwareAutoplay();
   }
@@ -197,7 +199,7 @@ class HeroCarousel extends HTMLElement {
   }
 
   _startAutoplay() {
-    if (this._reduceMotion || this._timer) return;
+    if (this._reduceMotion || this._timer || this._figureOpen || this.contains(document.activeElement)) return;
     this._timer = setInterval(() => this._go(this._current + 1, false), this._interval);
   }
 

@@ -113,7 +113,7 @@ assert.equal($('hero-carousel').length, 6);
 assert.equal($('plotly-chart').length, 2);
 assert.equal($('.chart-downloads').length, 2);
 assert.equal($('.chart-data table').length, 0);
-assert.equal($('.chart-downloads a[download]').length, 4);
+assert.equal($('.chart-downloads a[download]').length, 2);
 assert.equal($('.case-hero img').first().attr('loading'), 'eager');
 assert.equal($('#site-nav a').length, 5);
 const ids = $('[id]').map((_, element) => $(element).attr('id')).get();

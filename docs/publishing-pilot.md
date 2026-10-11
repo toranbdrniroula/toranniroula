@@ -303,3 +303,7 @@ Charts now have compact CSV and original JSON download links instead of long
 expandable tables. Seven datasets are exported with every series and coordinate,
 full numeric precision, and axis labels/units in the CSV header. Original JSON
 files are preserved byte-for-byte, including Plotly layout and trace metadata.
+
+### CSV-only downloads and figure inspection
+Chart download controls now offer CSV only. All seven CSV files are generated during the build from the original JSON and remain outside version control. Work cards retain direct canonical article navigation: the former overlay was a teaser requiring a second click for the full case study. Article figures instead offer a native modal with captions, Escape/Close, focus restoration and an original-image link. Plain image links remain usable without scripts or dialog support. Carousel autoplay pauses during figure inspection. No scientific prose or media was removed.
+
