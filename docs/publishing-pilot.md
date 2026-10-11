@@ -240,3 +240,25 @@ admin access through the connected account. Pages publishing source, domain
 settings and an actual Ubuntu Actions run have not been verified. The workflow
 and cutover/rollback instructions are prepared locally; no commit, push, Pages
 setting change or production deployment has been performed in this stage.
+
+## Production cutover — 11 October 2026
+
+Migration commit `5ec670a` was pushed to main. GitHub Actions run
+`38117948257` passed its Ubuntu build, all six tests, content/artifact checks
+and Pages deployment. The custom domain serves the generated static HTML.
+All 17 routes were checked live for HTTP 200, static main content, one H1 and
+canonical URLs. Sitemap, RSS, both compatibility scripts and the local KaTeX
+stylesheet also returned HTTP 200. Browser checks confirmed both legacy work
+and writing URLs preserve fragments while forwarding to canonical routes;
+the AMI post retains its 26 code blocks. Live theme switching was verified.
+
+The first push also triggered the previous branch-based Pages workflow. The
+user then confirmed switching the repository's Pages source to GitHub Actions,
+preserving the custom domain. The browser session was signed out; no credential
+was extracted for an API call. The generated homepage title was adjusted to
+avoid repeating the author name in the browser tab.
+
+Live contact delivery and exhaustive scientific-viewer interaction remain
+unverified; no test message was sent. The two gallery draft scaffolds retain
+their existing content limitations. Earlier sections record the migration
+stages and are historical rather than the current deployment status.

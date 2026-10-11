@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>try{if(localStorage.getItem('theme')==='light')document.documentElement.dataset.theme='light';}catch(e){}</script>
-  <title>{{ piece.title }} | {{ site.name }}</title>
+  <title>{{ piece.title }}{% if piece.title != site.name %} | {{ site.name }}{% endif %}</title>
   <meta name="description" content="{{ description }}">
   <meta name="author" content="{{ site.name }}">
   <link rel="canonical" href="{{ canonical }}">
