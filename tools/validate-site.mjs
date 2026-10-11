@@ -8,6 +8,12 @@ const require = createRequire(import.meta.url);
 const { ROOT, RSD_SLUG, RSD_ROUTE, WORK_SLUGS, WRITING_SLUGS, pilotData, createMarkdown } = require('./site-build.cjs');
 const output = path.join(ROOT, '_site');
 const {profileData}=require('./profile-data.cjs');
+const { contentSignature }=require('./content-signature.cjs');
+const baseline=JSON.parse(fs.readFileSync(path.join(ROOT,'tools/content-baseline.json'),'utf8'));
+for (const slug of WORK_SLUGS) {
+  assert.deepEqual(contentSignature(fs.readFileSync(path.join(ROOT,'content/work',`${slug}.md`),'utf8')),baseline.pages[slug],`${slug}: original prose or media changed; review against the pre-migration baseline before intentionally updating it`);
+}
+console.log('Verified pre-migration prose and media preservation across all ten work records.');
 for (const kind of ['about','contact']) {
   const data=profileData(kind);
   const page=load(fs.readFileSync(path.join(output,`${kind}.html`),'utf8'));
@@ -105,8 +111,9 @@ assert.equal($('.katex-error').length, 0);
 assert.equal($('script[src*="marked"], script[src*="nav.js"], script[src*="case-file.js"], script[src*="katex"]').length, 0);
 assert.equal($('hero-carousel').length, 6);
 assert.equal($('plotly-chart').length, 2);
-assert.equal($('.chart-data table').length, 2);
-assert($('.chart-data th').text().includes('Nozzle exit velocity (m/s)'));
+assert.equal($('.chart-downloads').length, 2);
+assert.equal($('.chart-data table').length, 0);
+assert.equal($('.chart-downloads a[download]').length, 4);
 assert.equal($('.case-hero img').first().attr('loading'), 'eager');
 assert.equal($('#site-nav a').length, 5);
 const ids = $('[id]').map((_, element) => $(element).attr('id')).get();

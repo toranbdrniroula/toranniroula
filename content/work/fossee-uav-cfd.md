@@ -123,11 +123,15 @@ The wingtip vortices themselves were isolated with the Q-criterion (Q = 2000), w
 <img src="../assets/media/work_assets_fossee_uav_cfd/fossee-uav-qcriterion-isosurface-q2000.png" alt="Q-criterion isosurfaces comparing the baseline UAV and the UAV with 45 degree winglet at 5 degrees angle of attack">
 <span class="md-caption">Q = 2000 isosurfaces, baseline vs 45° winglet at α = 5°, colored by velocity magnitude. The wake vortices trailing off the fuselage are essentially unchanged; the wingtip vortex is visibly and specifically reduced by the winglet.</span>
 
-## What was learned
+<span id="what-was-learned" aria-hidden="true"></span>
+
+## Winglet cant angle and induced-drag reduction
 
 Both winglet configurations improve lift-to-drag ratio over the baseline across the sweep, and the flow visualization confirms the actual mechanism rather than just the aggregate coefficients: the winglet suppresses spanwise flow leakage at the tip, shrinks the wingtip vortex, and that reduction in induced drag outweighs the small parasitic drag penalty from the wing extension needed to blend it in. The 45° cant angle beats the 90° configuration on every metric that matters - lower drag at matched lift, a larger maximum L/D gain (14.95% vs 10.9%), and visibly tighter vortex suppression in the Q-criterion comparison - which lines up with it having the more effective spanwise-flow barrier. Cant angle, not just the presence of a winglet, is doing real aerodynamic work here.
 
-## What's still open
+<span id="what-s-still-open" aria-hidden="true"></span>
+
+## Geometry uncertainty, transient flow and winglet optimization
 
 The geometry reconstruction is the main source of uncertainty in the baseline validation: Meftah et al.'s paper doesn't give exact fuselage cross-section, tail chord, or wing-tail spacing, so those were estimated from figure proportions, and that shows up as the growing C_L/C_D error past stall, where fuselage-wing junction and tail placement matter most. The mesh also averages y+ ≈ 18, coarser than ideal for fully resolving the boundary layer, and everything here is steady-state - real gust response and time-resolved vortex shedding are outside what `simpleFoam` can say anything about. The study also deliberately stayed focused on aerodynamic performance rather than the vortex structures themselves, so there's no dedicated vortex-dynamics study here despite the Q-criterion visualization. Natural next steps: transient runs with time-varying angle of attack, elevator/control-surface deflection (completely absent here), general turning flight rather than just cruise, and a proper winglet-shape optimization, surrogate-modeled or CFD-in-the-loop now that cant angle is confirmed to matter.
 

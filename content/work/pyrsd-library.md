@@ -74,11 +74,15 @@ Before pointing the pipeline at the actual (and much harder to validate) compres
 
 The hue-extracted images already show the boundary layer as a thin band of shifted color hugging the plate; the mean-gradient panels sharpen that into a clean ridge of $|\partial\rho/\partial x|$ tracking the layer's edge, growing (0.016 to 0.025 kg m&#8315;&#179; mm&#8315;&sup1;, peak-to-peak) with the higher wall temperature, exactly as boundary-layer theory predicts. Integrating that gradient field and converting to temperature under the isobaric assumption gave a wall temperature, extrapolated from the reconstructed field back to $x=0$, of about 312 K against a 313 K set point at the lower condition (&asymp;0.3% error), and about 330 K against a 333 K set point at the higher one (&asymp;1% error) - close enough, on a flow with an independently known answer, to trust the same pipeline on data where the answer isn't known in advance.
 
-## What was learned
+<span id="what-was-learned" aria-hidden="true"></span>
+
+## Calibration stability and testing the reconstruction pipeline
 
 Almost none of the real difficulty here turned out to be the reconstruction math - the Poisson solve and the Abel transform are both well-trodden ground. It was everything upstream: how much a slide-film graded filter's calibration drifts between sessions, how sensitive the hue-to-displacement mapping is to ambient lighting and camera white balance, and how much of an apparently real signal in a first pass turned out to be noise once the calibration curve was refit properly. Enforcing the "all I/O in one module" rule early also paid for itself directly - it made it possible to unit-test the calibration, optics, and solver code against synthetic gradient fields with known analytical answers, entirely without touching a camera.
 
-## What's still open
+<span id="what-s-still-open" aria-hidden="true"></span>
+
+## Axisymmetric reconstruction and time-resolved schlieren analysis
 
 Abel inversion for genuinely axisymmetric flows remains the roughest edge in the library - a candle plume was the original axisymmetric test case, and reconstructions from it still show artifacts near the centerline that a cleaner `symmetry_axis` handling would probably fix. More fundamentally, `pyrsd` treats every stack as a set of independent snapshots reduced to ensemble statistics; it has no notion of tracked motion between frames, so there's no path yet from it to Schlieren Imaging Velocimetry, which is the natural next step the underlying thesis work points toward. On the reconstruction side, the 2-D Poisson solver currently needs both $x$- and $y$-displacement fields from a single camera view, which most single-view RSD setups (including this one) don't actually have simultaneously - a genuinely single-view 2-D capability would mean either a second camera axis or falling back to a forward-model/regularized-inverse formulation instead of solving the Poisson equation directly.
 

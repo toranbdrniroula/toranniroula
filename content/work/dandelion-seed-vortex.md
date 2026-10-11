@@ -127,13 +127,17 @@ Over the time both runs cover, the vertical force history of the free-rotation a
 <video-embed src="../assets/media/work_assets_dandelion_seed/dandelion-6dof-q.mp4" poster="../assets/media/work_assets_dandelion_seed/dandelion-6dof-q-poster.jpg" label="Q-criterion isosurface of the falling seed, camera orbit" height="340" fit="contain" autoplay="true" loop="true" controls="false"></video-embed>
 <span class="md-caption">Q-criterion isosurface of the falling seed, coloured by vertical velocity, seen while the camera moves around it.</span>
 
-## What was learned
+<span id="what-was-learned" aria-hidden="true"></span>
+
+## Separated vortex rings in the fixed and falling seed
 
 A resolved-filament model of the dandelion pappus, at about five million cells, does produce a compact, separated vortex ring standing off the pappus, and it does so in both the fixed-seed and the falling-seed setups. The solid-disk control behaves differently in the way the bleed-flow explanation predicts: its vorticity stays attached to the rim, where the pappus's cores migrate to the axis and lift away. In the first 0.2 s of the falling case, rotation does not measurably change the drag.
 
 None of this is a surprise to anyone who has read Cummins et al. The point of redoing it is that the same mesh and solver setup now sits on both sides of the question: a fixed body for validation, and a body that falls, tilts, and sheds a wake of its own.
 
-## What's still open
+<span id="what-s-still-open" aria-hidden="true"></span>
+
+## Longer simulations, overset convergence and flexible filaments
 
 The falling case has so far covered about 0.23 s of physical time, which is not enough to say whether the seed reaches a steady fall speed, and I am deliberately not claiming one. The force is flattening, but the drag-versus-weight balance that defines terminal velocity needs a longer run before it means anything. The moments are the other open question: whether the growing tilting moment is a real instability of the falling pappus or numerical noise from the overset coupling is exactly what the rotation-free comparison cannot settle on its own, and it needs a convergence check on the overset interpolation to answer.
 

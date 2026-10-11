@@ -1,0 +1,66 @@
+{
+  "sourceCommit": "64aa4d9",
+  "note": "Pre-migration prose tokens and media attributes; headings and paragraph order may change, content must remain complete.",
+  "pages": {
+    "dandelion-seed-vortex": {
+      "wordCount": 1942,
+      "proseHash": "200cb2a9b4990c551c218af90c894804f9853914889c9507bd92d15612806814",
+      "mediaCount": 17,
+      "mediaHash": "1abdf8c1666a6db743c25d9d513e2029b21aa7131a2a975e22d2f4f18cd1332f"
+    },
+    "compressible-wall-jet-rsd": {
+      "wordCount": 4621,
+      "proseHash": "9792201aec1f1cf3bb9e94c2185afc2054eaa04231c6c588c3e4403c5e9f0290",
+      "mediaCount": 56,
+      "mediaHash": "33c64ff124d654fab57d7c619794128c09d2e8151fd7abb4a4d9b1e614ff5cd9"
+    },
+    "pyrsd-library": {
+      "wordCount": 1428,
+      "proseHash": "40ec173fdce9e237e327afa238b8273f19d4559d09adbf219edc7110faeeebf5",
+      "mediaCount": 3,
+      "mediaHash": "b9654fc247ddb9a418977c6985f1717a06ff185fa86993a928f1862e9d1314ce"
+    },
+    "hypersonics-advanced-propulsion": {
+      "wordCount": 673,
+      "proseHash": "2d49ad1ac05158af38a6ca473831fe366d33096598305c5bc8883df3c04ad5bf",
+      "mediaCount": 9,
+      "mediaHash": "4aa34b23c5c3a9d9854662d867b2605d9bfbf72d979dcd9b586b297d4fbc6176"
+    },
+    "fossee-uav-cfd": {
+      "wordCount": 1533,
+      "proseHash": "446601bfc851fd11e9fc76d0994edca6e0198ab81cb977c26e7b90131a89769e",
+      "mediaCount": 19,
+      "mediaHash": "f523bdadaf6def47f5f4554d1c4747b34c2277ecc4618ee9036c73b48f27299d"
+    },
+    "piv-pod-wake-study": {
+      "wordCount": 1754,
+      "proseHash": "80560312d451ff700ca2ba303378b408ce54d3dff735eeedc6b476933567bfff",
+      "mediaCount": 18,
+      "mediaHash": "d312c30e986e607b83d98dc0c42b24d13c155daeaf8f4c11b60c3a8fb9760639"
+    },
+    "nimbus-agricultural-uav": {
+      "wordCount": 1846,
+      "proseHash": "c185469c4852f258ea0572861f64047f81575e374bfe78efc550aa2eb979c28b",
+      "mediaCount": 24,
+      "mediaHash": "aadfb453418a98de3016d699cdbd3b91525be0fb782d250b68db8bcd2dd95c37"
+    },
+    "manim-piv-animation": {
+      "wordCount": 94,
+      "proseHash": "b132665cee70074015633d4476447a7b74df4979244e0220f04373e8ef8a9c7c",
+      "mediaCount": 0,
+      "mediaHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "schlieren-lab-notebook": {
+      "wordCount": 204,
+      "proseHash": "dfb96be8b708b7b123413a3adc5e617355bd7b5aa59cbaea6721531eed48f7b7",
+      "mediaCount": 0,
+      "mediaHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "cfd-flow-visualization-reel": {
+      "wordCount": 151,
+      "proseHash": "cac951ca643367bdd4d06e7443688b7a66e2328e060271d86e6a937723fb1b4e",
+      "mediaCount": 0,
+      "mediaHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  }
+}

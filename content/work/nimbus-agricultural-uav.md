@@ -121,11 +121,15 @@ Takeoff and landing distance came from the same telemetry: ground height and pos
 </div>
 <span class="md-caption">Takeoff to 50 ft: ≈460 m against the 300 m matching-plot target. Landing from 50 ft: ≈390 m.</span>
 
-## What was learned
+<span id="what-was-learned" aria-hidden="true"></span>
+
+## Cross-checking the aircraft design and stability
 
 The converged design met its brief with margin in most places - 40 m/s cruise and 48 m/s max speed against a 35 m/s requirement - and every dynamic mode came out qualitatively as expected for a conventional configuration. But the more general takeaway is the cross-check itself, not any one number: sizing a matching plot, modeling it in XFLR5, then verifying both by flight-testing a matched digital twin, and having the neutral point agree to within 3% across two genuinely independent methods, is the actual test of whether the sizing was done right. A number that only ever gets checked against itself isn't a validated number, it's just a number you've stopped being suspicious of - and that agreement is closer to how this process should always be checked than anything Nimbus-specific.
 
-## What's still open
+<span id="what-s-still-open" aria-hidden="true"></span>
+
+## Closing the takeoff and landing distance gap
 
 Takeoff and landing distance (460 m / 390 m) sit well above the 300 m constraint line the matching plot was drawn to - not a flyability problem, but a real gap between a "minimum field length" constraint and what actually came out once the rest of the sizing was fixed elsewhere. It's the honest cost of pinning the design point to the stall line's intersection with the takeoff-run line back on the matching plot, rather than to the takeoff-run line on its own: satisfying "simultaneously" isn't the same as satisfying "with margin." The concrete next step is trimming wing/power loading specifically against the takeoff-run constraint rather than the stall line it's currently pinned to, to bring the two closer together - and I'd rather post that gap here than pretend the matching plot's design point was the end of the story.
 

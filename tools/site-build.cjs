@@ -161,29 +161,15 @@ function prepareHTML(html, { eagerFirst = false, legacyPath = '/work/case-file.h
     heading.attr('id', id);
     headings.push({ title, id, level: element.tagName });
   });
-  // Existing chart data remains authoritative; expose a readable series table
-  // outside the component, whose mount replaces its own child DOM.
+  // Keep complete data downloadable without expanding a long table in the article.
   $('plotly-chart').each((_, element) => {
     const chart = $(element);
     const href = chart.attr('href');
-    const dataset = JSON.parse(fs.readFileSync(path.join(ROOT, href.slice(1)), 'utf8'));
-    const details = $('<details class="chart-data"><summary>View chart data</summary></details>');
-    const table = $('<table><thead><tr><th scope="col">Series</th><th scope="col">X</th><th scope="col">Y</th></tr></thead><tbody></tbody></table>');
-    const axisTitle = axis => typeof axis?.title === 'string' ? axis.title : axis?.title?.text;
-    table.find('th').eq(1).text(axisTitle(dataset.layout?.xaxis) || 'X');
-    table.find('th').eq(2).text(axisTitle(dataset.layout?.yaxis) || 'Y');
-    for (const series of dataset.data) {
-      for (let i = 0; i < series.x.length; i++) {
-        const row = $('<tr></tr>');
-        for (const value of [series.name || chart.attr('title'), series.x[i], series.y[i]]) {
-          row.append($('<td></td>').text(String(value)));
-        }
-        table.find('tbody').append(row);
-      }
-    }
-    details.append($('<div class="table-scroll"></div>').append(table));
-    details.append($('<p></p>').append($('<a>Download original chart data</a>').attr('href', href)));
-    chart.after(details);
+    const downloads = $('<p class="chart-downloads">Chart data: </p>');
+    downloads.append($('<a>Download CSV</a>').attr({href: href.replace(/\.json$/, '.csv'), download: path.basename(href).replace(/\.json$/, '.csv')}));
+    downloads.append(' · ');
+    downloads.append($('<a>Download original JSON</a>').attr({href, download: path.basename(href)}));
+    chart.after(downloads);
   });
   return { html: $.html(), headings };
 }

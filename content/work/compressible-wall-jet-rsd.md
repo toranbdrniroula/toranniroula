@@ -245,7 +245,9 @@ A candle flame descending into a rising butane plume (butane is roughly twice th
   <img src="../assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-butane-flame-t8.png" alt="RSD frame of candle flame and butane plume at t0 plus 200ms" data-caption="t0 + 200 ms - a coherent warm-to-cool structure dominates the field.">
 </hero-carousel>
 
-## What was learned
+<span id="what-was-learned" aria-hidden="true"></span>
+
+## Thermal coupling and agreement with CFD
 
 The facility works, and it's characterized well enough to trust: the 30% supply-line loss and the Kathmandu-altitude choking limit are both quantified rather than assumed, and the nozzle's behavior across the full pressure range (subsonic through choked-and-underexpanded) is confirmed directly in schlieren imagery rather than inferred from a spec sheet. `pyrsd` turns a color image sequence into a calibrated, reproducible density field, and the natural-convection validation - wall temperature recovered to within 0.3-1% of the thermocouple setpoint - is the result I trust most in the whole thesis, because it's the one point where the answer was known before the measurement.
 
@@ -260,7 +262,9 @@ On the physics itself: wall heating and jet momentum don't act independently on 
 - **Z-type schlieren alignment is genuinely fussy** - the minimum achievable angle between the two mirror legs constrained the usable test-section width, and re-aligning after almost anything moved in the lab was routine, not exceptional.
 - **An Abel inversion attempt on the candle plume failed** outright, from plume asymmetry and turbulent transition - it's not used anywhere in the final analysis, and stayed out deliberately rather than being forced to work.
 
-## What's still open
+<span id="what-s-still-open" aria-hidden="true"></span>
+
+## Measurement improvements and further flow analysis
 
 A pressure-rated Pitot tube or laser Doppler anemometry would directly validate the CFD-estimated exit Mach numbers instead of leaving them as an assumption. A temporary graphite or black-paint coating on a plate section (without permanently altering the experiment) would let IR thermography actually validate spatial temperature uniformity. Higher optical magnification ($\Delta x \lesssim 0.05$ mm/px, versus the ~0.278 mm/px used here) would resolve the near-wall gradient finely enough to extract a genuine Nusselt-number correlation for the heated wall jet - not attempted in this thesis - and schlieren imaging velocimetry, cross-correlating pairs of high-speed frames the way PIV does with seeded particles, would extract actual velocity fields directly from the density-gradient structures already being recorded. Dynamic Mode Decomposition on the same RSD sequences would complement the (not yet performed, but planned) POD analysis with frequency-indexed rather than purely energy-ranked modes, and a 3D LES of the wall jet would resolve the turbulent structures that 2D RANS necessarily throws away - which is also, not coincidentally, most of what's still open on the `pyrsd` side, where SIV, DMD, and a cleaner axisymmetric Abel-inversion path are the natural next modules.
 

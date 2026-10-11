@@ -29,8 +29,7 @@
 [data-static-project] table { width: 100%; border-collapse: collapse; font-size: 14px; }
 [data-static-project] th, [data-static-project] td { padding: 10px 12px; border: 1px solid var(--color-divider); text-align: left; }
 [data-static-project] .katex-display { overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
-[data-static-project] .chart-data { margin-bottom: 24px; }
-[data-static-project] .chart-data summary { cursor: pointer; padding: 12px 0; }
+[data-static-project] .chart-downloads { margin: .5rem 0 1.5rem; font-size: .9rem; }
 [data-static-project] plotly-chart { display: block; min-height: 360px; }
 [data-static-project] plotly-chart:not(:defined) { display: none; }
 [data-static-project] hero-carousel:not(:defined) { display: block; }

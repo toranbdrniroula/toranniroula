@@ -282,3 +282,24 @@ model/data URLs, GLB tour/free-view switching, video loaded data, and a loaded
 static image with scripts blocked. The complete content build still validates.
 Local scripts and CSS use content hashes in their URLs so an existing browser
 cache cannot pair newly generated markup with an older component implementation.
+
+## Content preservation and chart downloads
+
+A comparison with pre-migration commit `64aa4d9` confirmed that the Markdown
+records had not been edited during migration. The Hypersonics page's three
+generic headings were also in that original source. It now groups the existing
+setup and results by cylinder, shock interactions and intake, with the original
+limitations retained. Five other work records use specific section titles in
+place of generic reflection headings. Old section fragments have alias anchors.
+No prose, equation, numerical result or scientific media was removed.
+
+The build checks all ten work records against a pre-migration prose-token and
+media-attribute baseline, allowing changes to headings and paragraph ordering
+while detecting textual or media changes. Any future intentional prose edit
+requires review before updating that baseline. Existing output validation still
+checks every source paragraph and equation against the rendered article.
+
+Charts now have compact CSV and original JSON download links instead of long
+expandable tables. Seven datasets are exported with every series and coordinate,
+full numeric precision, and axis labels/units in the CSV header. Original JSON
+files are preserved byte-for-byte, including Plotly layout and trace metadata.
