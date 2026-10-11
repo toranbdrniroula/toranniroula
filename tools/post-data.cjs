@@ -9,7 +9,9 @@ function postData(slug) {
   const prepared = prepareHTML(createMarkdown().render(source), {legacyPath:'/writing/post.html'});
   const canonical = absoluteURL(`/writing/${slug}/`,site.site_url);
   const image = post.thumbnail && fs.existsSync(path.join(ROOT,post.thumbnail)) ? post.thumbnail : 'assets/media/og-banner.jpg';
-  return {site,post,piece:{...post,thumbnail:image},socialImage:image,body:prepared.html,headings:prepared.headings,
+  const heroDOM = require('cheerio').load('<img>', {}, false);
+  const hero = post.hero ? prepareHTML(heroDOM('img').attr({src:`/${post.hero}`,alt:post.hero_alt || post.title}).toString(), {eagerFirst:true}).html : '';
+  return {site,post,piece:{...post,thumbnail:image},socialImage:image,hero,body:prepared.html,headings:prepared.headings,
     canonical,description:post.excerpt,isWriting:true,hasMath:prepared.html.includes('<math'),needsThree:false,
     scripts:['static-post.js'],extraStyles:['writing.css','static-post.css'],navigation:navigationData('Writing'),year:new Date().getFullYear(),
     dateLabel:new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(`${post.date}T00:00:00Z`)),
