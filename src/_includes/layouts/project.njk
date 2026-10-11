@@ -6,8 +6,6 @@ layout: layouts/base.njk
   <header class="case-header">
     <h1 class="case-title">{{ piece.title }}</h1>
     <div class="case-context"><span>{{ piece.date }}</span><span class="case-status-badge">{{ piece.status }}</span><span>{{ piece.institution }}</span></div>
-    <p class="project-summary">{{ piece.quick_description }}</p>
-    <p class="project-scope">{{ scope }}</p>
     <div class="case-tags">{% for tag in piece.tags %}<span class="tag-chip">{{ tag }}</span>{% endfor %}</div>
     {% if piece.slug == 'compressible-wall-jet-rsd' %}<div class="project-actions"><a href="/assets/downloads/wall-jet-rsd-thesis-report.pdf">Full thesis report (PDF)</a></div>{% endif %}
   </header>
