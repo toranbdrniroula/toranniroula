@@ -1,0 +1,32 @@
+/* Shared finishing details. Keep scientific media and article structure intact. */
+::selection { background: var(--color-accent); color: var(--color-bg); }
+[data-static-project] :is(.case-title, .post-title, .hero-name) { letter-spacing: -.025em; line-height: 1.18; }
+[data-static-project] :is(.case-title, .post-title) { text-wrap: balance; }
+[data-static-project] .case-context { line-height: 1.7; }
+[data-static-project] :is(.case-technical, .post-body) { line-height: 1.8; }
+[data-static-project] .theme-toggle { width: 40px; height: 40px; flex-shrink: 0; background: var(--color-bg-elevated); }
+[data-static-project] .theme-toggle svg { width: 18px; height: 18px; }
+[data-static-project] .theme-toggle:hover { border-color: var(--color-accent); color: var(--color-accent); }
+[data-static-project] :is(.gallery-tile, .project-related-card) { border-radius: 10px; border: 1px solid var(--color-divider); }
+[data-static-project] .gallery-tile { transition: transform 180ms ease-out, border-color 180ms ease-out; }
+[data-static-project] .gallery-tile:is(:hover, :focus-visible) {
+  transform: translateY(-3px); border-color: var(--color-accent); box-shadow: none; filter: none;
+}
+[data-static-project] :is(.tile-tag, .tile-status) { border-radius: 5px; }
+/* Thumbnail badges sit over a dark scrim in either page theme. */
+[data-static-project] .tile-status.completed { color: #ACCEF5; }
+[data-static-project] .tile-status.in-progress { color: #F0C27B; }
+[data-static-project] :is(.tag-chip, .hero-btn, .code-copy-btn) { border-radius: 6px; }
+[data-static-project] :is(.case-pager-link, .project-related-card) { transition: border-color 160ms ease-out, background-color 160ms ease-out; }
+[data-static-project] :is(.form-field input, .form-field textarea) { border-radius: 8px; }
+[data-static-project] .form-field input::placeholder,
+[data-static-project] .form-field textarea::placeholder { color: var(--color-text-muted); opacity: 1; }
+[data-static-project] :is(.case-technical pre, .post-body > pre) { border: 1px solid var(--color-divider); border-radius: 8px; }
+[data-static-project] .project-contents a { transition: color 160ms ease-out, border-color 160ms ease-out; }
+[data-static-project] .project-contents a:hover { color: var(--color-accent); }
+[data-static-project] .footer { padding-top: 28px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-static-project] *, [data-static-project] *::before, [data-static-project] *::after { transition: none !important; }
+  [data-static-project] .gallery-tile:is(:hover, :focus-visible) { transform: none; }
+}

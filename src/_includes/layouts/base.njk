@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="{{ '/css/case-file.css' | assetURL }}">
   <link rel="stylesheet" href="{{ '/css/static-project.css' | assetURL }}">
   {% for style in extraStyles %}<link rel="stylesheet" href="{{ ('/css/' ~ style) | assetURL }}">{% endfor %}
+  <link rel="stylesheet" href="{{ '/css/polish.css' | assetURL }}">
   {% if isWriting %}<link rel="alternate" type="application/rss+xml" title="Writing | {{ site.name }}" href="/feed.xml">{% endif %}
   {% if hasMath %}<link rel="stylesheet" href="/assets/vendor/katex/katex.min.css">{% endif %}
   {% if needsThree %}<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"}}</script>{% endif %}

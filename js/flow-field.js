@@ -343,8 +343,8 @@
       if (!ok) this._mountStatic(canvas);
     }
 
-    // Fixed, non-interactive wash: no simulation, no listeners, nothing
-    // ever moves. Used under prefers-reduced-motion and as the fallback
+    // Fixed, non-interactive wash: repaint only on resize or theme change.
+    // Used under prefers-reduced-motion and as the fallback
     // when WebGL2 float render targets aren't available.
     _mountStatic(canvas) {
       const ctx = canvas.getContext('2d', { alpha: false });
@@ -366,7 +366,11 @@
       paint();
       const ro = new ResizeObserver(paint);
       ro.observe(this);
-      this._teardown = () => ro.disconnect();
+      document.addEventListener('site:themechange', paint);
+      this._teardown = () => {
+        ro.disconnect();
+        document.removeEventListener('site:themechange', paint);
+      };
     }
 
     // Real incompressible-flow simulation on the GPU. Returns false if the
@@ -622,6 +626,7 @@
       const onThemeChange = () => {
         bg = this._readColorRGB01('--color-bg', [0.04, 0.04, 0.05]);
         accent = this._readColorRGB01('--color-accent', [0.31, 0.66, 1]);
+        if (this._renderNow) this._renderNow();
       };
       document.addEventListener('site:themechange', onThemeChange);
 

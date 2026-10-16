@@ -33,6 +33,11 @@ On wide screens the contents rail sticks beside the article and highlights
 the current section. Narrow screens retain the normal contents list.
 Chart CSV downloads are generated from source JSON and remain untracked.
 
+Theme colors live in `css/base.css`; shared finishing details live in
+`css/polish.css`, loaded by the base layout. Keep muted text readable in both
+themes, thumbnail badges legible over images, and hover motion disabled when
+reduced motion is requested. Theme changes also repaint the home flow backdrop.
+
 ## GitHub Pages
 
 `.github/workflows/pages.yml` runs tests and a clean, validated build for pull
