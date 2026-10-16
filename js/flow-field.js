@@ -352,8 +352,8 @@
         const rect = this.getBoundingClientRect();
         canvas.width = Math.max(1, rect.width);
         canvas.height = Math.max(1, rect.height);
-        const bg = this._readColorRGB01('--color-bg', [0.04, 0.04, 0.05]).map(c => c * 255);
-        const accent = this._readColorRGB01('--color-accent', [0.31, 0.66, 1]).map(c => c * 255);
+        const bg = this._readColorRGB01('--flow-bg', [0.04, 0.04, 0.05]).map(c => c * 255);
+        const accent = this._readColorRGB01('--flow-accent', [0.31, 0.66, 1]).map(c => c * 255);
         const grad = ctx.createRadialGradient(
           canvas.width * 0.7, canvas.height * 0.35, 0,
           canvas.width * 0.7, canvas.height * 0.35, Math.max(canvas.width, canvas.height) * 0.7
@@ -621,11 +621,11 @@
       window.addEventListener('touchend', onTouchEnd, { passive: true });
       window.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
-      let bg = this._readColorRGB01('--color-bg', [0.04, 0.04, 0.05]);
-      let accent = this._readColorRGB01('--color-accent', [0.31, 0.66, 1]);
+      let bg = this._readColorRGB01('--flow-bg', [0.04, 0.04, 0.05]);
+      let accent = this._readColorRGB01('--flow-accent', [0.31, 0.66, 1]);
       const onThemeChange = () => {
-        bg = this._readColorRGB01('--color-bg', [0.04, 0.04, 0.05]);
-        accent = this._readColorRGB01('--color-accent', [0.31, 0.66, 1]);
+        bg = this._readColorRGB01('--flow-bg', [0.04, 0.04, 0.05]);
+        accent = this._readColorRGB01('--flow-accent', [0.31, 0.66, 1]);
         if (this._renderNow) this._renderNow();
       };
       document.addEventListener('site:themechange', onThemeChange);

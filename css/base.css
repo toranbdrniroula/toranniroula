@@ -9,6 +9,8 @@
   --color-accent: #8BB8EB;
   --color-accent-glow: rgba(139, 184, 235, 0.12);
   --color-divider: #282C34;
+  --flow-bg: #0A0A0C;
+  --flow-accent: #4FA8FF;
   --color-status-progress: #E0A845;
   --color-status-complete: #4FA8FF;
 
@@ -37,6 +39,7 @@ html[data-theme="light"] {
   --color-divider: #DCE1E8;
   --color-accent: #1769AA;
   --color-accent-glow: rgba(23, 105, 170, 0.08);
+  --flow-bg: #FAFAF7;
 }
 
 html[data-theme="light"] .post-body { color: #1E1E22; }
