@@ -1,6 +1,61 @@
 ---
-title: "OpenFOAM CFD for a Fixed-Wing UAV, and the Effect of Blended Winglets"
-date: "2025"
+{
+  "title": "OpenFOAM CFD for a Fixed-Wing UAV, and the Effect of Blended Winglets",
+  "category": "research",
+  "status": "Completed",
+  "thumbnail": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-cfd-thumb.png",
+  "media_type": "carousel",
+  "media_fit": "contain",
+  "hero_interval": 2000,
+  "hero_slides": [
+    {
+      "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-isometric-geometry.png",
+      "caption": "Baseline inverted V-tail, twin-boom geometry, reconstructed from Meftah et al."
+    },
+    {
+      "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-surface-mesh.png",
+      "caption": "snappyHexMesh surface refinement and wake refinement box"
+    },
+    {
+      "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-winglet-performance.png",
+      "caption": "Winglet cant angle study - up to 14.95% L/D improvement at 45°"
+    },
+    {
+      "src": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-qcriterion-isosurface-q2000.png",
+      "caption": "Q-criterion isosurfaces - wingtip vortex suppression by the winglet"
+    }
+  ],
+  "institution": "FOSSEE Fellowship, IIT Bombay, mentored by Asst. Prof. Chandan Bose (University of Birmingham), Asst. Prof. Tushar Chourushi, and CFD Engineer Nikhil Bhamare",
+  "date": "2025",
+  "tags": [
+    "OpenFOAM",
+    "simpleFoam",
+    "Spalart-Allmaras",
+    "snappyHexMesh",
+    "UAV",
+    "Winglets",
+    "CFD"
+  ],
+  "supporting_media": [
+    "assets/media/work_assets_fossee_uav_cfd/fossee-uav-qcriterion-isosurface-q3000.png",
+    "assets/media/work_assets_fossee_uav_cfd/fossee-uav-baseline-pressure-crosssection.png",
+    "assets/media/work_assets_fossee_uav_cfd/fossee-uav-baseline-velocity-crosssection.png",
+    "assets/media/work_assets_fossee_uav_cfd/fossee-uav-baseline-surface-pressure.png",
+    "assets/media/work_assets_fossee_uav_cfd/fossee-uav-turbulence-residual-comparison.png",
+    "assets/media/work_assets_fossee_uav_cfd/fossee-uav-dimensioned-drawing.png"
+  ],
+  "links": [
+    {
+      "label": "Internship report (PDF)",
+      "url": "assets/downloads/fossee-uav-cfd-internship-report.pdf"
+    },
+    {
+      "label": "Full case setup, ready to run (GitHub)",
+      "url": "https://github.com/toranbdrniroula/Aerodynamics-of-Fixed-Wing-UAV"
+    }
+  ],
+  "order": 5
+}
 ---
 
 This was a Research Migration Project for the FOSSEE Fellowship at IIT Bombay: take a published ANSYS Fluent study of a small fixed-wing UAV and reproduce it entirely in OpenFOAM, then push past replication into a design question the original paper never asked. The reference is S.M.A. Meftah et al., "Numerical Simulation of a Flow Around an Unmanned Aerial Vehicle" (*Mechanika*, 2011) - a small UAV with an inverted V-tail and twin boom, analysed at 20 m/s with the Spalart-Allmaras turbulence model, validated against experimental data for an isolated wing. Meftah et al. never looked at winglets. Once the baseline was replicated and validated, I added blended winglets at 45° and 90° cant angles to the same wing and asked whether and how much they help.

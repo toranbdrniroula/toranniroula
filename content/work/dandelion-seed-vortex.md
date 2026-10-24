@@ -1,6 +1,52 @@
 ---
-title: "Dandelion Seed Vortex Formation: Resolved-Filament CFD of a Falling Pappus"
-date: "2026"
+{
+  "title": "Dandelion Seed Vortex Formation: Resolved-Filament CFD of a Falling Pappus",
+  "category": "research",
+  "status": "In Progress",
+  "thumbnail": "assets/media/work_assets_dandelion_seed/dandelion-thumb.jpg",
+  "media_type": "carousel",
+  "media_fit": "contain",
+  "hero_interval": 2000,
+  "hero_slides": [
+    {
+      "src": "assets/media/work_assets_dandelion_seed/dandelion-6dof-q-uy.png",
+      "caption": "Falling seed (6DoF): Q-criterion isosurface, the separated vortex ring above the pappus"
+    },
+    {
+      "src": "assets/media/work_assets_dandelion_seed/dandelion-6dof-streamlines-q.png",
+      "caption": "Falling seed: streamlines and the large recirculation loops around the ring"
+    },
+    {
+      "src": "assets/media/work_assets_dandelion_seed/dandelion-static-uy-streamlines.png",
+      "caption": "Fixed seed, Re ≈ 684: streamlines and the recirculating bubble"
+    },
+    {
+      "src": "assets/media/work_assets_dandelion_seed/dandelion-static-vorticity-z.png",
+      "caption": "Fixed seed: out-of-plane vorticity, counter-rotating vortex pair"
+    },
+    {
+      "src": "assets/media/work_assets_dandelion_seed/dandelion-mesh-overview.png",
+      "caption": "All 42 filaments are geometrically resolved, no porous-media model"
+    }
+  ],
+  "institution": "University of Birmingham (collaboration)",
+  "date": "2026",
+  "tags": [
+    "OpenFOAM",
+    "Overset Mesh",
+    "6DoF",
+    "snappyHexMesh",
+    "CFD"
+  ],
+  "supporting_media": [
+    "assets/media/work_assets_dandelion_seed/dandelion-static-cd-vs-time.png",
+    "assets/media/work_assets_dandelion_seed/dandelion-6dof-force.png",
+    "assets/media/work_assets_dandelion_seed/dandelion-6dof-moment.png",
+    "assets/media/work_assets_dandelion_seed/dandelion-flatdisk-q-uy.png"
+  ],
+  "links": [],
+  "order": 1
+}
 ---
 
 A dandelion seed weighs about half a milligram, drifts down at a few tenths of a metre per second, and somehow stays upright and stable in air that is rarely still. The reason is not the seed body, it is the pappus: a 14 mm parachute of 42 hair-thin filaments that is more than 90% empty space. A structure that porous should barely resist the flow at all, and yet it produces enough drag to hold the seed aloft. In 2018 Cummins et al. showed why: the pappus sheds a *separated vortex ring* that sits a short distance above it, and that detached ring, not the filaments themselves, is doing most of the aerodynamic work.

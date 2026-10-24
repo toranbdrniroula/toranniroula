@@ -4,15 +4,13 @@ const MarkdownIt = require('markdown-it');
 const katex = require('katex');
 const cheerio = require('cheerio');
 const { imageSize } = require('image-size');
+const { readArticles } = require('./content.cjs');
 
 const ROOT = path.resolve(__dirname, '..');
-const RSD_SLUG = 'compressible-wall-jet-rsd';
-const RSD_ROUTE = `/work/${RSD_SLUG}/`;
-const PILOT_SLUGS = [RSD_SLUG, 'hypersonics-advanced-propulsion', 'dandelion-seed-vortex', 'nimbus-agricultural-uav'];
 const readJSON = name => JSON.parse(fs.readFileSync(path.join(ROOT, 'content', name), 'utf8'));
-const WORK_PIECES = readJSON('work-index.json');
+const WORK_PIECES = readArticles('work');
 const WORK_SLUGS = WORK_PIECES.map(piece => piece.slug);
-const WRITING_SLUGS = readJSON('writing-index.json').map(post => post.slug);
+const WRITING_SLUGS = readArticles('writing').map(post => post.slug);
 function navigationData(active) {
   return ['Home', 'Work', 'About', 'Writing', 'Contact'].map(label => ({label,
     href: label === 'Home' ? '/index.html' : `/${label.toLowerCase()}.html`, active: label === active}));
@@ -180,9 +178,9 @@ function prepareHTML(html, { eagerFirst = false, legacyPath = '/work/case-file.h
   return { html: $.html(), headings };
 }
 
-function pilotData(slug = RSD_SLUG) {
+function projectData(slug) {
   const site = readJSON('site.json');
-  const pieces = readJSON('work-index.json');
+  const pieces = WORK_PIECES;
   const piece = pieces.find(item => item.slug === slug);
   if (!piece) throw new Error(`Project metadata missing: ${slug}`);
   const source = fs.readFileSync(path.join(ROOT, 'content/work', `${slug}.md`), 'utf8');
@@ -222,21 +220,10 @@ function pilotData(slug = RSD_SLUG) {
   const dom = cheerio.load(prepared.html + hero);
   const scripts = ['hero-carousel', 'plotly-chart', 'vtk-reader', 'stl-reader', 'video-embed', 'scroll-reveal-viewer']
     .filter(tag => dom(tag).length || (tag === 'hero-carousel' && piece.media_type === 'carousel') || (tag === 'stl-reader' && dom('scroll-reveal-viewer').length)).map(tag => `${tag}.js`);
-  const scopes = {
-    [RSD_SLUG]: 'A joint project with Amogh Adhikari, Anup Bajgain, and Yogesh Dhami, supervised by Asst. Prof. Kamal Darlami and Asst. Prof. Laxman Motra. The full record below explains the facility, processing, measurements, and limitations.',
-    'hypersonics-advanced-propulsion': 'A self-directed extension of coursework using analytical methods and CFD. The intake study covers inviscid and RANS flow, without a combustion model.',
-    'dandelion-seed-vortex': 'An ongoing resolved-filament CFD study in collaboration with the University of Birmingham. The record distinguishes fixed-seed and falling-seed simulations and their current limitations.',
-    'nimbus-agricultural-uav': 'A team conceptual-design project with Amogh Adhikari, Anup Bajgain, and Yogesh Dhami. Flight-test verification in this record uses an X-Plane 12 digital twin; the reported telemetry comes from simulation.',
-    'pyrsd-library': 'An open-source Python package developed for the co-authored wall-jet thesis. The record explains its processing chain, validation and current limitations.',
-    'fossee-uav-cfd': 'A FOSSEE Fellowship study reproducing published UAV results in OpenFOAM and extending them to blended winglets. Geometry and results are computational.',
-    'piv-pod-wake-study': 'An IIT Kanpur research internship post-processing existing PIV measurements. This record covers the analysis and reduced-order reconstruction of the supplied snapshots.',
-    'manim-piv-animation': 'A Manim explainer prepared for an Instrumentation Systems guest lecture. The local clip is a preview of the animation.',
-    'schlieren-lab-notebook': 'Draft notebook scaffold. The planned sections below are retained from the source; their photographs and clips have not yet been supplied.',
-    'cfd-flow-visualization-reel': 'Draft reel scaffold. The planned cases below are retained from the source; the referenced reel media has not yet been supplied.'
-  };
+  const description = piece.description || cheerio.load(prepared.html)('p').first().text().slice(0, 180) || piece.title;
   return {
     site, piece: {...piece, links: piece.links.map(link => ({...link, url: resolveLegacyURL(link.url.startsWith('assets/') ? `/${link.url}` : link.url)}))}, body: prepared.html, hero, headings: prepared.headings,
-    scope: scopes[slug], supporting, related: related.map(legacyLink), previous: legacyLink(pieces[index - 1]), next: legacyLink(pieces[index + 1]),
+    supporting, related: related.map(legacyLink), previous: legacyLink(pieces[index - 1]), next: legacyLink(pieces[index + 1]),
     canonical: absoluteURL(route, site.site_url),
     structuredData: JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Article',
@@ -246,7 +233,7 @@ function pilotData(slug = RSD_SLUG) {
       image: absoluteURL(`/${fs.existsSync(path.join(ROOT,piece.thumbnail)) ? piece.thumbnail : 'assets/media/og-banner.jpg'}`, site.site_url),
       inLanguage: 'en'
     }).replaceAll('<', '\\u003c'),
-    description: scopes[slug],
+    description,
     socialImage: fs.existsSync(path.join(ROOT,piece.thumbnail)) ? piece.thumbnail : 'assets/media/og-banner.jpg',
     scripts, needsThree: scripts.includes('stl-reader.js'), hasMath: dom('math').length > 0,
     year: new Date().getFullYear(),
@@ -254,4 +241,4 @@ function pilotData(slug = RSD_SLUG) {
   };
 }
 
-module.exports = { ROOT, RSD_SLUG, RSD_ROUTE, PILOT_SLUGS, WORK_SLUGS, WORK_PIECES, WRITING_SLUGS, navigationData, absoluteURL, resolveLegacyURL, createMarkdown, prepareHTML, pilotData };
+module.exports = { ROOT, WORK_SLUGS, WORK_PIECES, WRITING_SLUGS, navigationData, absoluteURL, resolveLegacyURL, createMarkdown, prepareHTML, projectData };

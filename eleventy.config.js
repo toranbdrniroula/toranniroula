@@ -5,11 +5,11 @@ const path = require('node:path');
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true });
-  // During the pilot, every unmigrated route and asset is copied unchanged.
-  for (const directory of ['assets', 'css', 'js', 'content', 'work', 'writing']) {
+  // Publish assets and datasets; article sources and drafts stay private to the repo.
+  for (const directory of ['assets', 'css', 'js', 'content/data']) {
     eleventyConfig.addPassthroughCopy(directory);
   }
-  for (const file of ['feed.xml', 'sitemap.xml', 'robots.txt', 'CNAME', '.nojekyll']) {
+  for (const file of ['robots.txt', 'CNAME', '.nojekyll']) {
     eleventyConfig.addPassthroughCopy(file);
   }
   eleventyConfig.addPassthroughCopy({ 'node_modules/katex/dist': 'assets/vendor/katex' });

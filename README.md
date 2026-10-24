@@ -1,77 +1,66 @@
-# Research portfolio
+# Editing your website
 
-The website is built from `src/` templates and the existing `content/` records
-with Eleventy. Deploy `_site/`; the root HTML files are retained as transitional
-source references and are not the finished site.
+The design and interactive viewers are shared automatically. Everyday editing happens in content/, not in HTML or JavaScript.
 
-## Local development
+## Edit a page
 
-Use Node.js 24 and pnpm 11.25.0:
+- Work: edit content/work/<page-name>.md.
+- Writing: edit content/writing/<page-name>.md.
+- About, contact details, social links and CV path: edit content/site.json.
+- Publications: edit content/publications.json.
+- Images, videos and models: put files in assets/media/.
+- Chart data: put the source JSON in content/data/.
 
-```sh
-npm install --global pnpm@11.25.0
-pnpm install --frozen-lockfile
-pnpm test
-pnpm build
-pnpm dev
+Each article is ONE file: its settings are in a JSON block between --- lines at the top, and its Markdown text follows. Keep settings strings quoted and commas between fields. For a wording edit, just change the text below the second --- line. There is no index file or content hash to update.
+
+The filename is the URL. Renaming it changes the URL. Use lowercase words separated by hyphens. Optional order controls work-page ordering (smaller numbers first). The title, date, thumbnail, hero and other settings travel with that article.
+
+## Windows: three commands
+
+Run these from this folder in PowerShell. No separate Node or pnpm commands are needed when the bundled runtime is available.
+
+```powershell
+.\website.cmd preview
+.\website.cmd check
+.\website.cmd publish
 ```
 
-Open `http://127.0.0.1:8080/`. Rebuild after editing content or templates.
-Every build removes only the generated `_site` directory, then renders and
-checks the complete site. Dependencies and generated output are Git-ignored.
+preview builds the site, serves http://127.0.0.1:8080/, and rebuilds after you save changes. Refresh the browser to see them. Ctrl+C stops it.
 
-## Authoring
+check runs tests, builds the site, and verifies current article text, equations, media, links and metadata. Errors identify the file or setting to fix.
 
-Use `templates/work-piece/` or `templates/writing-post/` for new entries.
-The shared layouts include image enlargement, supporting galleries, related
-thumbnails, responsive heroes and adjacent-project navigation. Writing supports
-optional `hero` and `hero_alt` metadata, including animated GIFs.
+publish performs those checks first, commits website changes, and pushes to main. GitHub Actions then deploys; allow the workflow to finish before expecting the live site to change. If a check fails, publishing stops. It never forces a push.
 
-Contents are generated from article headings (`h2` through `h6`) during the
-build; do not maintain a manual contents list. Viewer captions are excluded.
-On wide screens the contents rail sticks beside the article and highlights
-the current section. Narrow screens retain the normal contents list.
-Chart CSV downloads are generated from source JSON and remain untracked.
+If you prefer GitHub's web editor, edit the same Markdown file and commit it to main there. The workflow builds and publishes it automatically.
 
-Theme colors live in `css/base.css`; shared finishing details live in
-`css/polish.css`, loaded by the base layout. Keep muted text readable in both
-themes, thumbnail badges legible over images, and hover motion disabled when
-reduced motion is requested. Theme changes also repaint the home flow backdrop.
+## Add a page
 
-## GitHub Pages
+```powershell
+.\website.cmd new work my-project My Project Title
+.\website.cmd new writing my-note My Note Title
+```
 
-`.github/workflows/pages.yml` runs tests and a clean, validated build for pull
-requests targeting `main`. Pushes to `main` and manual workflow runs on `main`
-also deploy the generated artifact through the `github-pages` environment.
-Pull requests cannot run the deployment job. Only that job receives Pages
-write and OIDC permissions; no personal token is required.
+These create drafts without overwriting existing files. Write the article, set "draft": false in its settings, then publish. No index, route, contents list, related-work list, RSS or sitemap edits are required. You can also copy templates/work.md or templates/writing.md into the corresponding content folder.
 
-Before the first deployment:
+## Hide or remove a page
 
-1. In the repository's **Settings → Pages**, select **GitHub Actions** as the
-   publishing source.
-2. Preserve the custom domain `toranniroula.com.np` in Pages settings and its
-   existing DNS/HTTPS configuration. `CNAME` remains in the generated site,
-   but the custom domain for an Actions deployment is configured in Settings.
-3. Commit and push the migration and workflow, or merge a reviewed pull request
-   into `main`. Confirm both workflow jobs complete before checking the site.
+Set "draft": true to hide it while retaining the file. Delete its Markdown file to remove it completely, then publish. The sitemap, feed, listings and related links update automatically. The two unfinished gallery placeholders are retained as drafts.
 
-The official upload action excludes dotfiles from its archive. `.nojekyll` is
-retained locally for compatibility; Actions deployment serves prebuilt HTML
-and does not run Jekyll.
+## Media and appearance
 
-After deployment, check Home, Work, Writing, About and Contact on the custom
-domain; open a work record and writing post directly; test the old query URLs
-with fragments; and inspect the scientific viewers and downloads. Verify
-mobile navigation, theme switching, canonical URLs, sitemap and RSS links.
-Contact delivery still needs a deliberate live submission; local tests mock
-the endpoint and do not send messages.
+See docs/media.md for image, video, STL, GLB, VTK, chart and scroll-tour examples. Contents are generated from headings and subheadings. Image enlargement, static viewer fallbacks, related thumbnails and adjacent links are automatic.
 
-For rollback, revert the migration deployment commit on `main` to the last
-working built version. For the initial cutover, the prior root-shell site can
-be restored by reverting the workflow/migration and restoring the previous
-Pages publishing source. Record that setting before changing it.
+Theme colors live in css/base.css and shared finishing details in css/polish.css. The flow field has independent --flow-bg and --flow-accent colors so interface changes do not alter its appearance. Routine writing does not require editing these files.
 
-See [the migration report](docs/publishing-pilot.md) for content validation and
-remaining interactive checks, and [GitHub's Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
-for repository configuration.
+## Setup on another computer
+
+Install Node.js 24, then run:
+
+```powershell
+npm install --global pnpm@11.25.0
+pnpm install --frozen-lockfile
+```
+
+The Windows helper uses Node from PATH or the bundled runtime already available on this computer. Standard pnpm test, pnpm build and pnpm dev also work. Never commit node_modules/, _site/, generated CSV files or local .qa/ files.
+
+Only src/ contains page layouts. The old duplicate root HTML pages and client-rendered article loaders have been removed. Existing old query-style article links still forward to the canonical pages. Deployment remains GitHub Pages with the custom domain and existing contact destination preserved.

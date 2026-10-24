@@ -1,6 +1,22 @@
 ---
-title: "A Manim Animation Explaining PIV"
-date: "2026"
+{
+  "title": "A Manim Animation Explaining PIV",
+  "category": "creative",
+  "status": "Completed",
+  "thumbnail": "assets/media/work_assets_manim_piv/manim-piv-thumb.png",
+  "media_type": "video",
+  "media_src": "assets/media/work_assets_manim_piv/manim-piv-loop.mp4",
+  "institution": "Guest lecture, Instrumentation Systems (sophomore course), IOE Pulchowk Campus",
+  "date": "2026",
+  "tags": [
+    "Manim",
+    "Python",
+    "Scientific Communication"
+  ],
+  "supporting_media": [],
+  "links": [],
+  "order": 8
+}
 ---
 
 ## How it was made

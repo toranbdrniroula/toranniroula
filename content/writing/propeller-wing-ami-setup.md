@@ -1,9 +1,15 @@
 ---
-title: "Setting Up a Propeller-Wing Case in OpenFOAM: A Practical Guide to AMI"
-date: 2026-07-09
-excerpt: "A full walkthrough of building a physically consistent propeller-wing simulation with the Arbitrary Mesh Interface: meshing, MRF, dynamic mesh setup, boundary conditions, solver controls, and force extraction, dictionary by dictionary."
-thumbnail: "../assets/media/writing_assets_propeller_wing_ami_setup/propeller-wing-ami-thumb.gif"
-pdf: "assets/downloads/propeller-wing-ami-setup.pdf"
+{
+  "title": "Setting Up a Propeller–Wing Case in OpenFOAM: A Practical Guide to AMI",
+  "date": "2026-07-09",
+  "excerpt": "A full walkthrough of building a physically consistent propeller-wing simulation with the Arbitrary Mesh Interface: meshing, MRF, dynamic mesh setup, boundary conditions, solver controls, and force extraction, dictionary by dictionary.",
+  "thumbnail": "assets/media/writing_assets_propeller_wing_ami_setup/propeller-wing-ami-thumb.gif",
+  "hero": "assets/media/writing_assets_propeller_wing_ami_setup/propeller-wing-ami-thumb.gif",
+  "hero_alt": "Animated preview of the propeller–wing AMI case in OpenFOAM",
+  "pdf": "assets/downloads/propeller-wing-ami-setup.pdf",
+  "category": "technical",
+  "order": 1
+}
 ---
 
 OpenFOAM is one of the most widely used free and open-source CFD packages, but the learning curve is steep for first-time users, and dynamic mesh cases make it steeper still: complex mesh motion handling, stricter mesh quality requirements, and interface boundaries that are easy to get subtly wrong. This is a detailed walkthrough of setting up and running a propeller-wing simulation using the Arbitrary Mesh Interface (AMI) method, where a rotating propeller operates in front of a stationary wing.

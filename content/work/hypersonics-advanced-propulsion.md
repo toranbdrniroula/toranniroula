@@ -1,6 +1,57 @@
 ---
-title: "Hypersonics and Advanced Propulsion: Shock Interactions and a Scramjet Intake"
-date: "2026"
+{
+  "title": "Hypersonics and Advanced Propulsion: Shock Interactions and a Scramjet Intake",
+  "category": "research",
+  "type": "coursework",
+  "status": "Completed",
+  "thumbnail": "assets/media/work_assets_hypersonics/thumb.png",
+  "media_type": "carousel",
+  "institution": "IOE Pulchowk Campus",
+  "date": "2026",
+  "tags": [
+    "rhoCentralFoam",
+    "Hypersonics",
+    "Shock-Shock Interaction",
+    "Scramjet Intake Design"
+  ],
+  "supporting_media": [
+    "assets/media/work_assets_hypersonics/support-cylinder-temperature.png",
+    "assets/media/work_assets_hypersonics/support-cylinder-streamlines.png",
+    "assets/media/work_assets_hypersonics/support-typeII-mach-field.png",
+    "assets/media/work_assets_hypersonics/support-typeI-total-pressure.png"
+  ],
+  "links": [
+    {
+      "label": "Full report (PDF)",
+      "url": "../assets/downloads/hypersonics/hypersonics-advanced-propulsion-report.pdf"
+    },
+    {
+      "label": "Python scripts (Cp, shock polar, intake design)",
+      "url": "../assets/downloads/hypersonics/hypersonics-code.zip"
+    }
+  ],
+  "media_fit": "contain",
+  "hero_interval": 4500,
+  "hero_slides": [
+    {
+      "src": "assets/media/work_assets_hypersonics/hero-1-typeII-mach-interaction.png",
+      "caption": "Type II (Mach) interaction at M∞ = 3 - Mach stem, triple point, and slipstream"
+    },
+    {
+      "src": "assets/media/work_assets_hypersonics/hero-2-cylinder-mach.png",
+      "caption": "Mach number field around the M∞ = 6 cylinder"
+    },
+    {
+      "src": "assets/media/work_assets_hypersonics/hero-3-intake-geometry.png",
+      "caption": "Single-ramp scramjet intake, sized from oblique-shock design"
+    },
+    {
+      "src": "assets/media/work_assets_hypersonics/hero-4-typeI-regular-reflection.png",
+      "caption": "Type I (regular) reflection, no Mach stem"
+    }
+  ],
+  "order": 4
+}
 ---
 
 <span id="how-it-was-done" aria-hidden="true"></span>

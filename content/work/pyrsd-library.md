@@ -1,6 +1,32 @@
 ---
-title: "pyrsd: a Python Library for Rainbow Schlieren Deflectometry"
-date: "2025-2026"
+{
+  "title": "pyrsd: a Python Library for Rainbow Schlieren Deflectometry",
+  "category": "research",
+  "status": "In Progress",
+  "thumbnail": "assets/media/work_assets_pyrsd/pyrsd-natural-convection-validation.png",
+  "media_type": "image",
+  "media_src": "assets/media/work_assets_pyrsd/pyrsd-natural-convection-validation.png",
+  "institution": "Personal project, written for my final year thesis, IOE Pulchowk Campus",
+  "date": "2025-2026",
+  "tags": [
+    "Python",
+    "Open Source",
+    "Image Processing",
+    "Optical Diagnostics"
+  ],
+  "supporting_media": [],
+  "links": [
+    {
+      "label": "Code",
+      "url": "https://github.com/toranbdrniroula/pyrsd"
+    },
+    {
+      "label": "DOI",
+      "url": "https://doi.org/10.5281/zenodo.19219233"
+    }
+  ],
+  "order": 3
+}
 ---
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19219233.svg)](https://doi.org/10.5281/zenodo.19219233)

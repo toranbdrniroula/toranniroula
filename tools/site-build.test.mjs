@@ -3,21 +3,20 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { load } from 'cheerio';
 const require = createRequire(import.meta.url);
-const { resolveLegacyURL, RSD_ROUTE, createMarkdown, prepareHTML } = require('./site-build.cjs');
+const { resolveLegacyURL, WORK_PIECES, WRITING_SLUGS, createMarkdown, prepareHTML } = require('./site-build.cjs');
 
 test('nested assets and old project queries resolve without losing query or fragment', () => {
   assert.equal(resolveLegacyURL('../assets/media/figure.png'), '/assets/media/figure.png');
-  assert.equal(resolveLegacyURL('case-file.html?slug=pyrsd-library&category=research#methods'), '/work/pyrsd-library/#methods');
-  assert.equal(resolveLegacyURL('case-file.html?slug=unknown&category=research'), '/work/case-file.html?slug=unknown&category=research');
-  assert.equal(resolveLegacyURL('/writing/post.html?slug=overset-meshing-explained#methods'), '/writing/overset-meshing-explained/#methods');
-  assert.equal(resolveLegacyURL('case-file.html?category=research&slug=compressible-wall-jet-rsd#methods'), RSD_ROUTE + '#methods');
-  assert.equal(resolveLegacyURL('case-file.html?slug=compressible-wall-jet-rsd'), RSD_ROUTE);
   assert.equal(resolveLegacyURL('https://example.org/report.pdf'), 'https://example.org/report.pdf');
   assert.equal(resolveLegacyURL('#methods'), '#methods');
-  for (const slug of ['hypersonics-advanced-propulsion', 'dandelion-seed-vortex', 'nimbus-agricultural-uav']) {
-    assert.equal(resolveLegacyURL(`case-file.html?slug=${slug}&category=research#methods`), `/work/${slug}/#methods`);
-    assert.equal(resolveLegacyURL(`case-file.html?slug=${slug}&category=creative`), `/work/case-file.html?slug=${slug}&category=creative`);
+  for (const {slug,category} of WORK_PIECES) {
+    assert.equal(resolveLegacyURL(`case-file.html?slug=${slug}&category=${category}#methods`), `/work/${slug}/#methods`);
+    assert.equal(resolveLegacyURL(`case-file.html?category=${category}&slug=${slug}#methods`), `/work/${slug}/#methods`);
+    assert.equal(resolveLegacyURL(`case-file.html?slug=${slug}`), `/work/${slug}/`);
+    assert.equal(resolveLegacyURL(`case-file.html?slug=${slug}&category=invalid-category`), `/work/case-file.html?slug=${slug}&category=invalid-category`);
   }
+  for (const slug of WRITING_SLUGS) assert.equal(resolveLegacyURL(`/writing/post.html?slug=${slug}#methods`), `/writing/${slug}/#methods`);
+  assert.equal(resolveLegacyURL('case-file.html?slug=__proto__'), '/work/case-file.html?slug=__proto__');
 });
 
 test('math renders at build time while code and raw HTML survive', () => {

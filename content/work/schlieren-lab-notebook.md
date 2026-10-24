@@ -1,6 +1,23 @@
 ---
-title: "Schlieren Lab Notebook"
-date: "2025-2026"
+{
+  "title": "Schlieren Lab Notebook",
+  "category": "gallery",
+  "status": "Ongoing",
+  "thumbnail": "assets/media/gallery-schlieren-thumb.jpg",
+  "media_type": "image",
+  "media_src": "assets/media/gallery-schlieren-hero.jpg",
+  "institution": "Flow Visualization Lab, IOE Pulchowk Campus",
+  "date": "2025-2026",
+  "tags": [
+    "Schlieren",
+    "High-Speed Imaging",
+    "Flow Visualization"
+  ],
+  "supporting_media": [],
+  "links": [],
+  "order": 9,
+  "draft": true
+}
 ---
 
 <!-- REPLACE ME: this whole page is a scaffold. Swap the hero/thumbnail

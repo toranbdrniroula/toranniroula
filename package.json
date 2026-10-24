@@ -4,9 +4,9 @@
   "engines": { "node": ">=20.19" },
   "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "build": "node tools/clean-site.mjs && eleventy && node tools/prepare-preview.mjs && node tools/export-chart-data.mjs && node tools/validate-site.mjs && node tools/check-artifact.mjs",
-    "dev": "node tools/preview.mjs",
-    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs tools/media-fallback.test.mjs tools/chart-csv.test.mjs"
+    "build": "node tools/build.mjs",
+    "dev": "node tools/manage.mjs preview",
+    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs tools/media-fallback.test.mjs tools/chart-csv.test.mjs tools/content.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.6",

@@ -1,6 +1,48 @@
 ---
-title: "Surface Heating Effects on a Compressible Wall Jet, Imaged with Rainbow Schlieren"
-date: "2025-2026"
+{
+  "title": "Surface Heating Effects on a Compressible Wall Jet, Imaged with Rainbow Schlieren",
+  "category": "research",
+  "status": "Completed",
+  "thumbnail": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-candle-plume.png",
+  "media_type": "carousel",
+  "media_fit": "contain",
+  "institution": "IOE Pulchowk Campus, Final Year Project, supervised by Asst. Prof. Kamal Darlami, former Deputy HOD, and Asst. Prof. Laxman Motra, Deputy HOD, Department of Mechanical and Aerospace Engineering with team members Amogh Adhikari, Anup Bajgain, and Yogesh Dhami",
+  "date": "2025-2026",
+  "tags": [
+    "Rainbow Schlieren Deflectometry",
+    "pyrsd",
+    "Python",
+    "CFD Validation",
+    "Experimental Aerodynamics"
+  ],
+  "supporting_media": [],
+  "links": [
+    {
+      "label": "pyrsd on GitHub",
+      "url": "https://github.com/toranbdrniroula/pyrsd"
+    }
+  ],
+  "hero_interval": 2000,
+  "hero_slides": [
+    {
+      "src": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-candle-plume.png",
+      "caption": "RSD hue field of a candle plume - the technique's core idea"
+    },
+    {
+      "src": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-experimental-setup.jpg",
+      "caption": "The full compressible wall-jet facility"
+    },
+    {
+      "src": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-gradient-1.0bar-60c.png",
+      "caption": "Mean density-gradient field, 1.0 bar, 60°C wall"
+    },
+    {
+      "src": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-filter-slides.jpg",
+      "caption": "The three E6 slide-film RSD filters"
+    }
+  ],
+  "order": 2
+}
 ---
 
 A jet running tangentially along a surface is one of the standard building blocks of applied aerodynamics - film cooling, wing circulation control, de-icing, thrust vectoring all lean on the same shear-and-mixing physics. Heat the surface the jet is running along and the picture gets more coupled: the thermal boundary layer and the momentum boundary layer now fight for the same near-wall space, and at high-subsonic Mach numbers even a moderate temperature difference produces a measurable change in density. That density change is exactly what an optical diagnostic can see, and almost nobody has actually gone and quantitatively imaged it for a *compressible* wall jet over a *heated* plate - most of the wall-jet literature is incompressible, and most of the schlieren-of-heated-surfaces literature is a static boundary layer with no jet running over it. That gap, and the fact that closing it needed a diagnostic technique with limited literature or lab resources, is what this thesis spent a year on.

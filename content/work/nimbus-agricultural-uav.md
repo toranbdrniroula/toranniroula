@@ -1,6 +1,24 @@
 ---
-title: "NIMBUS - Preliminary Design and Flight Dynamics of an Autonomous Agricultural UAV"
-date: "2026"
+{
+  "title": "NIMBUS - Preliminary Design and Flight Dynamics of an Autonomous Agricultural UAV",
+  "category": "research",
+  "type": "coursework",
+  "status": "Completed",
+  "thumbnail": "assets/media/work_assets_nimbus/nimbus-thumb.jpg",
+  "media_type": "image",
+  "media_src": "assets/media/work_assets_nimbus/nimbus-hero.jpg",
+  "institution": "Aircraft Design and Flight Dynamics courses, IOE Pulchowk Campus, with Amogh Adhikari, Anup Bajgain, and Yogesh Dhami",
+  "date": "2026",
+  "tags": [
+    "Flight Dynamics",
+    "Stability & Control",
+    "Conceptual Design",
+    "CATIA V5"
+  ],
+  "supporting_media": [],
+  "links": [],
+  "order": 7
+}
 ---
 
 Every aircraft design course eventually makes you do the same thing: pick a mission, size an airplane against it, and then find out on paper (or, if you're unlucky, in the air) exactly where your assumptions were lying to you. This piece is that exercise end to end - weight estimate, matching plot, configuration, XFLR5 aero, and then an independent flight-test campaign to check whether any of it actually held up. Nimbus, the agricultural e-duster at the center of it, is the vehicle for the methodology as much as it's the point of the article. If you're here for the general aircraft conceptual-design pipeline, it's all here; if you're here for Nimbus specifically, it's here too, warts included.

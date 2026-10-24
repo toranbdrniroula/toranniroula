@@ -10,9 +10,7 @@ function profileData(kind) {
   const publications = JSON.parse(fs.readFileSync(path.join(ROOT,'content/publications.json'),'utf8')).map(pub => ({...pub,
     typeLabel:pub.type.replace(/\b\w/g,c=>c.toUpperCase()),
     relatedHref:WORK_PIECES.some(piece=>piece.slug===pub.related_work) ? `/work/${pub.related_work}/` : ''}));
-  // Preserve the deployed destination while the original shell remains the
-  // transitional source for its form configuration.
-  const endpoint = fs.readFileSync(path.join(ROOT,'contact.html'),'utf8').match(/const scriptURL = '([^']+)'/)?.[1];
+  const endpoint = site.contact_endpoint;
   if (!endpoint) throw new Error('Contact endpoint missing');
   const description = `${title} ${site.name}, aerospace engineering researcher working across experimental fluid dynamics and CFD.`;
   const person = {'@type':'Person',name:site.name,url:site.site_url,

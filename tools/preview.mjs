@@ -19,4 +19,4 @@ http.createServer((request, response) => {
     response.writeHead(200, headers);
     fs.createReadStream(target).pipe(response);
   } catch (error) { response.writeHead(404); response.end('Not found'); }
-}).listen(8080, '127.0.0.1', () => console.log('Local preview: http://127.0.0.1:8080/work/compressible-wall-jet-rsd/'));
+}).listen(8080, '127.0.0.1', () => console.log('Local preview: http://127.0.0.1:8080/'));

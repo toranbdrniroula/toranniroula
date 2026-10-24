@@ -1,6 +1,24 @@
 ---
-title: "CFD Flow Visualization Reel"
-date: "2025-2026"
+{
+  "title": "CFD Flow Visualization Reel",
+  "category": "gallery",
+  "status": "Ongoing",
+  "thumbnail": "assets/media/gallery-cfd-thumb.jpg",
+  "media_type": "video",
+  "media_src": "assets/media/gallery-cfd-loop.mp4",
+  "institution": "Personal projects",
+  "date": "2025-2026",
+  "tags": [
+    "OpenFOAM",
+    "rhoCentralFoam",
+    "Compressible Flow",
+    "Flow Visualization"
+  ],
+  "supporting_media": [],
+  "links": [],
+  "order": 10,
+  "draft": true
+}
 ---
 
 <!-- REPLACE ME: this whole page is a scaffold. Swap media_src/thumbnail

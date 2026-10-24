@@ -1,6 +1,30 @@
 ---
-title: "PIV/POD Analysis of a NACA0015 Airfoil in Reverse Flow"
-date: "2025"
+{
+  "title": "PIV/POD Analysis of a NACA0015 Airfoil in Reverse Flow",
+  "category": "research",
+  "status": "Completed",
+  "thumbnail": "assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-vorticity-loop-poster.jpg",
+  "media_type": "video",
+  "media_fit": "contain",
+  "media_autoplay": true,
+  "media_loop": true,
+  "media_controls": false,
+  "media_src": "assets/media/work_assets_iitk_reverse_flow_piv_pod/iitk-reverse-flow-vorticity-loop.mp4",
+  "institution": "Research internship, IIT Kanpur, Experimental Aerodynamics Group, Flow Control Laboratory (Prof. Tufan K. Guha)",
+  "date": "2025",
+  "tags": [
+    "PIV",
+    "POD",
+    "PIVlab",
+    "Python",
+    "Q-criterion",
+    "Reynolds Stress",
+    "Experimental Aerodynamics"
+  ],
+  "supporting_media": [],
+  "links": [],
+  "order": 6
+}
 ---
 
 Part of a rotor blade sees reverse flow on every rotation, in every forward-flying helicopter. On the retreating side of the disk, the blade's rotational speed and the aircraft's forward speed partly cancel, and past a certain radius the local flow direction actually reverses. The geometric trailing edge, sharp and never meant to see oncoming air, suddenly becomes the effective aerodynamic leading edge. It separates immediately, the section produces negative lift and enormous drag, and the resulting impulsive loads are a genuine structural concern at high-speed forward flight. This is one of the standing problems in rotorcraft aerodynamics, and it's the reason the Experimental Aerodynamics Group (EAG) at IIT Kanpur's Flow Control Laboratory has an ongoing wind-tunnel program studying passive control of it, specifically, whether a serrated ("sinusoidal") trailing edge can tame the separation better than a plain one. The animation above is all 500 instantaneous PIV snapshots played back as normalized vorticity - the same recirculating wake that every mean-field plot below flattens into a single time-averaged picture.
