@@ -82,6 +82,14 @@
   [data-static-project] .hero-actions { gap: 10px; }
   [data-static-project] .hero-btn:not(.primary) { padding-inline: 4px; font-size: 13px; min-width: 44px; }
   [data-static-project] :is(.case-technical, .post-body) h2 { margin-top: 48px; }
+  /* Only enhanced headers float; without scripts the original menu stays in flow. */
+  [data-static-project].header-enhanced .top-strip { position: sticky; top: 0; z-index: 40; padding: 14px 24px; align-items: center; background: var(--color-bg); border-bottom: 1px solid var(--color-divider); transition: transform 180ms ease-out; }
+  [data-static-project].header-enhanced .top-strip .identity { min-width: 0; flex: 1; }
+  [data-static-project].header-enhanced .top-strip .name-mark { font-size: clamp(14px, 3.8vw, 16px); white-space: nowrap; }
+  [data-static-project].header-enhanced .top-strip .signature-line { font-size: 10px; line-height: 1.4; }
+  [data-static-project].header-enhanced.header-idle .top-strip { transform: translateY(calc(-100% - 2px)); pointer-events: none; }
+  [data-static-project].header-enhanced.mobile-menu-open .top-strip { z-index: 60; transform: none; pointer-events: auto; transition: none; }
+  [data-static-project] :is(h2,h3,h4,h5,h6)[id] { scroll-margin-top: 108px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

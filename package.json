@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node tools/build.mjs",
     "dev": "node tools/manage.mjs preview",
-    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs tools/media-fallback.test.mjs tools/chart-csv.test.mjs tools/content.test.mjs"
+    "test": "node --test tools/site-build.test.mjs tools/contact.test.mjs tools/media-fallback.test.mjs tools/chart-csv.test.mjs tools/content.test.mjs tools/responsive-header.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.6",

@@ -25,20 +25,24 @@
   gap: 2px;
 }
 
-/* Sticky nav, desktop only (matches the breakpoint hero.css already uses).
-   Applies site-wide -- every page keeps the nav reachable while scrolling.
-   Mobile is left alone: the hamburger menu is already a fixed overlay, so
-   there's less need for the bar itself to stick, and the extra chrome eats
-   into precious small-screen height. */
-@media (min-width: 1024px) {
+/* Tablet and desktop retain a stable, reachable navigation row. */
+@media (min-width: 640px) {
   .top-strip {
-    padding: 28px 48px;
     position: sticky;
     top: 0;
     z-index: 40;
     background: var(--color-bg);
   }
 }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .top-strip { padding: 20px 24px; gap: 20px; }
+  .identity { min-width: 0; }
+  .top-strip .name-mark { font-size: 18px; }
+  .top-strip .signature-line { font-size: 11px; }
+  .top-strip .site-nav { gap: 16px; }
+  .top-strip .site-nav a { font-size: 13px; }
+}
+@media (min-width: 1024px) { .top-strip { padding: 28px 48px; } }
 
 /* The homepage scroll enhancement controls visibility without changing the
    header's height. Its default remains usable when scripts are unavailable. */

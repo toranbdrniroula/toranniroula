@@ -59,6 +59,13 @@ the larger homepage layout automatically; `order` controls that selection.
 
 Theme colors live in css/base.css and shared finishing details in css/polish.css. The flow field has independent --flow-bg and --flow-accent colors so interface changes do not alter its appearance. Routine writing does not require editing these files.
 
+Navigation uses the same homepage identity handoff at every width: the header
+name stays hidden while the hero name is visible. Tablet/desktop navigation is
+sticky. On phones the compact header appears during scrolling and hides after
+1.8 seconds of inactivity, except at the page top, while the menu is open, or
+while its controls have keyboard focus. Without scripts, navigation stays in
+normal flow and remains usable.
+
 ## Setup on another computer
 
 Install Node.js 24, then run:

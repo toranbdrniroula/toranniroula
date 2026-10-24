@@ -42,6 +42,7 @@
   </main>
   {% include "partials/footer.njk" %}
   <script src="{{ '/js/static-project.js' | assetURL }}" defer></script>
+  <script src="{{ '/js/responsive-header.js' | assetURL }}" defer></script>
   <script src="{{ '/js/media-fallback.js' | assetURL }}" defer></script>
   {% for script in scripts %}<script src="{{ ('/js/' ~ script) | assetURL }}" defer></script>{% endfor %}
 </body>
