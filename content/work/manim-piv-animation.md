@@ -15,7 +15,9 @@
   ],
   "supporting_media": [],
   "links": [],
-  "order": 8
+  "order": 8,
+  "card_title": "Explaining PIV through animation",
+  "thumbnail_fit": "contain"
 }
 ---
 

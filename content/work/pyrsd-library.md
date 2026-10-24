@@ -25,7 +25,10 @@
       "url": "https://doi.org/10.5281/zenodo.19219233"
     }
   ],
-  "order": 3
+  "order": 3,
+  "card_title": "pyrsd: from color to density",
+  "card_thumbnail": "assets/media/work_assets_wall_jet_rsd/wall-jet-rsd-rho-t-mean-nc-60c.png",
+  "thumbnail_fit": "contain"
 }
 ---
 

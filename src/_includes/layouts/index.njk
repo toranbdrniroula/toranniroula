@@ -19,7 +19,7 @@ layout: layouts/base.njk
 </div>
 <p class="index-result-count" data-result-count aria-live="polite">{{ items.length }} {{ kind == 'writing' and 'posts' or 'projects' }}</p>
 {% endif %}
-<div class="{{ isWriting and 'writing-list' or 'gallery-grid' }}" data-index-list>
+<div class="{{ isWriting and 'writing-list' or 'gallery-grid' }}{% if isHome %} gallery-grid--selected{% endif %}" data-index-list>
 {% for item in items %}
   {% if isWriting %}
   <a class="writing-entry{% if loop.index0 % 2 %} reverse{% endif %}" href="{{ item.href }}" data-index-item data-category="{{ item.category }}">
@@ -27,9 +27,14 @@ layout: layouts/base.njk
     <div class="writing-entry-body"><h2 class="writing-entry-title">{{ item.title }}</h2><div class="writing-entry-meta"><time datetime="{{ item.date }}">{{ item.dateLabel }}</time> · {{ item.label }}</div><p class="writing-entry-excerpt">{{ item.excerpt }}</p><span class="writing-entry-link">Read →</span></div>
   </a>
   {% else %}
-  <a class="gallery-tile" href="{{ item.href }}" data-index-item data-category="{{ item.category }}">
-    {% if item.image %}<img src="{{ item.image.src }}" alt="" width="{{ item.image.width }}" height="{{ item.image.height }}" loading="lazy" decoding="async">{% else %}<span class="thumbnail-fallback">{{ item.label }} · {{ item.date }}</span>{% endif %}
-    <span class="tile-tag">{{ item.label }}</span><span class="tile-status {{ item.statusClass }}">{{ item.status }}</span><span class="tile-title">{{ item.title }}</span>
+  <a class="gallery-tile{% if isHome and loop.first %} gallery-tile--lead{% endif %}" href="{{ item.href }}" data-index-item data-category="{{ item.category }}" aria-label="{{ item.title }}">
+    <span class="card-media{% if item.thumbnail_fit == 'contain' %} card-media--contain{% endif %}">{% if item.image %}<img src="{{ item.image.src }}" alt="" width="{{ item.image.width }}" height="{{ item.image.height }}" loading="lazy" decoding="async">{% else %}<span class="thumbnail-fallback">{{ item.label }} · {{ item.date }}</span>{% endif %}</span>
+    <span class="card-body">
+      {% if isHome and loop.first %}<span class="card-feature-label">Featured project</span>{% endif %}
+      <span class="card-meta"><span>{{ item.date }}</span><span class="card-status{% if item.statusClass == 'in-progress' %} card-status--active{% endif %}">{{ item.status }}</span></span>
+      <span class="tile-title">{{ item.card_title or item.title }}</span>
+      <span class="card-read" aria-hidden="true">Explore project <span>↗</span></span>
+    </span>
   </a>
   {% endif %}
 {% endfor %}

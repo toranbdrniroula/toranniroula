@@ -17,7 +17,9 @@
   ],
   "supporting_media": [],
   "links": [],
-  "order": 7
+  "order": 7,
+  "card_title": "Nimbus: an agricultural aircraft",
+  "thumbnail_fit": "contain"
 }
 ---
 

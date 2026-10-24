@@ -50,7 +50,10 @@
       "caption": "Type I (regular) reflection, no Mach stem"
     }
   ],
-  "order": 4
+  "order": 4,
+  "card_title": "Shock interactions and scramjet intakes",
+  "card_thumbnail": "assets/media/work_assets_hypersonics/hero-1-typeII-mach-interaction.png",
+  "thumbnail_fit": "contain"
 }
 ---
 

@@ -23,7 +23,9 @@
   ],
   "supporting_media": [],
   "links": [],
-  "order": 6
+  "order": 6,
+  "card_title": "Reverse-flow PIV and modal analysis",
+  "thumbnail_fit": "contain"
 }
 ---
 

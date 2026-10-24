@@ -41,7 +41,8 @@
       "caption": "The three E6 slide-film RSD filters"
     }
   ],
-  "order": 2
+  "order": 2,
+  "card_title": "Heated wall jets in rainbow schlieren"
 }
 ---
 

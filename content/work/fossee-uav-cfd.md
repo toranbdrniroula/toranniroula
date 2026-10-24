@@ -54,7 +54,10 @@
       "url": "https://github.com/toranbdrniroula/Aerodynamics-of-Fixed-Wing-UAV"
     }
   ],
-  "order": 5
+  "order": 5,
+  "card_title": "UAV aerodynamics and blended winglets",
+  "card_thumbnail": "assets/media/work_assets_fossee_uav_cfd/fossee-uav-baseline-surface-pressure.png",
+  "thumbnail_fit": "contain"
 }
 ---
 

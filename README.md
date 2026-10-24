@@ -50,6 +50,13 @@ Set "draft": true to hide it while retaining the file. Delete its Markdown file 
 
 See docs/media.md for image, video, STL, GLB, VTK, chart and scroll-tour examples. Contents are generated from headings and subheadings. Image enlargement, static viewer fallbacks, related thumbnails and adjacent links are automatic.
 
+Optional article settings `card_title` and `card_thumbnail` control the short
+title and image on the work grid without changing the full article title,
+hero or scientific figures. Use `"thumbnail_fit": "contain"` for plots or
+diagrams that should be shown in full. Omit these settings
+to use the normal title and thumbnail. The first selected project receives
+the larger homepage layout automatically; `order` controls that selection.
+
 Theme colors live in css/base.css and shared finishing details in css/polish.css. The flow field has independent --flow-bg and --flow-accent colors so interface changes do not alter its appearance. Routine writing does not require editing these files.
 
 ## Setup on another computer

@@ -45,7 +45,8 @@
     "assets/media/work_assets_dandelion_seed/dandelion-flatdisk-q-uy.png"
   ],
   "links": [],
-  "order": 1
+  "order": 1,
+  "card_title": "Dandelion seed aerodynamics"
 }
 ---
 

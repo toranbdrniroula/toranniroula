@@ -12,7 +12,7 @@ function image(file) {
 }
 function indexData(kind) {
   const shared = {site:read('site.json'),year:new Date().getFullYear()};
-  const work = readArticles('work').map(piece => ({...piece, image: image(piece.thumbnail),
+  const work = readArticles('work').map(piece => ({...piece, image: image(piece.card_thumbnail || piece.thumbnail),
     label: label(piece.category), statusClass: piece.status.includes('Progress') ? 'in-progress' : 'completed',
     href: resolveLegacyURL(`case-file.html?slug=${piece.slug}&category=${piece.category}`)}));
   const writing = readArticles('writing').sort((a,b) => b.date.localeCompare(a.date)).map(post => ({...post,

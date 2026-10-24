@@ -1,5 +1,11 @@
 # Figures and interactive media
 
+Work cards can use `"card_title": "A short navigation title"` and
+`"card_thumbnail": "assets/media/a-clear-preview.png"`. These settings affect
+only the work/home cards; full article titles and scientific figures stay
+unchanged. `"thumbnail_fit": "contain"` preserves the complete preview image
+inside a light figure mount, useful for plots and aircraft silhouettes.
+
 Article settings are the JSON block between `---` lines at the top of the
 Markdown file. All paths in settings start at the repository root, without `/`.
 Paths inside article HTML should start with `/`, as in the examples below.
