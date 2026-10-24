@@ -40,21 +40,9 @@
   }
 }
 
-/* Homepage only: the hero canvas repeats the name in large type, so the
-   nav copy of it (name + signature line) starts hidden and only fades in
-   once the hero name has scrolled out of view -- see initHeroNameSync()
-   in nav.js. Default is hidden (not `visibility`/`display`, so the fade
-   is smooth) to avoid a flash of the duplicate name before JS runs. */
-body.has-hero .top-strip .identity {
-  opacity: 0;
-  transition: opacity 450ms ease-out;
-  pointer-events: none;
-}
-
-body.has-hero .top-strip .identity.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
+/* The homepage scroll enhancement controls visibility without changing the
+   header's height. Its default remains usable when scripts are unavailable. */
+body.has-hero .top-strip .identity { transition: opacity 180ms ease-out; }
 
 @media (prefers-reduced-motion: reduce) {
   body.has-hero .top-strip .identity { transition: none; }

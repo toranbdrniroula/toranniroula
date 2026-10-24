@@ -11,3 +11,4 @@
   [data-static-project] .gallery-tile { transition: none; }
 }
 [data-static-project].has-hero .top-strip .identity { opacity: 1; visibility: visible; pointer-events: auto; }
+[data-static-project].has-hero.hero-name-in-view .top-strip .identity { opacity: 0; visibility: hidden; pointer-events: none; }

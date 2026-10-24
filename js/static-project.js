@@ -58,6 +58,31 @@
     document.dispatchEvent(new CustomEvent('site:themechange', { detail: { theme: next } }));
   });
 })();
+// The floating identity replaces the hero identity only after it leaves view.
+(() => {
+  const name = document.querySelector('.has-hero .hero-name');
+  const header = document.querySelector('.top-strip');
+  const identity = header && header.querySelector('.identity');
+  if (!name || !identity) return;
+  let scheduled = false;
+  function syncIdentity() {
+    scheduled = false;
+    const bounds = name.getBoundingClientRect();
+    const hidden = matchMedia('(min-width: 1024px)').matches &&
+      bounds.bottom > header.getBoundingClientRect().bottom && bounds.top < window.innerHeight;
+    document.body.classList.toggle('hero-name-in-view', hidden);
+    identity.inert = hidden;
+    identity.setAttribute('aria-hidden', String(hidden));
+  }
+  function schedule() {
+    if (!scheduled) { scheduled = true; requestAnimationFrame(syncIdentity); }
+  }
+  window.addEventListener('scroll', schedule, {passive:true});
+  window.addEventListener('resize', schedule);
+  window.addEventListener('pageshow', schedule);
+  if (document.fonts) document.fonts.ready.then(schedule);
+  syncIdentity();
+})();
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
   document.querySelectorAll('video-embed').forEach(video => {
     video.setAttribute('autoplay', 'false');
