@@ -105,3 +105,5 @@ Run `website.cmd check` to catch missing assets, invalid media types, duplicate 
 ## Comparison rows and calibration links
 
 Give exactly two adjacent items the same `comparison` ID to place them side by side in a dedicated row, for example `"comparison": "match-ignition"`. On phones they stack. A comparison item cannot also be `wide` or `featured`. Use `"wide": true` for a larger standalone video. `calibrationImage` adds a small link to a local calibration image beneath a caption. Analysis parameters may be retained in an `analysis` object without appearing in the page captions.
+
+Changed media receive an automatic content version in their rendered URL. Keep editing normal asset paths; new images and videos load immediately without reusing an older browser-cached copy.

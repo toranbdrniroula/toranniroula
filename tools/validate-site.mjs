@@ -45,9 +45,9 @@ for(const chapter of gallery.chapters){
     const card=galleryPage('#'+item.id);
     assert.equal(card.find('h3').text(),item.title);
     if(item.type==='gif'){
-      assert.equal(card.find('img').attr('data-gif'),item.src);
+      assert.equal(card.find('img').attr('data-gif'),item.mediaSrcURL);
       assert(card.find('button[hidden]').length,'GIF must not autoplay');
-      assert(card.find('a').toArray().some(el=>galleryPage(el).attr('href')===item.src),'GIF needs a no-script link');
+      assert(card.find('a').toArray().some(el=>galleryPage(el).attr('href')===item.mediaSrcURL),'GIF needs a no-script link');
     }
     if(item.type==='video'&&item.src){
       assert.equal(card.find('video').attr('preload'),'none');

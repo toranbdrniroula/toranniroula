@@ -47,3 +47,24 @@ test('hosted video can be published without a local MP4 and keeps its fallback l
   delete config.chapters[0].items[0].sourceURL;
   assert.throws(()=>buildGallery(config),/sourceURL/);
 });
+
+test('media revisions invalidate a cached URL without changing the editable path',async()=>{
+  const fs=await import('node:fs');const os=await import('node:os');const path=await import('node:path');
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'gallery-media-'));
+  try{
+    fs.mkdirSync(path.join(root,'assets/media'),{recursive:true});
+    const asset=path.join(root,'assets/media/clip.mp4');
+    const config={title:'Gallery',description:'Selected work.',chapters:[{id:'flow',title:'Flow',items:[{id:'clip',title:'Clip',description:'Flow.',type:'video',src:'/assets/media/clip.mp4'}]}]};
+    fs.writeFileSync(asset,'first');
+    const before=buildGallery(config,root).chapters[0].items[0];
+    fs.writeFileSync(asset,'other');
+    const after=buildGallery(config,root).chapters[0].items[0];
+    assert.equal(before.src,after.src);
+    assert.notEqual(before.mediaSrcURL,after.mediaSrcURL);
+    assert.match(after.mediaSrcURL,/\?v=[a-f0-9]{16}$/);
+  }finally{
+    assert.equal(path.dirname(path.resolve(root)),path.resolve(os.tmpdir()));
+    assert(path.basename(root).startsWith('gallery-media-'));
+    fs.rmSync(root,{recursive:true,force:true});
+  }
+});

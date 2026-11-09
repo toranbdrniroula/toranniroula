@@ -21,12 +21,12 @@ layout: layouts/base.njk
         <figure>
           {% if item.still or item.src %}<div class="gallery-media"{% if item.width and item.height %} style="--media-ratio: {{ item.width }} / {{ item.height }}"{% endif %}>
           {% if item.type == 'video' and item.src %}
-            <video controls playsinline preload="none"{% if item.poster %} poster="{{ item.poster }}"{% endif %}{% if item.width %} width="{{ item.width }}" height="{{ item.height }}"{% endif %} aria-label="{{ item.title }}">
-              <source src="{{ item.src }}" type="video/mp4"><a href="{{ item.src }}">Watch {{ item.title }}</a>
+            <video controls playsinline preload="none"{% if item.poster %} poster="{{ item.posterURL }}"{% endif %}{% if item.width %} width="{{ item.width }}" height="{{ item.height }}"{% endif %} aria-label="{{ item.title }}">
+              <source src="{{ item.mediaSrcURL }}" type="video/mp4"><a href="{{ item.mediaSrcURL }}">Watch {{ item.title }}</a>
             </video>
           {% else %}
-            {% if item.type == 'image' %}<a href="{{ item.src }}" target="_blank" rel="noopener" aria-label="Open {{ item.title }} at full size">{% endif %}
-            <img src="{{ item.still }}"{% if item.type == 'gif' %} data-gif="{{ item.src }}"{% endif %} alt="{{ item.alt or item.description }}" width="{{ item.width }}" height="{{ item.height }}" loading="lazy" decoding="async">
+            {% if item.type == 'image' %}<a href="{{ item.mediaSrcURL }}" target="_blank" rel="noopener" aria-label="Open {{ item.title }} at full size">{% endif %}
+            <img src="{{ item.stillURL }}"{% if item.type == 'gif' %} data-gif="{{ item.mediaSrcURL }}"{% endif %} alt="{{ item.alt or item.description }}" width="{{ item.width }}" height="{{ item.height }}" loading="lazy" decoding="async">
             {% if item.type == 'image' %}</a>{% endif %}
             {% if item.type == 'gif' %}<button type="button" class="gallery-play" aria-pressed="false" aria-label="Play {{ item.title }} GIF" hidden>Play GIF</button>{% endif %}
           {% endif %}
@@ -39,9 +39,9 @@ layout: layouts/base.njk
             {% if item.tags.length %}<ul class="gallery-tags" aria-label="Tags">{% for tag in item.tags %}<li>{{ tag }}</li>{% endfor %}</ul>{% endif %}
             {% if item.note %}<p class="gallery-note">{{ item.note }}</p>{% endif %}
             <div class="gallery-links">
-              {% if item.type == 'gif' %}<a href="{{ item.src }}" target="_blank" rel="noopener">Open original GIF ↗</a>{% endif %}
+              {% if item.type == 'gif' %}<a href="{{ item.mediaSrcURL }}" target="_blank" rel="noopener">Open original GIF ↗</a>{% endif %}
               {% if item.sourceURL %}<a href="{{ item.sourceURL }}" target="_blank" rel="noopener">{{ item.sourceLabel or 'Open full recording' }} ↗</a>{% endif %}
-              {% if item.calibrationImage %}<a class="gallery-calibration" href="{{ item.calibrationImage }}" target="_blank" rel="noopener">View filter calibration ↗</a>{% endif %}
+              {% if item.calibrationImage %}<a class="gallery-calibration" href="{{ item.calibrationURL }}" target="_blank" rel="noopener">View filter calibration ↗</a>{% endif %}
               {% if item.projectURL %}<a href="{{ item.projectURL }}">{{ item.projectLabel or 'Read about this project' }} ↗</a>{% endif %}
             </div>
           </figcaption>

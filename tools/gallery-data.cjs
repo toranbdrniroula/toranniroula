@@ -1,9 +1,16 @@
 const fs = require('node:fs');
+const {createHash} = require('node:crypto');
 const path = require('node:path');
 const {imageSize} = require('image-size');
 const ROOT = path.resolve(__dirname, '..');
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 function buildGallery(config, root = ROOT) {
+  const mediaVersions=new Map();
+  const mediaURL=value=>{
+    if(!value)return undefined;
+    if(!mediaVersions.has(value))mediaVersions.set(value,createHash('sha256').update(fs.readFileSync(path.join(root,value.slice(1)))).digest('hex').slice(0,16));
+    return value+'?v='+mediaVersions.get(value);
+  };
   const fail = message => {throw new Error('content/gallery.json: '+message);};
   const text = (value, field) => {if(typeof value!=='string'||!value.trim()) fail(field+' is required');return value;};
   const order = values => [...values].sort((a,b)=>(a.order??999)-(b.order??999));
@@ -45,7 +52,7 @@ function buildGallery(config, root = ROOT) {
       if(item.tags&&!Array.isArray(item.tags)) fail(item.id+'.tags must be an array');
       const still=item.poster||(item.type==='image'?item.src:null);
       const dimensions=still?imageSize(fs.readFileSync(path.join(root,still.slice(1)))):{};
-      return {...item,still,width:dimensions.width,height:dimensions.height,format:{image:'Image',gif:'GIF',video:'Video'}[item.type],tags:item.tags||[]};
+      return {...item,still,mediaSrcURL:mediaURL(item.src),posterURL:mediaURL(item.poster),stillURL:mediaURL(still),calibrationURL:mediaURL(item.calibrationImage),width:dimensions.width,height:dimensions.height,format:{image:'Image',gif:'GIF',video:'Video'}[item.type],tags:item.tags||[]};
     });
     const comparisons=new Map();
     items.forEach((item,index)=>{
