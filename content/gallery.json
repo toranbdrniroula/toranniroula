@@ -139,10 +139,10 @@
         {
           "id": "arc",
           "title": "Electric arc with a knife edge",
-          "type": "gif",
+          "type": "video",
           "subject": "Transient flow",
-          "poster": "/assets/media/schlieren/arc.jpg",
-          "src": "/assets/media/schlieren/arc.gif",
+          "poster": "/assets/media/schlieren/arc-video.jpg",
+          "src": "/assets/media/schlieren/arc-video.mp4",
           "description": "The flow disturbance around an electric arc, viewed with a knife-edge cutoff.",
           "order": 110,
           "draft": false,
@@ -199,6 +199,17 @@
           "embedURL": "https://www.youtube-nocookie.com/embed/LkK_1z0zIyY",
           "sourceURL": "https://www.youtube.com/watch?v=LkK_1z0zIyY",
           "sourceLabel": "Watch on YouTube"
+        },
+        {
+          "id": "soldering-iron-bicolor",
+          "title": "Soldering-iron plume with a bicolor filter",
+          "type": "video",
+          "subject": "Thermal flow",
+          "description": "The thermal plume rising from a soldering iron, viewed with a bicolor schlieren filter.",
+          "order": 45,
+          "draft": false,
+          "src": "/assets/media/schlieren/soldering-iron-bicolor-video.mp4",
+          "poster": "/assets/media/schlieren/soldering-iron-bicolor-video.jpg"
         }
       ]
     },
@@ -292,42 +303,53 @@
     {
       "id": "shadowmetry",
       "title": "Shadowmetry",
-      "description": "Liquid mixing and warm-water flow, visualized without a knife edge or color filter.",
+      "description": "Flames, liquid mixing and warm-water flow, visualized without a knife edge or color filter.",
       "order": 15,
       "draft": false,
       "items": [
         {
           "id": "saltring",
           "title": "Salt-water ring",
-          "type": "gif",
+          "type": "video",
           "subject": "Shadowmetry",
-          "poster": "/assets/media/schlieren/saltring.jpg",
-          "src": "/assets/media/schlieren/saltring.gif",
-          "description": "A salt-water ring falls and mixes with the surrounding water, viewed without a knife edge or color filter.",
+          "poster": "/assets/media/shadowmetry/saltring-video.jpg",
+          "src": "/assets/media/shadowmetry/saltring-video.mp4",
+          "description": "A salt-water ring falls and mixes with the surrounding water, viewed with shadowmetry.",
           "order": 10,
           "draft": false
         },
         {
           "id": "glycerine",
           "title": "Glycerin mixing with water",
-          "type": "gif",
+          "type": "video",
           "subject": "Shadowmetry",
-          "poster": "/assets/media/schlieren/glycerine.jpg",
-          "src": "/assets/media/schlieren/glycerine.gif",
-          "description": "A glycerin drop falls and mixes with water, revealing the evolving liquid interface.",
+          "poster": "/assets/media/shadowmetry/glycerine-video.jpg",
+          "src": "/assets/media/shadowmetry/glycerine-video.mp4",
+          "description": "Three views of glycerin drops falling and mixing with water, visualized with shadowmetry.",
           "order": 20,
           "draft": false
         },
         {
           "id": "water-jet",
           "title": "Warm-water jet from a circular nozzle",
-          "type": "gif",
+          "type": "video",
           "subject": "Shadowmetry",
-          "poster": "/assets/media/schlieren/waterJet.jpg",
-          "src": "/assets/media/schlieren/waterJet.gif",
-          "description": "Warm water leaves a circular nozzle, forming a visible jet in the surrounding water.",
+          "poster": "/assets/media/shadowmetry/water-jet-video.jpg",
+          "src": "/assets/media/shadowmetry/water-jet-video.mp4",
+          "description": "Two views of warm water leaving a circular nozzle and mixing with the surrounding water.",
           "order": 30,
           "draft": false
+        },
+        {
+          "id": "candle-shadowmetry",
+          "title": "Candle plume in shadowmetry",
+          "type": "video",
+          "subject": "Shadowmetry",
+          "description": "The candle flame and rising thermal plume, visualized without a knife edge or color filter.",
+          "order": 40,
+          "draft": false,
+          "src": "/assets/media/shadowmetry/candle-shadowmetry-video.mp4",
+          "poster": "/assets/media/shadowmetry/candle-shadowmetry-video.jpg"
         }
       ]
     }
