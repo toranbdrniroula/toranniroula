@@ -6,19 +6,19 @@
     {
       "id": "schlieren",
       "title": "Schlieren",
-      "description": "Experiments that make invisible flows visible: thermal plumes, liquid mixing, jets and electric arcs. From the Flow Visualization Lab, IOE Pulchowk Campus.",
+      "description": "Thermal plumes, ignition, flame propagation, jets and quantitative rainbow schlieren deflectometry. Experiments from the Flow Visualization Lab, IOE Pulchowk Campus.",
       "order": 10,
       "draft": false,
       "items": [
         {
           "id": "candle",
-          "title": "Candle plume",
+          "title": "Candle — traversing the RSD filter",
           "type": "video",
           "subject": "Thermal flow",
-          "poster": "/assets/media/schlieren/candle.jpg",
-          "src": "/assets/media/schlieren/candle-preview.mp4",
-          "description": "A candle flame and its rising plume seen through the rainbow schlieren setup. The colors reveal refractive-index gradients in the heated air.",
-          "note": "20-second excerpt · muted",
+          "poster": "/assets/media/schlieren/candle-filter-sweep.jpg",
+          "src": "/assets/media/schlieren/candle-filter-sweep.mp4",
+          "description": "A candle flame and its plume viewed while the RSD filter is continuously traversed. Changing filter position and filter selection alter the background color and the visible contrast of the plume.",
+          "note": "Source excerpt: 3:30–5:22 · 112 seconds · muted",
           "order": 10,
           "draft": false,
           "featured": true,
@@ -28,6 +28,202 @@
           "embedLabel": "Full candle recording · 8 min 24 s"
         },
         {
+          "id": "heatgun",
+          "title": "Heat-gun plume",
+          "type": "video",
+          "subject": "Thermal flow",
+          "src": "/assets/media/schlieren/heatgun.mp4",
+          "poster": "/assets/media/schlieren/heatgun.jpg",
+          "description": "Heated air from a heat gun reveals a rising, unsteady plume through the schlieren setup.",
+          "note": "13.4-second recording · muted",
+          "draft": false,
+          "order": 20
+        },
+        {
+          "id": "candle-closeup",
+          "title": "Candle flame",
+          "type": "video",
+          "subject": "Thermal flow",
+          "src": "/assets/media/schlieren/candle-closeup.mp4",
+          "poster": "/assets/media/schlieren/candle-closeup.jpg",
+          "description": "A short candle recording showing the flame and the thermal plume above it.",
+          "note": "11.2-second recording · muted",
+          "draft": false,
+          "order": 30
+        },
+        {
+          "id": "soldering-iron",
+          "title": "Soldering-iron plume",
+          "type": "video",
+          "subject": "Thermal flow",
+          "src": "/assets/media/schlieren/soldering-iron.mp4",
+          "poster": "/assets/media/schlieren/soldering-iron.jpg",
+          "description": "A soldering iron produces a thermal plume visible through the RSD filter.",
+          "note": "Source excerpt: 5:30–7:00 · 90 seconds · muted",
+          "draft": false,
+          "order": 40
+        },
+        {
+          "id": "lighter-ignition",
+          "title": "Lighter ignition",
+          "type": "video",
+          "subject": "Ignition",
+          "src": "/assets/media/schlieren/lighter-ignition.mp4",
+          "poster": "/assets/media/schlieren/lighter-ignition.jpg",
+          "description": "A lighter ignites and establishes a flame, with the evolving thermal plume visible through the RSD setup.",
+          "note": "Source excerpt: 2:00–2:10 · 10 seconds · muted",
+          "draft": false,
+          "order": 50
+        },
+        {
+          "id": "match-knife-edge",
+          "title": "Lighting a match — knife edge",
+          "type": "video",
+          "subject": "Ignition",
+          "src": "/assets/media/schlieren/match-knife-edge.mp4",
+          "poster": "/assets/media/schlieren/match-knife-edge.jpg",
+          "description": "Match ignition recorded with a knife-edge schlieren cutoff. This is a separate experiment from the RSD match recording.",
+          "note": "300 source PNGs · every frame · 30 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "order": 60
+        },
+        {
+          "id": "match-rsd",
+          "title": "Lighting a match — RSD filter",
+          "type": "video",
+          "subject": "Ignition",
+          "src": "/assets/media/schlieren/match-rsd.mp4",
+          "poster": "/assets/media/schlieren/match-rsd.jpg",
+          "description": "Match ignition recorded using an RSD filter, showing the evolving refractive-index gradients in color.",
+          "note": "301 source PNGs · every frame · 30 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "order": 70
+        },
+        {
+          "id": "match-lighting-candle",
+          "title": "Lighting a candle with a match",
+          "type": "video",
+          "subject": "Ignition",
+          "src": "/assets/media/schlieren/match-lighting-candle.mp4",
+          "poster": "/assets/media/schlieren/match-lighting-candle.jpg",
+          "description": "A match is brought to a candle, followed by the growth and motion of the candle flame and its plume in the RSD view.",
+          "note": "Sampled from 4,618 TIFFs · every fourth source frame · 30 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "February 12",
+          "order": 80
+        },
+        {
+          "id": "arc-rsd",
+          "title": "Electric arc — RSD view",
+          "type": "video",
+          "subject": "Transient flow",
+          "src": "/assets/media/schlieren/arc-rsd.mp4",
+          "poster": "/assets/media/schlieren/arc-rsd.jpg",
+          "description": "An electric arc recorded with the RSD filter. The disturbance near the electrode tips is faint; source contrast has been retained.",
+          "note": "39 TIFFs · every frame · 10 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "February 12",
+          "order": 90
+        },
+        {
+          "id": "heated-plate-jet",
+          "title": "Converging-nozzle jet over an inclined heated plate",
+          "type": "video",
+          "subject": "Jet flow",
+          "src": "/assets/media/schlieren/heated-plate-jet.mp4",
+          "poster": "/assets/media/schlieren/heated-plate-jet.jpg",
+          "description": "RSD imaging of a converging-nozzle jet flowing over an inclined heated plate. The processed color field reveals variations along the plate.",
+          "note": "Sampled from 1,756 TIFFs · every second source frame · 30 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "March 7",
+          "order": 100
+        },
+        {
+          "id": "candle-hue-flow1",
+          "title": "Candle hue field — flow 1",
+          "type": "video",
+          "subject": "Hue-extracted RSD",
+          "src": "/assets/media/schlieren/candle-hue-flow1.mp4",
+          "poster": "/assets/media/schlieren/candle-hue-flow1.jpg",
+          "description": "The first March 9 candle sequence, presented from the supplied hue-extracted images with their colors preserved.",
+          "note": "101 TIFFs · every frame · 15 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "March 9",
+          "order": 110
+        },
+        {
+          "id": "candle-hue-flow2",
+          "title": "Candle hue field — flow 2",
+          "type": "video",
+          "subject": "Hue-extracted RSD",
+          "src": "/assets/media/schlieren/candle-hue-flow2.mp4",
+          "poster": "/assets/media/schlieren/candle-hue-flow2.jpg",
+          "description": "The second March 9 candle sequence, showing the changing form of the flame and plume in the supplied hue-extracted RSD images.",
+          "note": "101 TIFFs · every frame · 15 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "March 9",
+          "order": 120
+        },
+        {
+          "id": "candle-hue-march13",
+          "title": "Candle hue field — March 13",
+          "type": "video",
+          "subject": "Hue-extracted RSD",
+          "src": "/assets/media/schlieren/candle-hue-march13.mp4",
+          "poster": "/assets/media/schlieren/candle-hue-march13.jpg",
+          "description": "The March 13 candle sequence used for the calibrated displacement and estimated density-gradient analysis below.",
+          "note": "Sampled from 2,194 TIFFs · every fourth source frame · 30 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "March 13",
+          "order": 130
+        },
+        {
+          "id": "candle-quantitative",
+          "title": "From candle hue to displacement and density gradient",
+          "type": "video",
+          "subject": "Quantitative RSD",
+          "src": "/assets/media/schlieren/candle-quantitative.mp4",
+          "poster": "/assets/media/schlieren/candle-quantitative.jpg",
+          "description": "A synchronized three-panel view of the hue-extracted candle, calibrated focal-plane displacement, and estimated path-averaged air-equivalent density gradient. Calibration uses 0.05 mm translation per image and the unlit-candle background. The mirror focal length is 1500 mm; the effective optical path is estimated as 20 mm.",
+          "note": "The gradient magnitude depends on the estimated path length and air Gladstone–Dale constant. Saturated and out-of-calibration pixels are masked; color scales stay fixed. This is not an Abel reconstruction. Every fourth source frame · 30 fps playback; acquisition timing unconfirmed",
+          "draft": false,
+          "date": "March 13",
+          "software": "PyRSD",
+          "tags": [
+            "0.05 mm calibration step",
+            "Estimated 20 mm path"
+          ],
+          "wide": true,
+          "projectURL": "/work/pyrsd-library/",
+          "projectLabel": "Read about PyRSD",
+          "order": 140
+        },
+        {
+          "id": "flame-propagation",
+          "title": "Flame propagation into a butane plume",
+          "type": "video",
+          "subject": "Ignition",
+          "src": "/assets/media/schlieren/flame-propagation.mp4",
+          "poster": "/assets/media/schlieren/flame-propagation.jpg",
+          "description": "A sequence showing flame propagation from the candle toward the butane plume of a lighter. All nine distinct PNGs, t0 through t8, are used; duplicate TIFF versions are omitted.",
+          "note": "Nine source frames · each held for 0.6 seconds for inspection · not real-time playback",
+          "draft": false,
+          "date": "March 27",
+          "order": 150
+        },
+        {
+          "id": "candle-calibration",
+          "title": "March 13 filter calibration",
+          "type": "image",
+          "subject": "Quantitative RSD",
+          "src": "/assets/media/schlieren/candle-calibration.png",
+          "description": "The hue–translation calibration extracted from 69 calibration images using a central 100 × 100 pixel region. Successive images correspond to 0.05 mm translation. The blue saturation plateau is masked in the quantitative fields.",
+          "date": "March 13",
+          "software": "PyRSD",
+          "draft": false,
+          "order": 160
+        },
+        {
           "id": "arc",
           "title": "Electric arc",
           "type": "gif",
@@ -35,7 +231,7 @@
           "poster": "/assets/media/schlieren/arc.jpg",
           "src": "/assets/media/schlieren/arc.gif",
           "description": "An electric arc between two electrodes, with a small disturbed region visible just above the gap.",
-          "order": 20,
+          "order": 170,
           "draft": false
         },
         {
@@ -46,7 +242,7 @@
           "poster": "/assets/media/schlieren/saltring.jpg",
           "src": "/assets/media/schlieren/saltring.gif",
           "description": "A salt-water structure entering the viewing region. Concentration differences make the evolving liquid interface visible.",
-          "order": 30,
+          "order": 180,
           "draft": false
         },
         {
@@ -57,7 +253,7 @@
           "poster": "/assets/media/schlieren/glycerine.jpg",
           "src": "/assets/media/schlieren/glycerine.gif",
           "description": "A curved glycerine interface and fine structures in the circular field of view, recorded during liquid-mixing experiments.",
-          "order": 40,
+          "order": 190,
           "draft": false
         },
         {
@@ -68,13 +264,13 @@
           "poster": "/assets/media/schlieren/waterJet.jpg",
           "src": "/assets/media/schlieren/waterJet.gif",
           "description": "A jet emerging from a nozzle into the circular field of view, with a folded interface near its exit.",
-          "order": 50,
+          "order": 200,
           "draft": false
         }
       ],
       "context": {
         "title": "Reading schlieren images",
-        "text": "Schlieren imaging responds to changes in refractive index. Temperature differences in air and concentration differences in liquids can therefore appear as light, dark or colored structures. These recordings show the appearance of the flow; brightness and color alone are not calibrated density measurements.",
+        "text": "Schlieren imaging responds to refractive-index gradients. The image sequences here use stated presentation rates; acquisition frame rates have not been confirmed, so their playback is not a physical time scale. The calibrated candle result uses a confirmed 1500 mm focal length and an estimated 20 mm optical path. Its density gradient is a path-averaged air-equivalent estimate, with ambiguous and out-of-range hues masked. A separate Abel reconstruction would require an image length scale and an axisymmetry assessment.",
         "href": "/work/compressible-wall-jet-rsd/",
         "label": "Explore the rainbow schlieren research"
       }

@@ -17,7 +17,7 @@ layout: layouts/base.njk
     </header>
     <div class="gallery-grid">
       {% for item in chapter.items %}
-      <article class="gallery-card{% if item.featured %} gallery-featured{% endif %}" id="{{ item.id }}">
+      <article class="gallery-card{% if item.featured %} gallery-featured{% endif %}{% if item.wide %} gallery-wide{% endif %}" id="{{ item.id }}">
         <figure>
           {% if item.still or item.src %}<div class="gallery-media"{% if item.width and item.height %} style="--media-ratio: {{ item.width }} / {{ item.height }}"{% endif %}>
           {% if item.type == 'video' and item.src %}

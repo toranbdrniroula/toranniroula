@@ -46,3 +46,5 @@
   .top-strip { flex-wrap: wrap; }
   .top-strip .site-nav { flex-wrap: wrap; gap: 14px; }
 }
+
+.gallery-wide { grid-column: 1 / -1; }
