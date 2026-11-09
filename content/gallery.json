@@ -12,7 +12,9 @@
       "height": 960,
       "src": "candle-preview.mp4",
       "description": "A candle flame and its rising plume seen through the rainbow schlieren setup. The colors reveal refractive-index gradients in the heated air.",
-      "note": "20-second excerpt · muted"
+      "note": "20-second excerpt · muted",
+      "driveURL": "https://drive.google.com/file/d/1tsg8NYZzmOsWO8R4Yc81VO0nQbBnw4CT/view?usp=drivesdk",
+      "driveEmbedURL": "https://drive.google.com/file/d/1tsg8NYZzmOsWO8R4Yc81VO0nQbBnw4CT/preview"
     },
     {
       "id": "arc",

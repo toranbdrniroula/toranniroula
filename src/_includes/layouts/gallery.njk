@@ -32,6 +32,7 @@ layout: layouts/base.njk
           {% if item.type == 'gif' %}<a class="schlieren-original" href="/assets/media/schlieren/{{ item.src }}" target="_blank" rel="noopener">Open original GIF ↗</a>{% endif %}
           {% if item.driveURL %}<a class="schlieren-original" href="{{ item.driveURL }}" target="_blank" rel="noopener">Watch the full recording on Google Drive ↗</a>{% endif %}
         </figcaption>
+        {% if item.driveEmbedURL %}<details class="schlieren-full"><summary>Full candle recording · 8 min 24 s</summary><iframe src="{{ item.driveEmbedURL }}" title="Full candle plume schlieren recording" loading="lazy" allow="fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><p class="schlieren-note">If the player is still processing, <a href="{{ item.driveURL }}" target="_blank" rel="noopener">open the recording on Google Drive</a>.</p></details>{% endif %}
       </figure>
     </article>
     {% endfor %}
