@@ -8,6 +8,7 @@ function buildGallery(config, root = ROOT) {
   const mediaVersions=new Map();
   const mediaURL=value=>{
     if(!value)return undefined;
+    if(value.startsWith('https://'))return value;
     if(!mediaVersions.has(value))mediaVersions.set(value,createHash('sha256').update(fs.readFileSync(path.join(root,value.slice(1)))).digest('hex').slice(0,16));
     return value+'?v='+mediaVersions.get(value);
   };
@@ -43,7 +44,13 @@ function buildGallery(config, root = ROOT) {
       identify(item.id,'item.id');text(item.title,item.id+'.title');text(item.description,item.id+'.description');
       if(!['image','gif','video'].includes(item.type)) fail(item.id+'.type must be image, gif or video');
       if(item.type!=='video'||item.src) local(item.src,item.id+'.src');
-      if(item.poster) local(item.poster,item.id+'.poster');
+      if(item.poster){
+        if(item.poster.startsWith('https://')){
+          const url=new URL(item.poster);
+          if(url.hostname!=='i.ytimg.com'||!/^\/vi\/[\w-]+\/[a-z0-9]+\.jpg$/.test(url.pathname))fail(item.id+' has an unsupported remote poster');
+          if(!(item.width>0&&item.height>0))fail(item.id+' remote poster needs width and height');
+        }else local(item.poster,item.id+'.poster');
+      }
       if(item.calibrationImage) local(item.calibrationImage,item.id+'.calibrationImage');
       if(item.type==='gif'&&!item.poster) fail(item.id+' needs a still poster for its GIF');
       if(item.type==='video'&&!item.src&&!item.embedURL) fail(item.id+' needs src or embedURL');
@@ -51,7 +58,7 @@ function buildGallery(config, root = ROOT) {
       link(item.sourceURL,item.id+'.sourceURL');link(item.projectURL,item.id+'.projectURL');
       if(item.tags&&!Array.isArray(item.tags)) fail(item.id+'.tags must be an array');
       const still=item.poster||(item.type==='image'?item.src:null);
-      const dimensions=still?imageSize(fs.readFileSync(path.join(root,still.slice(1)))):{};
+      const dimensions=still?(still.startsWith('https://')?{width:item.width,height:item.height}:imageSize(fs.readFileSync(path.join(root,still.slice(1))))):{};
       return {...item,still,mediaSrcURL:mediaURL(item.src),posterURL:mediaURL(item.poster),stillURL:mediaURL(still),calibrationURL:mediaURL(item.calibrationImage),width:dimensions.width,height:dimensions.height,format:{image:'Image',gif:'GIF',video:'Video'}[item.type],tags:item.tags||[]};
     });
     const comparisons=new Map();

@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+---
+<div class="media-gallery">
+  <header class="gallery-intro">
+    {% if galleryPage.kind == 'chapter' %}<p class="gallery-eyebrow"><a href="/gallery.html">Gallery</a> / {{ galleryPage.title }}</p>{% else %}<p class="gallery-eyebrow">Experiments / Computation / Flight</p>{% endif %}
+    <h1>{{ galleryPage.title }}</h1>
+    <p class="gallery-lead">{{ galleryPage.description }}</p>
+    {% if galleryPage.kind == 'chapter' %}<nav class="gallery-jump" aria-label="Gallery chapters">{% for collection in galleryPage.chapters %}<a href="{{ collection.href }}"{% if collection.id == galleryPage.chapter.id %} aria-current="page"{% endif %}>{{ collection.title }}</a>{% endfor %}</nav>{% endif %}
+  </header>
+  {% if galleryPage.kind == 'overview' %}
+  <div class="gallery-collections">
+    {% for collection in galleryPage.chapters %}<a class="gallery-collection" id="{{ collection.id }}" href="{{ collection.href }}">
+      {% if collection.cover.still %}<div class="gallery-collection-cover"><img src="{{ collection.cover.stillURL }}" width="{{ collection.cover.width }}" height="{{ collection.cover.height }}" alt="{{ collection.title }} collection" loading="lazy" decoding="async"></div>{% endif %}
+      <p class="gallery-eyebrow">{{ collection.count }} pieces</p><h2>{{ collection.title }}</h2><p>{{ collection.description }}</p><span>Explore collection ↗</span>
+    </a>{% endfor %}
+  </div>
+  <script type="application/json" id="gallery-route-map">{{ galleryRouteMap | safe }}</script>
+  {% else %}
+  <p class="gallery-note gallery-page-count">{{ galleryPage.start }} to {{ galleryPage.end }} of {{ galleryPage.total }}</p>
+  <div class="gallery-grid">
+    {% for item in galleryPage.chapter.items %}{% include "partials/gallery-item.njk" %}{% endfor %}
+  </div>
+  {% if galleryPage.pageCount > 1 %}<nav class="gallery-pagination" aria-label="Gallery pages">
+    {% if galleryPage.previous %}<a href="{{ galleryPage.previous }}" rel="prev">Previous</a>{% endif %}
+    {% for link in galleryPage.links %}{% if link.gap %}<span aria-hidden="true">…</span>{% else %}<a href="{{ link.href }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.number }}</a>{% endif %}{% endfor %}
+    {% if galleryPage.next %}<a href="{{ galleryPage.next }}" rel="next">Next</a>{% endif %}
+  </nav>{% endif %}
+  <p class="gallery-back"><a href="/gallery.html">Back to all collections</a></p>
+  {% endif %}
+</div>

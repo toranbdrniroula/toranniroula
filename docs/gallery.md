@@ -107,3 +107,9 @@ Run `website.cmd check` to catch missing assets, invalid media types, duplicate 
 Give exactly two adjacent items the same `comparison` ID to place them side by side in a dedicated row, for example `"comparison": "match-ignition"`. On phones they stack. A comparison item cannot also be `wide` or `featured`. Use `"wide": true` for a larger standalone video. `calibrationImage` adds a small link to a local calibration image beneath a caption. Analysis parameters may be retained in an `analysis` object without appearing in the page captions.
 
 Changed media receive an automatic content version in their rendered URL. Keep editing normal asset paths; new images and videos load immediately without reusing an older browser-cached copy.
+
+## Gallery index and chapter pages
+
+The index at /gallery.html shows chapter covers. Each published chapter has its own /gallery/CHAPTER-ID/ page, with up to 12 media entries per page. Set pageSize in content/gallery.json to change the limit (2 to 48). Comparison pairs stay on one page. New pages, navigation and sitemap entries are generated automatically. Existing /gallery.html#MEDIA-ID links forward to the media's chapter page.
+
+YouTube-only items need type: video, embedURL (the youtube-nocookie.com embed address), sourceURL (the normal watch address), and a poster. You may use a YouTube thumbnail at https://i.ytimg.com/vi/VIDEO-ID/hqdefault.jpg with width: 480 and height: 360. The player loads only after the visitor clicks Play video. Keep local MP4s until their replacement YouTube uploads have been verified; then remove src to use the hosted player. Local poster images remain supported.
