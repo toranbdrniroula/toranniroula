@@ -1,64 +1,107 @@
 {
-  "title": "Schlieren gallery",
-  "description": "A collection of experiments that make invisible flows visible: thermal plumes, liquid mixing, jets and electric arcs.",
-  "items": [
+  "title": "Gallery",
+  "eyebrow": "Experiments / Computation / Flight",
+  "description": "Selected views from experiments, computational fluid dynamics, aircraft design and flight simulation.",
+  "chapters": [
     {
-      "id": "candle",
-      "title": "Candle plume",
-      "type": "video",
-      "subject": "Thermal flow",
-      "poster": "candle.jpg",
-      "width": 960,
-      "height": 960,
-      "src": "candle-preview.mp4",
-      "description": "A candle flame and its rising plume seen through the rainbow schlieren setup. The colors reveal refractive-index gradients in the heated air.",
-      "note": "20-second excerpt · muted",
-      "driveURL": "https://drive.google.com/file/d/1tsg8NYZzmOsWO8R4Yc81VO0nQbBnw4CT/view?usp=drivesdk",
-      "driveEmbedURL": "https://drive.google.com/file/d/1tsg8NYZzmOsWO8R4Yc81VO0nQbBnw4CT/preview"
+      "id": "schlieren",
+      "title": "Schlieren",
+      "description": "Experiments that make invisible flows visible: thermal plumes, liquid mixing, jets and electric arcs. From the Flow Visualization Lab, IOE Pulchowk Campus.",
+      "order": 10,
+      "draft": false,
+      "items": [
+        {
+          "id": "candle",
+          "title": "Candle plume",
+          "type": "video",
+          "subject": "Thermal flow",
+          "poster": "/assets/media/schlieren/candle.jpg",
+          "src": "/assets/media/schlieren/candle-preview.mp4",
+          "description": "A candle flame and its rising plume seen through the rainbow schlieren setup. The colors reveal refractive-index gradients in the heated air.",
+          "note": "20-second excerpt · muted",
+          "order": 10,
+          "draft": false,
+          "featured": true,
+          "sourceURL": "https://drive.google.com/file/d/1tsg8NYZzmOsWO8R4Yc81VO0nQbBnw4CT/view?usp=drivesdk",
+          "sourceLabel": "Watch on Google Drive",
+          "embedURL": "https://drive.google.com/file/d/1tsg8NYZzmOsWO8R4Yc81VO0nQbBnw4CT/preview",
+          "embedLabel": "Full candle recording · 8 min 24 s"
+        },
+        {
+          "id": "arc",
+          "title": "Electric arc",
+          "type": "gif",
+          "subject": "Transient flow",
+          "poster": "/assets/media/schlieren/arc.jpg",
+          "src": "/assets/media/schlieren/arc.gif",
+          "description": "An electric arc between two electrodes, with a small disturbed region visible just above the gap.",
+          "order": 20,
+          "draft": false
+        },
+        {
+          "id": "saltring",
+          "title": "Salt-water ring",
+          "type": "gif",
+          "subject": "Liquid mixing",
+          "poster": "/assets/media/schlieren/saltring.jpg",
+          "src": "/assets/media/schlieren/saltring.gif",
+          "description": "A salt-water structure entering the viewing region. Concentration differences make the evolving liquid interface visible.",
+          "order": 30,
+          "draft": false
+        },
+        {
+          "id": "glycerine",
+          "title": "Glycerine",
+          "type": "gif",
+          "subject": "Liquid mixing",
+          "poster": "/assets/media/schlieren/glycerine.jpg",
+          "src": "/assets/media/schlieren/glycerine.gif",
+          "description": "A curved glycerine interface and fine structures in the circular field of view, recorded during liquid-mixing experiments.",
+          "order": 40,
+          "draft": false
+        },
+        {
+          "id": "water-jet",
+          "title": "Water jet",
+          "type": "gif",
+          "subject": "Jet flow",
+          "poster": "/assets/media/schlieren/waterJet.jpg",
+          "src": "/assets/media/schlieren/waterJet.gif",
+          "description": "A jet emerging from a nozzle into the circular field of view, with a folded interface near its exit.",
+          "order": 50,
+          "draft": false
+        }
+      ],
+      "context": {
+        "title": "Reading schlieren images",
+        "text": "Schlieren imaging responds to changes in refractive index. Temperature differences in air and concentration differences in liquids can therefore appear as light, dark or colored structures. These recordings show the appearance of the flow; brightness and color alone are not calibrated density measurements.",
+        "href": "/work/compressible-wall-jet-rsd/",
+        "label": "Explore the rainbow schlieren research"
+      }
     },
     {
-      "id": "arc",
-      "title": "Electric arc",
-      "type": "gif",
-      "subject": "Transient flow",
-      "poster": "arc.jpg",
-      "width": 320,
-      "height": 320,
-      "src": "arc.gif",
-      "description": "An electric arc between two electrodes, with a small disturbed region visible just above the gap."
+      "id": "cfd",
+      "title": "Computational fluid dynamics",
+      "description": "Flow fields, simulation results and animations.",
+      "order": 20,
+      "draft": true,
+      "items": []
     },
     {
-      "id": "saltring",
-      "title": "Salt-water ring",
-      "type": "gif",
-      "subject": "Liquid mixing",
-      "poster": "saltring.jpg",
-      "width": 432,
-      "height": 432,
-      "src": "saltring.gif",
-      "description": "A salt-water structure entering the viewing region. Concentration differences make the evolving liquid interface visible."
+      "id": "aircraft-design",
+      "title": "Aircraft design",
+      "description": "Aircraft concepts, geometry and design studies.",
+      "order": 30,
+      "draft": true,
+      "items": []
     },
     {
-      "id": "glycerine",
-      "title": "Glycerine",
-      "type": "gif",
-      "subject": "Liquid mixing",
-      "poster": "glycerine.jpg",
-      "width": 400,
-      "height": 400,
-      "src": "glycerine.gif",
-      "description": "A curved glycerine interface and fine structures in the circular field of view, recorded during liquid-mixing experiments."
-    },
-    {
-      "id": "water-jet",
-      "title": "Water jet",
-      "type": "gif",
-      "subject": "Jet flow",
-      "poster": "waterJet.jpg",
-      "width": 400,
-      "height": 400,
-      "src": "waterJet.gif",
-      "description": "A jet emerging from a nozzle into the circular field of view, with a folded interface near its exit."
+      "id": "flight-simulation",
+      "title": "Flight simulation",
+      "description": "Aircraft and flight scenarios in X-Plane and FlightGear.",
+      "order": 40,
+      "draft": true,
+      "items": []
     }
   ]
 }

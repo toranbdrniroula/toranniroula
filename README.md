@@ -8,6 +8,7 @@ The design and interactive viewers are shared automatically. Everyday editing ha
 - Writing: edit content/writing/<page-name>.md.
 - About, contact details, social links and CV path: edit content/site.json.
 - Publications: edit content/publications.json.
+- Gallery chapters and media: edit content/gallery.json; see docs/gallery.md.
 - Images, videos and models: put files in assets/media/.
 - Chart data: put the source JSON in content/data/.
 

@@ -1,5 +1,5 @@
 (() => {
-  document.querySelectorAll('.schlieren-play').forEach(button => {
+  document.querySelectorAll('.gallery-play').forEach(button => {
     const image=button.parentElement.querySelector('img');
     const poster=image.getAttribute('src');
     const label=button.getAttribute('aria-label').replace(/^Play /,'').replace(/ GIF$/,'');
@@ -16,6 +16,13 @@
         image.src=poster;button.setAttribute('aria-pressed','false');
         button.setAttribute('aria-label','Retry '+label+' GIF');button.textContent='Retry GIF';
       }
+    });
+  });
+  document.querySelectorAll('.gallery-full').forEach(details=>{
+    const player=details.querySelector('iframe');
+    details.addEventListener('toggle',()=>{
+      if(details.open) player.src=player.dataset.src;
+      else player.removeAttribute('src');
     });
   });
 })();
