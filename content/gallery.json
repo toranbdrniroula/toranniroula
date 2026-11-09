@@ -16,33 +16,39 @@
           "type": "video",
           "subject": "Thermal flow",
           "poster": "/assets/media/schlieren/candle-filter-sweep.jpg",
-          "src": "/assets/media/schlieren/candle-filter-sweep.mp4",
           "description": "Moving and changing the color filter reveals different views of the candle flame and its rising plume.",
           "order": 10,
           "draft": false,
-          "featured": true
+          "featured": true,
+          "embedURL": "https://www.youtube-nocookie.com/embed/h374M4-NTUs",
+          "sourceURL": "https://www.youtube.com/watch?v=h374M4-NTUs",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "heatgun",
           "title": "Heat-gun plume",
           "type": "video",
           "subject": "Thermal flow",
-          "src": "/assets/media/schlieren/heatgun.mp4",
           "poster": "/assets/media/schlieren/heatgun.jpg",
           "description": "A stream of heated air from a heat gun, made visible with color schlieren.",
           "draft": false,
-          "order": 20
+          "order": 20,
+          "embedURL": "https://www.youtube-nocookie.com/embed/I1Oh3o2BBts",
+          "sourceURL": "https://www.youtube.com/watch?v=I1Oh3o2BBts",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "candle-closeup",
           "title": "Candle flame",
           "type": "video",
           "subject": "Thermal flow",
-          "src": "/assets/media/schlieren/candle-closeup.mp4",
           "poster": "/assets/media/schlieren/candle-closeup.jpg",
           "description": "A close view of the candle flame and its rising thermal plume.",
           "draft": false,
-          "order": 30
+          "order": 30,
+          "embedURL": "https://www.youtube-nocookie.com/embed/GpBv-lMLIM0",
+          "sourceURL": "https://www.youtube.com/watch?v=GpBv-lMLIM0",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "soldering-iron",
@@ -60,11 +66,13 @@
           "title": "Lighter ignition",
           "type": "video",
           "subject": "Ignition",
-          "src": "/assets/media/schlieren/lighter-ignition.mp4",
           "poster": "/assets/media/schlieren/lighter-ignition.jpg",
           "description": "A lighter ignites, revealing the developing flame and plume.",
           "draft": false,
-          "order": 50
+          "order": 50,
+          "embedURL": "https://www.youtube-nocookie.com/embed/oXkBqcgPVZc",
+          "sourceURL": "https://www.youtube.com/watch?v=oXkBqcgPVZc",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "match-knife-edge",
@@ -107,22 +115,26 @@
           "title": "Jet over an inclined heated plate",
           "type": "video",
           "subject": "Jet flow",
-          "src": "/assets/media/schlieren/heated-plate-jet.mp4",
           "poster": "/assets/media/schlieren/heated-plate-jet.jpg",
           "description": "A jet from a converging nozzle flows over an inclined heated plate, viewed with RSD.",
           "draft": false,
-          "order": 90
+          "order": 90,
+          "embedURL": "https://www.youtube-nocookie.com/embed/q6hEgpFY4iw",
+          "sourceURL": "https://www.youtube.com/watch?v=q6hEgpFY4iw",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "candle-hue-flow1",
           "title": "Color schlieren of a candle plume",
           "type": "video",
           "subject": "Color schlieren",
-          "src": "/assets/media/schlieren/color-schlieren-candle.mp4",
           "poster": "/assets/media/schlieren/color-schlieren-candle.jpg",
           "description": "Two views of the changing candle flame and plume, brought together in one color schlieren video.",
           "draft": false,
-          "order": 100
+          "order": 100,
+          "embedURL": "https://www.youtube-nocookie.com/embed/QA9J-bZOs-E",
+          "sourceURL": "https://www.youtube.com/watch?v=QA9J-bZOs-E",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "arc",
@@ -141,19 +153,20 @@
           "title": "Electric arc with a color filter",
           "type": "video",
           "subject": "Transient flow",
-          "src": "/assets/media/schlieren/arc-rsd.mp4",
           "poster": "/assets/media/schlieren/arc-rsd.jpg",
           "description": "The faint disturbance above the electrode tips, viewed with a color filter.",
           "draft": false,
           "order": 120,
-          "comparison": "electric-arc"
+          "comparison": "electric-arc",
+          "embedURL": "https://www.youtube-nocookie.com/embed/VHcJYPkTBe0",
+          "sourceURL": "https://www.youtube.com/watch?v=VHcJYPkTBe0",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "candle-quantitative",
           "title": "From candle hue to displacement and density gradient",
           "type": "video",
           "subject": "Quantitative RSD",
-          "src": "/assets/media/schlieren/candle-quantitative.mp4",
           "poster": "/assets/media/schlieren/candle-quantitative.jpg",
           "description": "Calibrated hue reveals focal-plane displacement and the path-averaged density gradient around the candle plume.",
           "draft": false,
@@ -168,19 +181,24 @@
             "optical_path_mm": 20,
             "optical_path_status": "Estimated from flame width",
             "calibration_step_mm": 0.05
-          }
+          },
+          "embedURL": "https://www.youtube-nocookie.com/embed/Lf1E_q7g7U0",
+          "sourceURL": "https://www.youtube.com/watch?v=Lf1E_q7g7U0",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "flame-propagation",
           "title": "Flame propagation into a butane plume",
           "type": "video",
           "subject": "Ignition",
-          "src": "/assets/media/schlieren/flame-propagation.mp4",
           "poster": "/assets/media/schlieren/flame-propagation.jpg",
           "description": "Flame travels from the candle toward the butane plume of a lighter.",
           "draft": false,
           "order": 140,
-          "wide": true
+          "wide": true,
+          "embedURL": "https://www.youtube-nocookie.com/embed/LkK_1z0zIyY",
+          "sourceURL": "https://www.youtube.com/watch?v=LkK_1z0zIyY",
+          "sourceLabel": "Watch on YouTube"
         }
       ]
     },
@@ -225,9 +243,11 @@
           "type": "video",
           "subject": "Vortical flow",
           "description": "Q-criterion visualization of a falling seed, colored by velocity.",
-          "src": "/assets/media/cfd/falling-seed.mp4",
           "poster": "/assets/media/cfd/falling-seed.jpg",
-          "order": 30
+          "order": 30,
+          "embedURL": "https://www.youtube-nocookie.com/embed/PAquqpgRzKU",
+          "sourceURL": "https://www.youtube.com/watch?v=PAquqpgRzKU",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "tesla-high",
