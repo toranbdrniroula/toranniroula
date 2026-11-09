@@ -37,6 +37,7 @@ function buildGallery(config, root = ROOT) {
       if(!['image','gif','video'].includes(item.type)) fail(item.id+'.type must be image, gif or video');
       if(item.type!=='video'||item.src) local(item.src,item.id+'.src');
       if(item.poster) local(item.poster,item.id+'.poster');
+      if(item.calibrationImage) local(item.calibrationImage,item.id+'.calibrationImage');
       if(item.type==='gif'&&!item.poster) fail(item.id+' needs a still poster for its GIF');
       if(item.type==='video'&&!item.src&&!item.embedURL) fail(item.id+' needs src or embedURL');
       if(item.embedURL){embed(item.embedURL);if(!item.sourceURL) fail(item.id+' needs a sourceURL as a player fallback');}
@@ -46,6 +47,18 @@ function buildGallery(config, root = ROOT) {
       const dimensions=still?imageSize(fs.readFileSync(path.join(root,still.slice(1)))):{};
       return {...item,still,width:dimensions.width,height:dimensions.height,format:{image:'Image',gif:'GIF',video:'Video'}[item.type],tags:item.tags||[]};
     });
+    const comparisons=new Map();
+    items.forEach((item,index)=>{
+      if(!item.comparison)return;
+      if(typeof item.comparison!=='string'||!slug.test(item.comparison))fail(item.id+'.comparison must be a lowercase ID');
+      if(item.wide||item.featured)fail(item.id+' cannot combine comparison with wide or featured');
+      if(!comparisons.has(item.comparison))comparisons.set(item.comparison,[]);
+      comparisons.get(item.comparison).push(index);
+    });
+    for(const [name,indices] of comparisons){
+      if(indices.length!==2||indices[1]!==indices[0]+1)fail('comparison '+name+' needs exactly two adjacent items');
+      items[indices[0]].comparisonSide='left';items[indices[1]].comparisonSide='right';
+    }
     if(items.filter(item=>item.featured).length>1) fail(chapter.id+' can have only one featured item');
     link(chapter.context?.href,chapter.id+'.context.href');
     return {...chapter,items,count:items.length};

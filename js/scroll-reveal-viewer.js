@@ -481,7 +481,7 @@ class ScrollRevealViewer extends HTMLElement {
     const loaded = await new Promise((resolve) => {
       const onError = (err) => {
         console.error('scroll-reveal-viewer: failed to load model', href, err);
-        this._showMessage(container, "Couldn't load this model — check the file and try again.");
+        this._showMessage(container, "Couldn't load this model - check the file and try again.");
         resolve(false);
       };
       if (/\.(glb|gltf)(\?|$)/i.test(href)) {

@@ -101,3 +101,7 @@ All items accept `subject`, `date` (display text), `software`, `tags` (array), `
 Each chapter accepts a `description` and optional `context` object with `title`, `text`, `href`, and `label`. Use this for reading notes specific to that chapter; the schlieren explanation belongs only to Schlieren.
 
 Run `website.cmd check` to catch missing assets, invalid media types, duplicate IDs, malformed embed URLs and missing player fallback links before publishing.
+
+## Comparison rows and calibration links
+
+Give exactly two adjacent items the same `comparison` ID to place them side by side in a dedicated row, for example `"comparison": "match-ignition"`. On phones they stack. A comparison item cannot also be `wide` or `featured`. Use `"wide": true` for a larger standalone video. `calibrationImage` adds a small link to a local calibration image beneath a caption. Analysis parameters may be retained in an `analysis` object without appearing in the page captions.

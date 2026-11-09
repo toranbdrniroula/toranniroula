@@ -48,3 +48,11 @@
 }
 
 .gallery-wide { grid-column: 1 / -1; }
+
+/* Dedicated comparison rows stack naturally on phones. */
+@media (min-width: 640px) {
+  .gallery-comparison-left { grid-column: 1; }
+  .gallery-comparison-right { grid-column: 2; }
+}
+.gallery-wide .gallery-media { max-height: 720px; }
+.gallery-calibration { font-size: 13px; }

@@ -17,7 +17,7 @@ layout: layouts/base.njk
     </header>
     <div class="gallery-grid">
       {% for item in chapter.items %}
-      <article class="gallery-card{% if item.featured %} gallery-featured{% endif %}{% if item.wide %} gallery-wide{% endif %}" id="{{ item.id }}">
+      <article class="gallery-card{% if item.featured %} gallery-featured{% endif %}{% if item.wide %} gallery-wide{% endif %}{% if item.comparisonSide %} gallery-comparison-{{ item.comparisonSide }}{% endif %}" id="{{ item.id }}">
         <figure>
           {% if item.still or item.src %}<div class="gallery-media"{% if item.width and item.height %} style="--media-ratio: {{ item.width }} / {{ item.height }}"{% endif %}>
           {% if item.type == 'video' and item.src %}
@@ -41,10 +41,11 @@ layout: layouts/base.njk
             <div class="gallery-links">
               {% if item.type == 'gif' %}<a href="{{ item.src }}" target="_blank" rel="noopener">Open original GIF ↗</a>{% endif %}
               {% if item.sourceURL %}<a href="{{ item.sourceURL }}" target="_blank" rel="noopener">{{ item.sourceLabel or 'Open full recording' }} ↗</a>{% endif %}
+              {% if item.calibrationImage %}<a class="gallery-calibration" href="{{ item.calibrationImage }}" target="_blank" rel="noopener">View filter calibration ↗</a>{% endif %}
               {% if item.projectURL %}<a href="{{ item.projectURL }}">{{ item.projectLabel or 'Read about this project' }} ↗</a>{% endif %}
             </div>
           </figcaption>
-          {% if item.embedURL %}<details class="gallery-full"><summary>{{ item.embedLabel or 'Watch full recording' }}</summary><iframe data-src="{{ item.embedURL }}" title="{{ item.title }} — full recording" loading="lazy" allow="fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><p class="gallery-note">If the player is unavailable, <a href="{{ item.sourceURL }}" target="_blank" rel="noopener">open the recording directly</a>.</p></details>{% endif %}
+          {% if item.embedURL %}<details class="gallery-full"><summary>{{ item.embedLabel or 'Watch full recording' }}</summary><iframe data-src="{{ item.embedURL }}" title="{{ item.title }} - full recording" loading="lazy" allow="fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><p class="gallery-note">If the player is unavailable, <a href="{{ item.sourceURL }}" target="_blank" rel="noopener">open the recording directly</a>.</p></details>{% endif %}
         </figure>
       </article>
       {% endfor %}
