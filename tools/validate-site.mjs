@@ -32,6 +32,27 @@ for (const kind of ['home','work','writing']) {
   common(page,data.piece.title,data.canonical);
   assert.deepEqual(page('[data-index-item]').map((_,el)=>page(el).attr('href')).get(),data.items.map(item=>item.href));
 }
+const gallery=JSON.parse(fs.readFileSync(path.join(ROOT,'content/gallery.json'),'utf8'));
+const galleryPage=pageAt('/gallery.html');
+common(galleryPage,gallery.title,new URL('/gallery.html',JSON.parse(fs.readFileSync(path.join(ROOT,'content/site.json'),'utf8')).site_url).href);
+assert.equal(galleryPage('.schlieren-card').length,gallery.items.length);
+assert.equal(galleryPage('nav[aria-label="Site navigation"] a[aria-current="page"]').text(),'Gallery');
+for(const item of gallery.items){
+  const card=galleryPage('#'+item.id);
+  assert.equal(card.find('h2').text(),item.title);
+  for(const asset of [item.poster,item.src]) assert(fs.statSync(path.join(ROOT,'assets/media/schlieren',asset)).size>0,'Gallery asset missing: '+asset);
+  if(item.type==='gif'){
+    assert.equal(card.find('img').attr('data-gif'),'/assets/media/schlieren/'+item.src);
+    assert(card.find('button[hidden]').length,'GIF must not autoplay');
+    assert(card.find('a[href$=".gif"]').length,'GIF needs a no-script link');
+  }else{
+    assert.equal(card.find('video').attr('preload'),'none');
+    assert.equal(card.find('video[autoplay]').length,0);
+  }
+}
+assert(fs.readFileSync(path.join(output,'sitemap.xml'),'utf8').includes('/gallery.html'));
+console.log('Validated gallery: navigation, media assets, still previews, video controls and sitemap.');
+
 for (const kind of ['work','writing']) {
   const items=readArticles(kind);
   for (const item of items) {

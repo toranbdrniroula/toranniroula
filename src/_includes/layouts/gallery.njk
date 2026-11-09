@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+---
+<div class="schlieren-gallery">
+  <header class="schlieren-intro">
+    <p class="schlieren-eyebrow">Experiments / Flow visualization</p>
+    <h1>{{ gallery.title }}</h1>
+    <p class="schlieren-lead">{{ gallery.description }}</p>
+    <p class="schlieren-note">From the Flow Visualization Lab, IOE Pulchowk Campus. Open a GIF to watch its motion, or play the candle recording below.</p>
+    <nav class="schlieren-jump" aria-label="Gallery subjects">{% for item in gallery.items %}<a href="#{{ item.id }}">{{ item.title }}</a>{% endfor %}</nav>
+  </header>
+  <div class="schlieren-grid">
+    {% for item in gallery.items %}
+    <article class="schlieren-card{% if loop.first %} schlieren-featured{% endif %}" id="{{ item.id }}">
+      <figure>
+        <div class="schlieren-media">
+        {% if item.type == 'video' %}
+          <video controls playsinline preload="none" poster="/assets/media/schlieren/{{ item.poster }}" width="{{ item.width }}" height="{{ item.height }}" aria-label="{{ item.title }} — 20-second excerpt">
+            <source src="/assets/media/schlieren/{{ item.src }}" type="video/mp4">
+            <a href="/assets/media/schlieren/{{ item.src }}">Watch the candle plume excerpt</a>
+          </video>
+        {% else %}
+          <img src="/assets/media/schlieren/{{ item.poster }}" data-gif="/assets/media/schlieren/{{ item.src }}" alt="{{ item.description }}" width="{{ item.width }}" height="{{ item.height }}" loading="lazy" decoding="async">
+          <button type="button" class="schlieren-play" aria-pressed="false" aria-label="Play {{ item.title }} GIF" hidden>Play GIF</button>
+        {% endif %}
+        </div>
+        <figcaption>
+          <p class="schlieren-eyebrow">{{ item.subject }} / {{ 'Video' if item.type == 'video' else 'GIF' }}</p>
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.description }}</p>
+          {% if item.note %}<p class="schlieren-note">{{ item.note }}</p>{% endif %}
+          {% if item.type == 'gif' %}<a class="schlieren-original" href="/assets/media/schlieren/{{ item.src }}" target="_blank" rel="noopener">Open original GIF ↗</a>{% endif %}
+          {% if item.driveURL %}<a class="schlieren-original" href="{{ item.driveURL }}" target="_blank" rel="noopener">Watch the full recording on Google Drive ↗</a>{% endif %}
+        </figcaption>
+      </figure>
+    </article>
+    {% endfor %}
+  </div>
+  <footer class="schlieren-context"><h2>Reading these images</h2><p>Schlieren imaging responds to changes in refractive index. Temperature differences in air and concentration differences in liquids can therefore appear as light, dark or colored structures. These recordings show the appearance of the flow; brightness and color alone are not calibrated density measurements.</p><a href="/work/compressible-wall-jet-rsd/">Explore the rainbow schlieren research ↗</a></footer>
+</div>

@@ -1,0 +1,62 @@
+{
+  "title": "Schlieren gallery",
+  "description": "A collection of experiments that make invisible flows visible: thermal plumes, liquid mixing, jets and electric arcs.",
+  "items": [
+    {
+      "id": "candle",
+      "title": "Candle plume",
+      "type": "video",
+      "subject": "Thermal flow",
+      "poster": "candle.jpg",
+      "width": 960,
+      "height": 960,
+      "src": "candle-preview.mp4",
+      "description": "A candle flame and its rising plume seen through the rainbow schlieren setup. The colors reveal refractive-index gradients in the heated air.",
+      "note": "20-second excerpt · muted"
+    },
+    {
+      "id": "arc",
+      "title": "Electric arc",
+      "type": "gif",
+      "subject": "Transient flow",
+      "poster": "arc.jpg",
+      "width": 320,
+      "height": 320,
+      "src": "arc.gif",
+      "description": "An electric arc between two electrodes, with a small disturbed region visible just above the gap."
+    },
+    {
+      "id": "saltring",
+      "title": "Salt-water ring",
+      "type": "gif",
+      "subject": "Liquid mixing",
+      "poster": "saltring.jpg",
+      "width": 432,
+      "height": 432,
+      "src": "saltring.gif",
+      "description": "A salt-water structure entering the viewing region. Concentration differences make the evolving liquid interface visible."
+    },
+    {
+      "id": "glycerine",
+      "title": "Glycerine",
+      "type": "gif",
+      "subject": "Liquid mixing",
+      "poster": "glycerine.jpg",
+      "width": 400,
+      "height": 400,
+      "src": "glycerine.gif",
+      "description": "A curved glycerine interface and fine structures in the circular field of view, recorded during liquid-mixing experiments."
+    },
+    {
+      "id": "water-jet",
+      "title": "Water jet",
+      "type": "gif",
+      "subject": "Jet flow",
+      "poster": "waterJet.jpg",
+      "width": 400,
+      "height": 400,
+      "src": "waterJet.gif",
+      "description": "A jet emerging from a nozzle into the circular field of view, with a folded interface near its exit."
+    }
+  ]
+}

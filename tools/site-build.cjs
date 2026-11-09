@@ -12,7 +12,7 @@ const WORK_PIECES = readArticles('work');
 const WORK_SLUGS = WORK_PIECES.map(piece => piece.slug);
 const WRITING_SLUGS = readArticles('writing').map(post => post.slug);
 function navigationData(active) {
-  return ['Home', 'Work', 'About', 'Writing', 'Contact'].map(label => ({label,
+  return ['Home', 'Work', 'Gallery', 'About', 'Writing', 'Contact'].map(label => ({label,
     href: label === 'Home' ? '/index.html' : `/${label.toLowerCase()}.html`, active: label === active}));
 }
 
