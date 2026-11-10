@@ -1,3 +1,4 @@
+import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -44,4 +45,22 @@ test('Studio protects local content, detects stale edits and restores backups',a
   assert.equal((await request('job',{kind:'arbitrary-command'})).status,400);
   assert.equal((await request('job',{kind:'preview'})).status,202);
  }finally{studio.server.closeAllConnections();await new Promise(resolve=>studio.server.close(resolve));fs.rmSync(root,{recursive:true,force:true});}
+});
+
+// Reproduce the browser's getter-only textarea type property when rendering actual Studio helpers.
+test('Studio textareas render and edit without assigning their read-only type',()=>{
+ const app=fs.readFileSync(new URL('./studio/app.js',import.meta.url),'utf8');
+ const helpers=app.split(/\r?\n/).filter(line=>line.startsWith('function el(')||line.startsWith('function field(')).join('\n');
+ let changes=0;
+ const document={createTextNode:text=>({text}),createElement:tag=>{
+  const node={tag,children:[],listeners:{},append(child){this.children.push(child);},setAttribute(key,value){this[key]=value;},addEventListener(key,handler){this.listeners[key]=handler;}};
+  if(tag==='textarea')Object.defineProperty(node,'type',{get:()=> 'textarea'});return node;
+ }};
+ const context=vm.createContext({document,changed:()=>changes++});vm.runInContext(helpers,context);
+ const make=vm.runInContext('field',context);let value;
+ const textarea=make('Description','Existing',v=>value=v,{area:true,rows:5}).children[1];
+ assert.equal(textarea.type,'textarea');assert.equal(textarea.value,'Existing');assert.equal(textarea.rows,5);
+ textarea.listeners.input({target:{value:'Edited'}});assert.equal(value,'Edited');assert.equal(changes,1);
+ const number=make('Order',10,v=>value=v,{type:'number'}).children[1];assert.equal(number.type,'number');
+ number.listeners.input({target:{value:'20'}});assert.equal(value,20);
 });
