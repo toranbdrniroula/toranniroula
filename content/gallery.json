@@ -55,11 +55,13 @@
           "title": "Soldering-iron plume",
           "type": "video",
           "subject": "Thermal flow",
-          "src": "/assets/media/schlieren/soldering-iron.mp4",
           "poster": "/assets/media/schlieren/soldering-iron.jpg",
           "description": "The thermal plume rising from a hot soldering iron.",
           "draft": false,
-          "order": 40
+          "order": 40,
+          "embedURL": "https://www.youtube-nocookie.com/embed/Qn13j1qGZdU",
+          "sourceURL": "https://www.youtube.com/watch?v=Qn13j1qGZdU",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "lighter-ignition",
@@ -79,36 +81,42 @@
           "title": "Match ignition with a knife edge",
           "type": "video",
           "subject": "Ignition",
-          "src": "/assets/media/schlieren/match-knife-edge.mp4",
           "poster": "/assets/media/schlieren/match-knife-edge.jpg",
           "description": "Light and shadow reveal the flow around an igniting match.",
           "draft": false,
           "order": 60,
-          "comparison": "match-ignition"
+          "comparison": "match-ignition",
+          "embedURL": "https://www.youtube-nocookie.com/embed/fmJ9V7Vk0Vk",
+          "sourceURL": "https://www.youtube.com/watch?v=fmJ9V7Vk0Vk",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "match-rsd",
           "title": "Match ignition with a color filter",
           "type": "video",
           "subject": "Ignition",
-          "src": "/assets/media/schlieren/match-rsd.mp4",
           "poster": "/assets/media/schlieren/match-rsd.jpg",
           "description": "A color filter reveals the evolving flow around an igniting match.",
           "draft": false,
           "order": 70,
-          "comparison": "match-ignition"
+          "comparison": "match-ignition",
+          "embedURL": "https://www.youtube-nocookie.com/embed/W_9I4DGelKU",
+          "sourceURL": "https://www.youtube.com/watch?v=W_9I4DGelKU",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "match-lighting-candle",
           "title": "Lighting a candle with a match",
           "type": "video",
           "subject": "Ignition",
-          "src": "/assets/media/schlieren/match-lighting-candle.mp4",
           "poster": "/assets/media/schlieren/match-lighting-candle.jpg",
           "description": "A burning match lights the candle, followed by the growth of its flame and plume.",
           "draft": false,
           "order": 80,
-          "wide": true
+          "wide": true,
+          "embedURL": "https://www.youtube-nocookie.com/embed/U0cCcnpgL58",
+          "sourceURL": "https://www.youtube.com/watch?v=U0cCcnpgL58",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "heated-plate-jet",
@@ -142,11 +150,13 @@
           "type": "video",
           "subject": "Transient flow",
           "poster": "/assets/media/schlieren/arc-video.jpg",
-          "src": "/assets/media/schlieren/arc-video.mp4",
           "description": "The flow disturbance around an electric arc, viewed with a knife-edge cutoff.",
           "order": 110,
           "draft": false,
-          "comparison": "electric-arc"
+          "comparison": "electric-arc",
+          "embedURL": "https://www.youtube-nocookie.com/embed/zSbZyRBS2Qs",
+          "sourceURL": "https://www.youtube.com/watch?v=zSbZyRBS2Qs",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "arc-rsd",
@@ -208,8 +218,10 @@
           "description": "The thermal plume rising from a soldering iron, viewed with a bicolor schlieren filter.",
           "order": 45,
           "draft": false,
-          "src": "/assets/media/schlieren/soldering-iron-bicolor-video.mp4",
-          "poster": "/assets/media/schlieren/soldering-iron-bicolor-video.jpg"
+          "poster": "/assets/media/schlieren/soldering-iron-bicolor-video.jpg",
+          "embedURL": "https://www.youtube-nocookie.com/embed/cpBkTrAJkEI",
+          "sourceURL": "https://www.youtube.com/watch?v=cpBkTrAJkEI",
+          "sourceLabel": "Watch on YouTube"
         }
       ]
     },
@@ -266,10 +278,12 @@
           "type": "video",
           "subject": "Internal flow",
           "description": "Flow visualization in the high-resistance direction of a Tesla valve.",
-          "src": "/assets/media/cfd/tesla-high.mp4",
           "poster": "/assets/media/cfd/tesla-high.jpg",
           "comparison": "tesla-valve",
-          "order": 40
+          "order": 40,
+          "embedURL": "https://www.youtube-nocookie.com/embed/XOx1n8xbZxY",
+          "sourceURL": "https://www.youtube.com/watch?v=XOx1n8xbZxY",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "tesla-low",
@@ -277,10 +291,12 @@
           "type": "video",
           "subject": "Internal flow",
           "description": "Flow visualization in the low-resistance direction of the same valve.",
-          "src": "/assets/media/cfd/tesla-low.mp4",
           "poster": "/assets/media/cfd/tesla-low.jpg",
           "comparison": "tesla-valve",
-          "order": 50
+          "order": 50,
+          "embedURL": "https://www.youtube-nocookie.com/embed/b5Jb9oM8UOg",
+          "sourceURL": "https://www.youtube.com/watch?v=b5Jb9oM8UOg",
+          "sourceLabel": "Watch on YouTube"
         }
       ]
     },
@@ -313,10 +329,12 @@
           "type": "video",
           "subject": "Shadowmetry",
           "poster": "/assets/media/shadowmetry/saltring-video.jpg",
-          "src": "/assets/media/shadowmetry/saltring-video.mp4",
           "description": "A salt-water ring falls and mixes with the surrounding water, viewed with shadowmetry.",
           "order": 10,
-          "draft": false
+          "draft": false,
+          "embedURL": "https://www.youtube-nocookie.com/embed/YOuoEDS6UiA",
+          "sourceURL": "https://www.youtube.com/watch?v=YOuoEDS6UiA",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "glycerine",
@@ -324,10 +342,12 @@
           "type": "video",
           "subject": "Shadowmetry",
           "poster": "/assets/media/shadowmetry/glycerine-video.jpg",
-          "src": "/assets/media/shadowmetry/glycerine-video.mp4",
           "description": "Three views of glycerin drops falling and mixing with water, visualized with shadowmetry.",
           "order": 20,
-          "draft": false
+          "draft": false,
+          "embedURL": "https://www.youtube-nocookie.com/embed/uT4ikOs1LIo",
+          "sourceURL": "https://www.youtube.com/watch?v=uT4ikOs1LIo",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "water-jet",
@@ -335,10 +355,12 @@
           "type": "video",
           "subject": "Shadowmetry",
           "poster": "/assets/media/shadowmetry/water-jet-video.jpg",
-          "src": "/assets/media/shadowmetry/water-jet-video.mp4",
           "description": "Two views of warm water leaving a circular nozzle and mixing with the surrounding water.",
           "order": 30,
-          "draft": false
+          "draft": false,
+          "embedURL": "https://www.youtube-nocookie.com/embed/Hj3a_OjgBYI",
+          "sourceURL": "https://www.youtube.com/watch?v=Hj3a_OjgBYI",
+          "sourceLabel": "Watch on YouTube"
         },
         {
           "id": "candle-shadowmetry",
@@ -348,8 +370,10 @@
           "description": "The candle flame and rising thermal plume, visualized without a knife edge or color filter.",
           "order": 40,
           "draft": false,
-          "src": "/assets/media/shadowmetry/candle-shadowmetry-video.mp4",
-          "poster": "/assets/media/shadowmetry/candle-shadowmetry-video.jpg"
+          "poster": "/assets/media/shadowmetry/candle-shadowmetry-video.jpg",
+          "embedURL": "https://www.youtube-nocookie.com/embed/WWCuUSn8X4Q",
+          "sourceURL": "https://www.youtube.com/watch?v=WWCuUSn8X4Q",
+          "sourceLabel": "Watch on YouTube"
         }
       ]
     }
