@@ -1,0 +1,6 @@
+const site=require('../content/site.json');
+const {navigationData,absoluteURL}=require('../tools/site-build.cjs');
+module.exports=class {
+ data(){return {permalink:'/404.html',layout:'layouts/base.njk',site,piece:{title:'Page not found',thumbnail:'assets/media/og-banner.jpg'},canonical:absoluteURL('/404.html',site.site_url),description:'Find your way back to the projects, gallery and writing.',noindex:true,pageType:'website',navigation:navigationData(''),year:new Date().getFullYear(),scripts:[],extraStyles:['not-found.css'],hasMath:false,needsThree:false};}
+ render(){return `<section class="not-found" aria-labelledby="not-found-title"><p class="not-found-code">404 / Page not found</p><h1 id="not-found-title">Let's get you back on course.</h1><p class="not-found-lead">The address may have changed, or this page hasn't been published yet.</p><div class="not-found-links"><a class="not-found-primary" href="/work.html">Explore projects <span aria-hidden="true">↗</span></a><a href="/gallery.html">Browse the gallery <span aria-hidden="true">↗</span></a><a href="/writing.html">Read the writing <span aria-hidden="true">↗</span></a></div><p class="not-found-home"><a href="/index.html">← Return home</a></p></section>`;}
+};

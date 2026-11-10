@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {sendNotFound} from './not-found.cjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,5 +19,5 @@ http.createServer((request, response) => {
     if (url.searchParams.get('scripts') === 'off') headers['Content-Security-Policy'] = "script-src 'none'";
     response.writeHead(200, headers);
     fs.createReadStream(target).pipe(response);
-  } catch (error) { response.writeHead(404); response.end('Not found'); }
+  } catch (error) { sendNotFound(response,path.dirname(root),{head:request.method==='HEAD'}); }
 }).listen(8080, '127.0.0.1', () => console.log('Local preview: http://127.0.0.1:8080/'));

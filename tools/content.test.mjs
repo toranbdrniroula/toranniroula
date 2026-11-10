@@ -19,7 +19,7 @@ test('drafts are excluded from published collections without deleting their file
   }
 });
 
-test('hypersonics projects have separate content, reports and code downloads',async()=>{
+test('hypersonics projects have independent detailed web content and code downloads',async()=>{
  const fs=await import('node:fs');const path=await import('node:path');const {ROOT}=createRequire(import.meta.url)('./content.cjs');
  const expected={
   'flow-around-cylinder':{viewers:['cylinder.vtp'],code:'cp_dist.py'},
@@ -31,7 +31,8 @@ test('hypersonics projects have separate content, reports and code downloads',as
   const item=published.find(item=>item.slug===slug);assert.ok(item,slug+' is published');
   const source=fs.readFileSync(path.join(ROOT,'content/work',slug+'.md'),'utf8');
   assert.deepEqual([...source.matchAll(/<vtk-reader href="[^"]*\/([^"/]+)"/g)].map(m=>m[1]),settings.viewers);
-  assert.ok(item.links.some(link=>link.url.endsWith(slug+'-report.pdf')));assert.ok(item.links.some(link=>link.url.endsWith(settings.code)));
-  const report=fs.readFileSync(path.join(ROOT,'assets/downloads/hypersonics',slug+'-report.pdf'));assert.equal(report.subarray(0,5).toString(),'%PDF-');
+  assert.ok(item.links.some(link=>link.url.endsWith(settings.code)));assert.ok(!item.links.some(link=>link.url.endsWith('.pdf')));
+  assert.ok(source.includes('$'));assert.ok(source.includes('| ---'));assert.ok(source.split(/\s+/).length>650);
+  assert.ok(!fs.existsSync(path.join(ROOT,'assets/downloads/hypersonics',slug+'-report.pdf')));
  }
 });

@@ -95,3 +95,14 @@ for (const file of ['feed.xml','sitemap.xml']) {
   for (const post of readArticles('writing')) assert(xml.includes(`/writing/${post.slug}/`));
 }
 console.log('Validated current content, draft exclusion and removed article. No historical content hashes are required.');
+
+const missingPage=pageAt('/404.html');
+assert.equal(missingPage('meta[name=robots]').attr('content'),'noindex');
+assert.equal(missingPage('h1').length,1);
+for(const route of ['/work.html','/gallery.html','/writing.html','/index.html'])assert(missingPage('a').toArray().some(node=>missingPage(node).attr('href')===route));
+assert(!fs.readFileSync(path.join(output,'sitemap.xml'),'utf8').includes('/404.html'));
+for(const item of ['flow-around-cylinder','shock-shock-interactions','scramjet-intake']){
+ const page=pageAt('/work/'+item+'/');assert.equal(page('a[href$=".pdf"]').length,0);assert(page('math').length>0);assert(page('table').length>0);
+}
+assert.equal(fs.readdirSync(path.join(output,'assets/downloads/hypersonics')).filter(file=>file.endsWith('.pdf')).length,0);
+console.log('Validated custom 404 navigation, noindex, and detailed PDF-free hypersonics pages.');

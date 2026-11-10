@@ -14,6 +14,7 @@ test('Studio accepts only individual YouTube links',()=>{
 test('Studio protects local content, detects stale edits and restores backups',async()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'website-studio-test-'));
  fs.mkdirSync(path.join(root,'content/work'),{recursive:true});fs.mkdirSync(path.join(root,'content/writing'));
+ fs.mkdirSync(path.join(root,'_site/assets/vendor'),{recursive:true});fs.writeFileSync(path.join(root,'_site/assets/vendor/generated.css'),'/* generated style */');fs.writeFileSync(path.join(root,'_site/404.html'),'<h1>Custom missing page</h1><a href="/work.html">Work</a>');
  const gallery={title:'Gallery',description:'Experiments',chapters:[]};
  const site={name:'Test',email:'test@example.com',site_url:'https://example.com',about:{photo:'/assets/photo.jpg'},contact_endpoint:'https://example.com/contact'};
  for(const [name,data] of Object.entries({gallery,site,publications:[]}))fs.writeFileSync(path.join(root,'content/'+name+'.json'),JSON.stringify(data));
@@ -23,6 +24,8 @@ test('Studio protects local content, detects stale edits and restores backups',a
  const response=await fetch(url);const cookie=response.headers.get('set-cookie').split(';')[0];await response.text();
  const request=(route,data,options={})=>fetch(base+'/api/'+route,{method:data===undefined?'GET':'POST',headers:{cookie,Origin:base,'Content-Type':'application/json',...options.headers},body:data===undefined?undefined:JSON.stringify(data)});
  try{
+  const generated=await fetch(base+'/assets/vendor/generated.css');assert.equal(generated.status,200);assert.match(await generated.text(),/generated style/);
+  const missing=await fetch(base+'/deeply/nested/missing-page');assert.equal(missing.status,404);assert.match(await missing.text(),/Custom missing page/);
   assert.equal((await fetch(base+'/api/state')).status,403);
   assert.equal((await request('save',{file:'content/gallery.json',data:gallery,version:null},{headers:{Origin:'https://evil.test'}})).status,403);
   const initial=await (await request('state')).json();assert.equal(initial.collections.work[0].title,'Research');

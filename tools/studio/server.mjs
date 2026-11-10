@@ -10,6 +10,7 @@ const require=createRequire(import.meta.url);
 const {parseArticle}=require('../content.cjs');
 const {buildGallery}=require('../gallery-data.cjs');
 const science=require('./science.cjs');
+const {sendNotFound}=require('../not-found.cjs');
 const markdown=require('markdown-it')({html:false,linkify:true});
 export const digest=text=>crypto.createHash('sha256').update(text).digest('hex');
 export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}={}){
@@ -70,7 +71,7 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
  }
  const body=async req=>{let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>55*1024*1024)throw Error('Use an image or PDF smaller than 40 MB. Host videos on YouTube.');chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks).toString('utf8')||'{}');};
  const serve=(res,file,headers={})=>{
-  if(!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);res.end('Not found');return;}
+  if(!fs.existsSync(file)||!fs.statSync(file).isFile()){sendNotFound(res,root);return;}
   const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.svg':'image/svg+xml','.xml':'application/xml','.pdf':'application/pdf','.woff2':'font/woff2','.mp4':'video/mp4'};
   res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream','X-Content-Type-Options':'nosniff',...headers});fs.createReadStream(file).pipe(res);
  };
@@ -164,7 +165,8 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
     json(res,404,{error:'Unknown action'});return;
    }
    if(req.method!=='GET'&&req.method!=='HEAD'){res.writeHead(405);res.end();return;}
-   let base=url.pathname.startsWith('/assets/')?root:path.join(root,'_site');
+   let base=path.join(root,'_site');
+   if(url.pathname.startsWith('/assets/')){const original=path.resolve(root,'.'+decodeURIComponent(url.pathname));if(original.startsWith(root+path.sep)&&fs.existsSync(original))base=root;}
    let target=path.resolve(base,'.'+decodeURIComponent(url.pathname));
    if(target!==base&&!target.startsWith(base+path.sep))throw Error('Not a public preview path');
    if(fs.existsSync(target)&&fs.statSync(target).isDirectory())target=path.join(target,'index.html');
