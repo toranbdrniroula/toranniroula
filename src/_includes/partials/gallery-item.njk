@@ -7,7 +7,7 @@
             </video>
           {% elif item.type == 'video' and item.embedURL %}
             <img src="{{ item.stillURL }}" alt="{{ item.title }}" width="{{ item.width }}" height="{{ item.height }}" loading="lazy" decoding="async">
-            <button type="button" class="gallery-video-play" hidden aria-label="Play {{ item.title }}">Play video</button>
+            <button type="button" class="gallery-video-play" hidden aria-label="Play {{ item.title }}"><svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true" focusable="false"><rect class="gallery-play-background" width="68" height="48" rx="12"/><path fill="#fff" d="M28 14v20l18-10z"/></svg></button>
             <iframe class="gallery-video-frame" data-src="{{ item.embedURL }}" title="{{ item.title }}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen hidden></iframe>
           {% else %}
             {% if item.type == 'image' %}<a href="{{ item.mediaSrcURL }}" target="_blank" rel="noopener" aria-label="Open {{ item.title }} at full size">{% endif %}

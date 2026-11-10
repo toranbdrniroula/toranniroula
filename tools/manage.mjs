@@ -25,6 +25,11 @@ try {
     else Object.assign(settings,{excerpt:'A short description for the writing list.',category:'technical'});
     fs.writeFileSync(file,`---\n${JSON.stringify(settings,null,2)}\n---\n\nWrite your introduction here.\n\n## Setup\n\nDescribe the work.\n\n## Results\n\nAdd your results.\n`,{flag:'wx'});
     console.log(`Created draft: ${file}\nEdit this one file. Set "draft": false when ready to publish.`);
+  } else if(command==='pull') {
+    const status=spawnSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'});
+    if(status.status!==0||status.stdout.trim()) throw new Error('Save and publish your local changes before pulling. No files were changed.');
+    git(['pull','--ff-only','origin','main']);
+    console.log('Pulled successfully. If dependency files changed, run pnpm install --frozen-lockfile in the terminal.');
   } else if(['check','preview','publish'].includes(command)) {
     if(!fs.existsSync('node_modules/@11ty/eleventy/cmd.cjs')) throw new Error('Dependencies are missing. Install Node.js 24, then run: npm install --global pnpm@11.25.0 && pnpm install --frozen-lockfile');
     if(command!=='preview') node(['--test',...fs.readdirSync('tools').filter(file=>file.endsWith('.test.mjs')).map(file=>'tools/'+file)]);
@@ -34,9 +39,9 @@ try {
       const branch=spawnSync('git',['branch','--show-current'],{cwd:root,encoding:'utf8'});
       if(branch.status!==0 || branch.stdout.trim()!=='main') throw new Error('Publish from the main branch. No commit or push was attempted.');
       const staged=spawnSync('git',['diff','--cached','--name-only'],{cwd:root,encoding:'utf8'});
-      const allowed=/^(content\/|assets\/|css\/|js\/|src\/|templates\/|tools\/|\.github\/|README\.md$|package\.json$|pnpm-lock\.yaml$|eleventy\.config\.js$|robots\.txt$|CNAME$|\.nojekyll$|website\.cmd$)/;
+      const allowed=/^(content\/|assets\/|css\/|js\/|src\/|templates\/|docs\/|tools\/|\.github\/|README\.md$|\.gitignore$|package\.json$|pnpm-lock\.yaml$|eleventy\.config\.js$|robots\.txt$|CNAME$|\.nojekyll$|website\.cmd$)/;
       if(staged.status!==0 || staged.stdout.trim().split('\n').filter(Boolean).some(file=>!allowed.test(file))) throw new Error('Unrelated files are already staged. Unstage them before publishing the website.');
-      git(['add','-A','--','content','assets','css','js','src','templates','tools','README.md','package.json','pnpm-lock.yaml','eleventy.config.js','.github','robots.txt','CNAME','.nojekyll','website.cmd']);
+      git(['add','-A','--','content','assets','css','js','src','templates','docs','tools','.gitignore','README.md','package.json','pnpm-lock.yaml','eleventy.config.js','.github','robots.txt','CNAME','.nojekyll','website.cmd']);
       const changed=spawnSync('git',['diff','--cached','--quiet'],{cwd:root});
       if(changed.status===1) git(['commit','-m','Update website content']);
       else if(changed.status!==0) throw new Error('Could not inspect staged changes.');

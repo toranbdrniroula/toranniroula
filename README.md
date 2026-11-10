@@ -1,3 +1,7 @@
+## Daily editing with Website Studio
+
+Double-click **Website Studio** on your desktop (or `website.cmd` here). Edit content using forms, save, preview, and publish. See [the short guide](docs/WEBSITE-STUDIO.md). The editor and backups stay on your laptop.
+
 # Editing your website
 
 The design and interactive viewers are shared automatically. Everyday editing happens in content/, not in HTML or JavaScript.
