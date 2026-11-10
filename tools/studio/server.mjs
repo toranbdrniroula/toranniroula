@@ -45,7 +45,7 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
  }
  async function startJob(kind){
   if(job.running)throw Object.assign(Error('Another operation is already running.'),{status:409});
-  job={running:true,kind,stage:kind==='publish'?'Checking and publishing':'Building preview',log:'',started:new Date().toISOString()};
+  job={running:true,kind,stage:kind==='publish'?'Checking and publishing':kind==='pull'?'Pulling updates':'Building preview',log:'',started:new Date().toISOString()};
   if(runJob){try{await runJob(kind);job.running=false;job.ok=true;}catch(error){job.running=false;job.ok=false;job.log=error.message;}return;}
   const child=spawn(process.execPath,[path.join(root,'tools/manage.mjs'),kind==='publish'?'publish':kind==='pull'?'pull':'check'],{cwd:root,windowsHide:true,env:{...process.env,PATH:path.dirname(process.execPath)+path.delimiter+process.env.PATH},stdio:['ignore','pipe','pipe']});
   child.stdout.on('data',chunk=>log(chunk.toString()));child.stderr.on('data',chunk=>log(chunk.toString()));

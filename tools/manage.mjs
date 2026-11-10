@@ -61,5 +61,5 @@ try {
       server.on('exit',()=>{watchers.forEach(watcher=>watcher.close());process.exit();});
       process.on('SIGINT',()=>{server.kill();process.exit();});
     } else console.log('All checks passed. Ready to publish.');
-  } else throw new Error('Commands: preview | check | publish | new work slug Title | new writing slug Title');
+  } else throw new Error('Commands: preview | check | publish | pull | new work slug Title | new writing slug Title');
 } catch(error) { console.error(error.message); process.exitCode=1; }

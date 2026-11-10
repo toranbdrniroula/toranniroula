@@ -51,3 +51,6 @@ Advanced commands remain available: `website.cmd preview`, `website.cmd check`, 
 
 Find the editor by searching **Website Studio** in the Windows Start menu, using its desktop shortcut, or double-clicking `website.cmd` in the website folder.
 
+
+The private runtime also includes npm and the pinned pnpm package manager, so dependency installation works in the Studio terminal independently of Codex.
+
