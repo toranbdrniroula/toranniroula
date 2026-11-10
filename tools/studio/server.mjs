@@ -9,6 +9,7 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const require=createRequire(import.meta.url);
 const {parseArticle}=require('../content.cjs');
 const {buildGallery}=require('../gallery-data.cjs');
+const science=require('./science.cjs');
 const markdown=require('markdown-it')({html:false,linkify:true});
 export const digest=text=>crypto.createHash('sha256').update(text).digest('hex');
 export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}={}){
@@ -70,7 +71,7 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
  const body=async req=>{let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>55*1024*1024)throw Error('Use an image or PDF smaller than 40 MB. Host videos on YouTube.');chunks.push(chunk);}return JSON.parse(Buffer.concat(chunks).toString('utf8')||'{}');};
  const serve=(res,file,headers={})=>{
   if(!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);res.end('Not found');return;}
-  const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.svg':'image/svg+xml','.pdf':'application/pdf','.woff2':'font/woff2','.mp4':'video/mp4'};
+  const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.svg':'image/svg+xml','.xml':'application/xml','.pdf':'application/pdf','.woff2':'font/woff2','.mp4':'video/mp4'};
   res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream','X-Content-Type-Options':'nosniff',...headers});fs.createReadStream(file).pipe(res);
  };
  const server=http.createServer(async(req,res)=>{
@@ -80,9 +81,9 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
    const url=new URL(req.url,'http://'+expected);
    if(url.pathname==='/api/health'){json(res,200,{app:'Toran Website Studio',root});return;}
    if(url.pathname.startsWith('/studio')){
-    const names={'/studio/':'index.html','/studio/app.js':'app.js','/studio/style.css':'style.css'};
+    const names={'/studio/':'index.html','/studio/app.js':'app.js','/studio/science.js':'science.js','/studio/style.css':'style.css'};
     if(!names[url.pathname]){res.writeHead(404);res.end();return;}
-    serve(res,path.join(here,names[url.pathname]),{'Set-Cookie':`studio=${secret}; HttpOnly; SameSite=Strict; Path=/`,'Content-Security-Policy':"default-src 'self'; img-src 'self' https://i.ytimg.com data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",'Cache-Control':'no-store'});return;
+    serve(res,path.join(here,names[url.pathname]),{'Set-Cookie':`studio=${secret}; HttpOnly; SameSite=Strict; Path=/`,'Content-Security-Policy':"default-src 'self'; img-src 'self' https://i.ytimg.com data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src 'self' https://embed.diagrams.net; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",'Cache-Control':'no-store'});return;
    }
    if(url.pathname.startsWith('/api/')){
     if(!req.headers.cookie?.split(';').some(c=>c.trim()==='studio='+secret)){json(res,403,{error:'Open Website Studio first.'});return;}
@@ -120,7 +121,32 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
      if(!response.ok)throw Error('YouTube could not verify this video. Make it Public or Unlisted and try again.');
      const data=await response.json();json(res,200,{id,title:data.title,poster:'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg',width:480,height:360});return;
     }
+    if(url.pathname.startsWith('/api/science/')){
+     if(job.running)throw Error('Wait for the current operation to finish.');
+     if(url.pathname==='/api/science/inspect'){
+      if(String(input.name).toLowerCase().endsWith('.csv')){const data=science.parseCSV(input.text);json(res,200,{headers:data.headers,points:data.rows.length});}
+      else{const dataset=JSON.parse(input.text);json(res,200,{points:science.validateChart(dataset)});}return;
+     }
+     const write=(relative,data)=>{const target=path.join(root,relative.slice(1));fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,data);};
+     const title=String(input.title||'Untitled').slice(0,180);
+     if(url.pathname==='/api/science/chart'){
+      if(typeof input.text!=='string'||Buffer.byteLength(input.text)>20*1024*1024)throw Error('Choose data smaller than 20 MB.');
+      const isCSV=String(input.name).toLowerCase().endsWith('.csv');
+      const dataset=isCSV?science.chartFromCSV(input):JSON.parse(input.text);const points=science.validateChart(dataset);
+      dataset.layout={...dataset.layout,title:{text:title}};
+      const text=JSON.stringify(dataset,null,2)+'\n',id=digest(text+input.text).slice(0,16),relative='/content/data/imports/plot-'+id+'.json';
+      write(relative,text);write('/content/data/imports/plot-'+id+'-original.'+(isCSV?'csv':'json'),input.text);
+      json(res,200,{path:relative,points,snippet:science.chartSnippet(relative,title)});return;
+     }
+     if(url.pathname==='/api/science/diagram'){
+      const data=science.cleanDiagram(input.xml,input.svg),id=digest(data.xml+data.svg).slice(0,16),base='/assets/diagrams/imports/diagram-'+id;
+      write(base+'.svg',data.svg);write(base+'.drawio.xml',data.xml);
+      json(res,200,{path:base+'.svg',source:base+'.drawio.xml',snippet:science.diagramSnippet(base+'.svg',base+'.drawio.xml',title)});return;
+     }
+     throw Error('Unknown scientific import action.');
+    }
     if(url.pathname==='/api/media'){
+
      if(job.running)throw Error('Wait for the current operation to finish.');
      const extension=path.extname(String(input.name)).toLowerCase();if(!['.png','.jpg','.jpeg','.webp','.gif','.pdf'].includes(extension))throw Error('Choose a PNG, JPEG, WebP, GIF or PDF. Use YouTube for videos.');
      const bytes=Buffer.from(String(input.base64),'base64');if(!bytes.length||bytes.length>40*1024*1024)throw Error('Choose a file smaller than 40 MB.');

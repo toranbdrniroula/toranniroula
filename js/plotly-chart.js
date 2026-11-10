@@ -102,7 +102,11 @@
         // light/dark choice from whoever authored the data file.
         paper_bgcolor: c.bg,
         plot_bgcolor: c.bg,
-        title: themedTitle(userLayoutSafe.title, isNarrow)
+        title: themedTitle(userLayoutSafe.title, isNarrow),
+        scene: Object.assign({}, userLayoutSafe.scene || {}, {
+          bgcolor: c.bg,
+          ...Object.fromEntries(['xaxis','yaxis','zaxis'].map(axis=>[axis,Object.assign({},userLayoutSafe.scene?.[axis]||{},{backgroundcolor:c.bg,gridcolor:c.divider,zerolinecolor:c.divider,color:c.text})]))
+        })
       }
     );
   }

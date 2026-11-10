@@ -54,3 +54,16 @@ Find the editor by searching **Website Studio** in the Windows Start menu, using
 
 The private runtime also includes npm and the pinned pnpm package manager, so dependency installation works in the Studio terminal independently of Codex.
 
+
+## Scientific figures and diagrams
+
+In Projects or Writing, open a page and use the new **3D plot** and **Diagram** toolbar buttons.
+
+For a 3D plot, choose a CSV with named columns or Plotly JSON. CSV supports points, a line following row order, or a surface on a complete rectangular X/Y grid. Select X, Y and Z columns, add labels and units, then choose **Insert plot**. Save the page and Preview. The data is copied into `content/data/imports`; original input is retained alongside the normalized Plotly JSON. Published CSV downloads include X, Y and Z, including every surface grid point. Numerical values are not rounded. The importer supports at most 200,000 points; JSON supports scatter3d and surface traces with explicit X/Y coordinates.
+
+For a diagram, create it in the embedded draw.io editor or use **Open draw.io XML** to load an existing .drawio or .xml file. Click **Save and Exit** inside draw.io. Studio saves a passive SVG and the editable XML in `assets/diagrams/imports` and inserts the figure into the page. Multi-page diagrams export into one SVG with the selected page visible. Keep one intended figure per diagram when possible. To edit it later, download its editable source, reopen it using the same button, and replace the old figure in the article.
+
+The draw.io editor needs internet; saved website diagrams do not. Conversion happens while saving the diagram in Studio. Publishing deploys the saved SVG, so the build server does not need draw.io installed. Block diagrams are drawings; they do not execute a control simulation.
+
+Starter files are in `templates/science`: `3d-points.csv`, `surface.csv` and `control-loop.drawio`. These examples are not displayed on the public site. No chemistry editor or reaction solver has been added in this update.
+

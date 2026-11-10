@@ -35,6 +35,12 @@ test('Studio protects local content, detects stale edits and restores backups',a
   assert.equal(JSON.parse(fs.readFileSync(path.join(root,'content/gallery.json'))).description,'Experiments');
   assert.equal((await request('media',{name:'attack.html',base64:Buffer.from('<script>bad</script>').toString('base64')})).status,400);
   const md=await (await request('markdown',{text:'<script>alert(1)</script>'})).json();assert.ok(!md.html.includes('<script>'));
+  const chartResponse=await request('science/chart',{name:'data.csv',text:'x,y,z\n0,0,1.81948410489933\n1,1,4',columns:{x:'x',y:'y',z:'z'},title:'Test'});
+  assert.equal(chartResponse.status,200);const chart=await chartResponse.json();assert.equal(chart.points,2);assert.match(chart.snippet,/plotly-chart/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root,chart.path))).data[0].z[0],1.81948410489933);
+  const diagramResponse=await request('science/diagram',{title:'Control',xml:'<mxfile><diagram>source</diagram></mxfile>',svg:'<svg xmlns="http://www.w3.org/2000/svg"><text>Plant</text></svg>'});
+  assert.equal(diagramResponse.status,200);const diagram=await diagramResponse.json();assert.match(diagram.snippet,/Download editable diagram/);assert.ok(fs.existsSync(path.join(root,diagram.source)));
+  assert.equal((await request('science/diagram',{xml:'<html/>',svg:'<svg/>'})).status,400);
   assert.equal((await request('job',{kind:'arbitrary-command'})).status,400);
   assert.equal((await request('job',{kind:'preview'})).status,202);
  }finally{studio.server.closeAllConnections();await new Promise(resolve=>studio.server.close(resolve));fs.rmSync(root,{recursive:true,force:true});}

@@ -1,0 +1,12 @@
+<mxfile><diagram name="Control loop"><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+<mxCell id="reference" value="Reference" style="text;html=1;" vertex="1" parent="1"><mxGeometry x="20" y="95" width="80" height="30" as="geometry"/></mxCell>
+<mxCell id="sum" value="+ / -" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="140" y="90" width="40" height="40" as="geometry"/></mxCell>
+<mxCell id="controller" value="Controller C(s)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="230" y="80" width="140" height="60" as="geometry"/></mxCell>
+<mxCell id="plant" value="Plant G(s)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="430" y="80" width="140" height="60" as="geometry"/></mxCell>
+<mxCell id="output" value="Output" style="text;html=1;" vertex="1" parent="1"><mxGeometry x="630" y="95" width="80" height="30" as="geometry"/></mxCell>
+<mxCell id="e1" edge="1" source="reference" target="sum" parent="1" style="edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" edge="1" source="sum" target="controller" parent="1" style="edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" edge="1" source="controller" target="plant" parent="1" style="edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" edge="1" source="plant" target="output" parent="1" style="edgeStyle=orthogonalEdgeStyle;"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="feedback" value="Unity feedback" edge="1" source="output" target="sum" parent="1" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;entryX=0.5;entryY=1;"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="670" y="230"/><mxPoint x="160" y="230"/></Array></mxGeometry></mxCell>
+</root></mxGraphModel></diagram></mxfile>
