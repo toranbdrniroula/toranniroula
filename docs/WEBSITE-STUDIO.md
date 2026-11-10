@@ -67,3 +67,15 @@ The draw.io editor needs internet; saved website diagrams do not. Conversion hap
 
 Starter files are in `templates/science`: `3d-points.csv`, `surface.csv` and `control-loop.drawio`. These examples are not displayed on the public site. No chemistry editor or reaction solver has been added in this update.
 
+
+## Insert viewers and other components
+
+Projects and Writing now have toolbar buttons for **STL / GLB**, **CFD field**, **Plot**, **Carousel**, and **Equation**, alongside 3D plot, Diagram and Text preview. Choose an existing website asset or import a file from the laptop. The forms generate the custom element markup and insert it at the cursor.
+
+Models accept STL or binary GLB; fields accept VTK PolyData (.vtp). Files are copied into the website with stable names, up to 40 MB each. VTU and glTF files with separate dependencies are not supported by these import controls. Choose a still reference image for model/field viewers so there is useful content while the interactive view loads or if it fails.
+
+Plot supports existing Plotly JSON and CSV imports for lines, points and bars, with column and axis-label selection. Full numerical values are retained, with CSV downloads on the published page. Use the separate 3D plot control for XYZ CSV data and surfaces.
+
+Carousel lets you add images, edit captions, reorder or remove slides, and choose automatic advance and its interval. Newly inserted carousels default to manual navigation. Equation accepts LaTeX, checks it, shows a styled preview, and inserts inline or display math.
+
+The editor shows a word/line count. Text preview shows Markdown text; the main Preview button renders the complete page, including interactive viewers. Setup and manual editing instructions are in [EDITING.md](EDITING.md).

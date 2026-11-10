@@ -199,7 +199,7 @@ class HeroCarousel extends HTMLElement {
   }
 
   _startAutoplay() {
-    if (this._reduceMotion || this._timer || this._figureOpen || this.contains(document.activeElement)) return;
+    if (this.getAttribute('autoplay') === 'false' || this._reduceMotion || this._timer || this._figureOpen || this.contains(document.activeElement)) return;
     this._timer = setInterval(() => this._go(this._current + 1, false), this._interval);
   }
 

@@ -10,6 +10,8 @@ const require=createRequire(import.meta.url);
 const {parseArticle}=require('../content.cjs');
 const {buildGallery}=require('../gallery-data.cjs');
 const science=require('./science.cjs');
+const components=require('./components.cjs');
+const katex=require('katex');
 const {sendNotFound}=require('../not-found.cjs');
 const markdown=require('markdown-it')({html:false,linkify:true});
 export const digest=text=>crypto.createHash('sha256').update(text).digest('hex');
@@ -17,7 +19,9 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
  const privateDir=path.join(root,'.website-studio');
  const backups=path.join(privateDir,'backups');
  fs.mkdirSync(backups,{recursive:true});
- const secret=crypto.randomBytes(32).toString('hex');
+ const keyFile=path.join(privateDir,'session-key');
+ let secret=fs.existsSync(keyFile)?fs.readFileSync(keyFile,'utf8').trim():'';
+ if(!/^[a-f0-9]{64}$/.test(secret)){secret=crypto.randomBytes(32).toString('hex');fs.writeFileSync(keyFile,secret,{mode:0o600});}
  let job={running:false,log:'',stage:'Ready'},address;
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
  const contentPath=file=>{
@@ -82,9 +86,9 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
    const url=new URL(req.url,'http://'+expected);
    if(url.pathname==='/api/health'){json(res,200,{app:'Toran Website Studio',root});return;}
    if(url.pathname.startsWith('/studio')){
-    const names={'/studio/':'index.html','/studio/app.js':'app.js','/studio/science.js':'science.js','/studio/style.css':'style.css'};
+    const names={'/studio/':'index.html','/studio/app.js':'app.js','/studio/science.js':'science.js','/studio/components.js':'components.js','/studio/style.css':'style.css'};
     if(!names[url.pathname]){res.writeHead(404);res.end();return;}
-    serve(res,path.join(here,names[url.pathname]),{'Set-Cookie':`studio=${secret}; HttpOnly; SameSite=Strict; Path=/`,'Content-Security-Policy':"default-src 'self'; img-src 'self' https://i.ytimg.com data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-src 'self' https://embed.diagrams.net; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",'Cache-Control':'no-store'});return;
+    serve(res,path.join(here,names[url.pathname]),{'Set-Cookie':`studio=${secret}; HttpOnly; SameSite=Strict; Path=/`,'Content-Security-Policy':"default-src 'self'; img-src 'self' https://i.ytimg.com data:; style-src 'self'; style-src-attr 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-src 'self' https://embed.diagrams.net; object-src 'none'; base-uri 'self'; frame-ancestors 'none'",'Cache-Control':'no-store'});return;
    }
    if(url.pathname.startsWith('/api/')){
     if(!req.headers.cookie?.split(';').some(c=>c.trim()==='studio='+secret)){json(res,403,{error:'Open Website Studio first.'});return;}
@@ -99,6 +103,7 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
      const file='content/'+url.searchParams.get('kind')+'/'+url.searchParams.get('slug')+'.md';const item=read(file);const match=/^---\r?\n([\s\S]*?)\r?\n---\s*/.exec(item.text);
      json(res,200,{settings:JSON.parse(match[1]),body:item.text.slice(match[0].length),version:item.version});return;
     }
+    if(req.method==='GET'&&url.pathname==='/api/assets'){json(res,200,components.listAssets(root,url.searchParams.get('kind')));return;}
     if(req.method==='GET'&&url.pathname==='/api/job'){json(res,200,job);return;}
     if(req.method==='GET'&&url.pathname==='/api/history'){
      const items=fs.readdirSync(backups).filter(file=>/^\d+-[a-f0-9]+\.json$/.test(file)).sort().reverse().slice(0,30).map(file=>{const item=JSON.parse(fs.readFileSync(path.join(backups,file),'utf8'));return {id:item.id,file:item.file,created:item.created,restorable:item.before!==null,version:fs.existsSync(contentPath(item.file))?read(item.file).version:null};});json(res,200,items);return;
@@ -146,7 +151,25 @@ export function createStudio({root=path.resolve(here,'../..'),port=4317,runJob}=
      }
      throw Error('Unknown scientific import action.');
     }
+    if(url.pathname.startsWith('/api/components/')){
+     if(job.running)throw Error('Wait for the current preview or publish to finish.');
+     if(url.pathname==='/api/components/asset'){json(res,200,components.importComponentAsset(root,input,digest));return;}
+     if(url.pathname==='/api/components/snippet'){json(res,200,{snippet:components.buildComponent(root,input)});return;}
+     if(url.pathname==='/api/components/plot'){
+      if(typeof input.text!=='string'||Buffer.byteLength(input.text)>20*1024*1024)throw Error('Choose data smaller than 20 MB.');
+      const title=String(input.title||'').trim();if(!title||title.length>180)throw Error('Give the plot a title, up to 180 characters.');
+      const csv=String(input.name).toLowerCase().endsWith('.csv'),data=csv?components.plotFromCSV(input):JSON.parse(input.text);components.validatePlot(data);data.layout={...data.layout,title:{text:title}};
+      const text=JSON.stringify(data,null,2)+'\n',base='/content/data/imports/chart-'+digest(text+input.text).slice(0,16),file=path.join(root,base+'.json');fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,text);fs.writeFileSync(path.join(root,base+'-original.'+(csv?'csv':'json')),input.text);json(res,200,{path:base+'.json'});return;
+     }
+     if(url.pathname==='/api/components/equation'){
+      const expression=String(input.text||'').trim();if(!expression||expression.length>4000||expression.includes('$'))throw Error('Enter a LaTeX expression without dollar-sign delimiters, up to 4,000 characters.');
+      const html=katex.renderToString(expression,{displayMode:input.display!==false,throwOnError:true,trust:false,output:'htmlAndMathml'});
+      const snippet=input.display!==false?'\n\n$$\n'+expression+'\n$$\n\n':'$'+expression+'$';json(res,200,{html,snippet});return;
+     }
+     throw Error('Unknown component action.');
+    }
     if(url.pathname==='/api/media'){
+
 
      if(job.running)throw Error('Wait for the current operation to finish.');
      const extension=path.extname(String(input.name)).toLowerCase();if(!['.png','.jpg','.jpeg','.webp','.gif','.pdf'].includes(extension))throw Error('Choose a PNG, JPEG, WebP, GIF or PDF. Use YouTube for videos.');

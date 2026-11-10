@@ -22,6 +22,7 @@ test('Studio protects local content, detects stale edits and restores backups',a
  fs.writeFileSync(path.join(root,'content/work/research.md'),'---\n'+JSON.stringify(settings)+'\n---\n\nOriginal body.');
  const studio=createStudio({root,port:0,runJob:async()=>{}});const {url}=await studio.listen();const base=new URL(url).origin;
  const response=await fetch(url);const cookie=response.headers.get('set-cookie').split(';')[0];await response.text();
+ const secondStudio=createStudio({root,port:0,runJob:async()=>{}});const secondAddress=await secondStudio.listen();try{const reopened=await fetch(secondAddress.url);assert.equal(reopened.headers.get('set-cookie').split(';')[0],cookie);await reopened.text();}finally{secondStudio.server.closeAllConnections();await new Promise(resolve=>secondStudio.server.close(resolve));}
  const request=(route,data,options={})=>fetch(base+'/api/'+route,{method:data===undefined?'GET':'POST',headers:{cookie,Origin:base,'Content-Type':'application/json',...options.headers},body:data===undefined?undefined:JSON.stringify(data)});
  try{
   const generated=await fetch(base+'/assets/vendor/generated.css');assert.equal(generated.status,200);assert.match(await generated.text(),/generated style/);
@@ -45,6 +46,13 @@ test('Studio protects local content, detects stale edits and restores backups',a
   const diagramResponse=await request('science/diagram',{title:'Control',xml:'<mxfile><diagram>source</diagram></mxfile>',svg:'<svg xmlns="http://www.w3.org/2000/svg"><text>Plant</text></svg>'});
   assert.equal(diagramResponse.status,200);const diagram=await diagramResponse.json();assert.match(diagram.snippet,/Download editable diagram/);assert.ok(fs.existsSync(path.join(root,diagram.source)));
   assert.equal((await request('science/diagram',{xml:'<html/>',svg:'<svg/>'})).status,400);
+  const modelBytes=Buffer.alloc(134);modelBytes.writeUInt32LE(1,80);
+  const imported=await (await request('components/asset',{name:'model.stl',base64:modelBytes.toString('base64')})).json();assert.equal(imported.kind,'model');
+  const component=await (await request('components/snippet',{kind:'model',source:imported.path,title:'Test model'})).json();assert.match(component.snippet,/stl-reader/);
+  const assets=await (await request('assets?kind=model')).json();assert.equal(assets[0].path,imported.path);
+  const curve=await (await request('components/plot',{name:'curve.csv',text:'x,y\n0,1.81948410489933\n1,2',title:'Curve',x:'x',y:'y',style:'lines'})).json();assert.ok(curve.path);
+  const equation=await (await request('components/equation',{text:'x^2',display:true})).json();assert.equal(equation.snippet,'\n\n$$\nx^2\n$$\n\n');assert.match(equation.html,/katex/);
+  assert.equal((await request('components/equation',{text:'$bad$'})).status,400);
   assert.equal((await request('job',{kind:'arbitrary-command'})).status,400);
   assert.equal((await request('job',{kind:'preview'})).status,202);
  }finally{studio.server.closeAllConnections();await new Promise(resolve=>studio.server.close(resolve));fs.rmSync(root,{recursive:true,force:true});}
@@ -66,4 +74,8 @@ test('Studio textareas render and edit without assigning their read-only type',(
  textarea.listeners.input({target:{value:'Edited'}});assert.equal(value,'Edited');assert.equal(changes,1);
  const number=make('Order',10,v=>value=v,{type:'number'}).children[1];assert.equal(number.type,'number');
  number.listeners.input({target:{value:'20'}});assert.equal(value,20);
+});
+
+test('all Studio browser scripts parse before publication',()=>{
+ for(const file of ['app.js','science.js','components.js'])assert.doesNotThrow(()=>new vm.Script(fs.readFileSync(new URL('./studio/'+file,import.meta.url),'utf8'),{filename:file}));
 });
