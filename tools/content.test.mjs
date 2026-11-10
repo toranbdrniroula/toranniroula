@@ -18,3 +18,20 @@ test('drafts are excluded from published collections without deleting their file
     assert.deepEqual(readArticles(kind).map(item=>item.slug),all.filter(item=>!item.draft).map(item=>item.slug));
   }
 });
+
+test('hypersonics projects have separate content, reports and code downloads',async()=>{
+ const fs=await import('node:fs');const path=await import('node:path');const {ROOT}=createRequire(import.meta.url)('./content.cjs');
+ const expected={
+  'flow-around-cylinder':{viewers:['cylinder.vtp'],code:'cp_dist.py'},
+  'shock-shock-interactions':{viewers:['typeI.vtp','typeII.vtp'],code:'shockPolar.py'},
+  'scramjet-intake':{viewers:['intake.vtp'],code:'intake.py'}
+ };
+ const published=readArticles('work');assert.ok(!published.some(item=>item.slug==='hypersonics-advanced-propulsion'));
+ for(const [slug,settings] of Object.entries(expected)){
+  const item=published.find(item=>item.slug===slug);assert.ok(item,slug+' is published');
+  const source=fs.readFileSync(path.join(ROOT,'content/work',slug+'.md'),'utf8');
+  assert.deepEqual([...source.matchAll(/<vtk-reader href="[^"]*\/([^"/]+)"/g)].map(m=>m[1]),settings.viewers);
+  assert.ok(item.links.some(link=>link.url.endsWith(slug+'-report.pdf')));assert.ok(item.links.some(link=>link.url.endsWith(settings.code)));
+  const report=fs.readFileSync(path.join(ROOT,'assets/downloads/hypersonics',slug+'-report.pdf'));assert.equal(report.subarray(0,5).toString(),'%PDF-');
+ }
+});

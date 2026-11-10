@@ -23,6 +23,7 @@ function absoluteURL(value, base) {
 function resolveLegacyURL(value, legacyPath = '/work/case-file.html') {
   if (!value || /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(value)) return value;
   const url = new URL(value, `https://site.invalid${legacyPath}`);
+  if(url.pathname==='/work/case-file.html'&&url.searchParams.get('slug')==='hypersonics-advanced-propulsion'&&(!url.searchParams.has('category')||url.searchParams.get('category')==='research'))return '/work/hypersonics-advanced-propulsion/'+url.hash;
   const piece = WORK_PIECES.find(piece => piece.slug === url.searchParams.get('slug'));
   if (url.pathname === '/work/case-file.html' && piece &&
       (!url.searchParams.has('category') || url.searchParams.get('category') === piece.category)) {

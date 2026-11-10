@@ -35,3 +35,8 @@ test('contents include deeper article headings with unique links and exclude vie
   const $ = load(result.html);
   for (const heading of result.headings) assert.equal($(`#${heading.id}`).text(), heading.title);
 });
+
+test('previous hypersonics links retain their topic index and fragment',()=>{
+ assert.equal(resolveLegacyURL('case-file.html?slug=hypersonics-advanced-propulsion&category=research#details'),'/work/hypersonics-advanced-propulsion/#details');
+ assert.equal(resolveLegacyURL('case-file.html?slug=hypersonics-advanced-propulsion'),'/work/hypersonics-advanced-propulsion/');
+});
